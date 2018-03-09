@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { geolocated } from 'react-geolocated'
 import { getStopsAndSchedulesByLocation } from './Requests'
 import Route from './Route'
 import './Routes.css'
@@ -9,20 +8,44 @@ class Routes extends Component {
     super(props)
     this.state = {
       stops: null,
+      lat: null,
+      lon: null,
+      loading: true
     }
   }
 
   componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.updatePositionAndGetStopsData, this.onError)
+    } else {
+      console.error("Cannot get geolocation")
+    }
+  }
+
+  onError = (e) => {
+    console.error(e)
+  }
+
+  updatePositionAndGetStopsData = position =>
+  new Promise(resolve => {
+    if (position) {
+      this.setState({
+        lat: position.coords.latitude,
+        lon: position.coords.longitude,
+      })
+      resolve(position)
+    } else {
+      console.error("No position")
+    }
+  }).then(res => {
     this.getStopsData()
     setInterval(() => {
       this.getStopsData()
     } , 60000)
-  }
+  })
 
   getStopsData() {
-    // TODO: add geolocation
-    console.log(navigator.geolocation)
-    getStopsAndSchedulesByLocation(60.157330, 24.877253).then(stops => {
+    getStopsAndSchedulesByLocation(this.state.lat, this.state.lon).then(stops => {
       let stopsData = {}
       Object.keys(stops).map( key =>
         stopsData[key] = {
@@ -31,16 +54,20 @@ class Routes extends Component {
           stopTimes: stops[key].node.stop.stoptimesWithoutPatterns
         }
       )
-      this.setState({ stops: stopsData })
+      this.setState({
+        stops: stopsData,
+        loading: false
+       })
     })
   }
 
   render() {
-    if (!this.state.stops) return null
     const stops = this.state.stops
+    console.log(this.state)
     return (
       <div className="Routes">
-      { Object.keys(stops)
+      { this.state.loading && <p>Loading ... </p> }
+      { !this.state.loading && Object.keys(stops)
         .sort((a, b) => a > b)
         .map( key =>
         <div className="Routes" key={key}>
