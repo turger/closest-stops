@@ -27,7 +27,7 @@ export const minutesToDeparture = (departureTimestamp, serviceDay, currDate = ne
   return getTimeIfMoreThan60min(minutesToDeparture, departureTimestamp)
 }
 
-const Route = ({routes, distance}) => (
+const Route = ({routes, distance, name}) => (
   <div className="Route">
     {routes
       .filter(route => {
@@ -40,7 +40,9 @@ const Route = ({routes, distance}) => (
         return(
           <div className="Route__box" key={`${route.trip.route.gtfsId}-${route.realtimeArrival}`}>
             <div className="Route__box--name">
-              {route.trip.route.shortName} {route.trip.route.longName} {distance}
+              {route.trip.route.shortName} {name} {distance}
+              <br/>
+              {route.trip.route.longName}
             </div>
             <div className={classNames('Route__box--time',
               {'Route__box--small': !Number.isInteger(timeToDeparture) }

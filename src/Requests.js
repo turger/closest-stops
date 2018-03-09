@@ -22,9 +22,9 @@ const doQuery = query => new Promise(resolve => {
     })
 })
 
-export const getStopsAndSchedulesByLocation = (lat, lon, startTime = getCurrentTimestamp()) => doQuery(`
+export const getStopsAndSchedulesByLocation = (lat, lon, radius, startTime = getCurrentTimestamp()) => doQuery(`
   {
-    stopsByRadius(lat:${lat}, lon:${lon}, radius:500) {
+    stopsByRadius(lat:${lat}, lon:${lon}, radius:${radius}) {
       edges {
         node {
           distance
