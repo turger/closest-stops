@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-import './Route.css'
+import PropTypes from 'prop-types'
+import './Stops.css'
 
 export const getTimeIfMoreThan60min = (minutesToDeparture, departureTimestamp) => {
   if (minutesToDeparture >= 60) {
@@ -27,8 +28,8 @@ export const minutesToDeparture = (departureTimestamp, serviceDay, currDate = ne
   return getTimeIfMoreThan60min(minutesToDeparture, departureTimestamp)
 }
 
-const Route = ({routes, distance, name}) => (
-  <div className="Route">
+const Stops = ({routes, distance, name}) => (
+  <div className="Stops">
     {routes
       .filter(route => {
         const timeToDeparture = minutesToDeparture(route.realtimeArrival, route.serviceDay)
@@ -38,14 +39,14 @@ const Route = ({routes, distance, name}) => (
       .map(route => {
         const timeToDeparture = minutesToDeparture(route.realtimeArrival, route.serviceDay)
         return(
-          <div className="Route__box" key={`${route.trip.route.gtfsId}-${route.realtimeArrival}`}>
-            <div className="Route__box--name">
+          <div className="Stops__box" key={`${route.trip.route.gtfsId}-${route.realtimeArrival}`}>
+            <div className="Stops__box--name">
               {route.trip.route.shortName} {name} {distance}
               <br/>
               {route.trip.route.longName}
             </div>
-            <div className={classNames('Route__box--time',
-              {'Route__box--small': !Number.isInteger(timeToDeparture) }
+            <div className={classNames('Stops__box--time',
+              {'Stops__box--small': !Number.isInteger(timeToDeparture) }
             )}>
                 { timeToDeparture }
             </div>
@@ -56,4 +57,10 @@ const Route = ({routes, distance, name}) => (
   </div>
 )
 
-export default Route
+Stops.propTypes = {
+  routes: PropTypes.array.isRequired,
+  distance: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired
+}
+
+export default Stops
