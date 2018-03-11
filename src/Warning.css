@@ -1,0 +1,17 @@
+.Warning {
+  display: flex;
+  flex-direction: row;
+  width: 85%;
+  align-items: center;
+  margin: 10px auto;
+  padding: 5px;
+  background: rgba(254, 211, 48, 0.3);
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.Warning svg {
+  width: 40px;
+  height: 40px;
+  margin: 0 10px 0 5px;
+}

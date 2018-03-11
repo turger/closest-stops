@@ -1,3 +1,68 @@
 .Routes {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Routes__info {
+  font-weight: bold;
+  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  padding: 3px;
+}
+
+.Routes__times {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: stretch;
+  justify-content: center;
+  width: 100%;
+}
+
+.Routes__box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  min-height: 40px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin: 2px;
+  padding: 3px;
+}
+
+.Routes__box__bottom {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.Routes__box__name__short {
+  font-size: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 2px;
+  color: #d1d8e0;
+}
+
+.Routes__box__name__long {
+  font-size: 11px;
+  text-align: center;
+}
+
+.Routes__box__name__long svg {
+  width: 20px;
+  height: 20px;
+}
+
+.Routes__box__time {
+  font-size: 20px;
+  margin-left: 5px;
 }

@@ -1,66 +1,116 @@
-import React from 'react'
-import classNames from 'classnames'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { getStopsAndSchedulesByLocation } from './Requests'
+import SearchAddress from './SearchAddress'
+import Routes from './Routes'
+import Warning from './Warning'
 import './Stops.css'
 
-export const getTimeIfMoreThan60min = (minutesToDeparture, departureTimestamp) => {
-  if (minutesToDeparture >= 60) {
-    const depDate = new Date(departureTimestamp * 1000)
-    const hours = depDate.getUTCHours()
-    const minutes = ('0' + depDate.getUTCMinutes()).slice(-2)
-    return `${hours}:${minutes}`
-  } else {
-    return minutesToDeparture
+class Stops extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      stops: null,
+      lat: null,
+      lon: null,
+      loading: false,
+      radius: 1000,
+      locationDenied: false
+    }
   }
-}
 
-export const minutesToDeparture = (departureTimestamp, serviceDay, currDate = new Date()) => {
-  const currDateInSeconds = (currDate.getHours()*60*60)+(currDate.getMinutes()*60)+currDate.getSeconds()
-  const secondsInDay = 86400
-  let minutesToDeparture = Math.floor((departureTimestamp-currDateInSeconds) / 60)
-  // if service day is next day
-  if (serviceDay > (currDate.setHours(0,0,0,0) / 1000)) {
-    minutesToDeparture = Math.floor(((departureTimestamp+secondsInDay)-currDateInSeconds) / 60)
-  // else if departureTimestamp is more than 24h, this happens between 00:00-06:00
-  } else if (departureTimestamp-currDateInSeconds > secondsInDay) {
-    minutesToDeparture = Math.floor(((departureTimestamp-secondsInDay)-currDateInSeconds) / 60)
+  componentDidMount() {
+    this.getCurrentGeolocation()
   }
-  return getTimeIfMoreThan60min(minutesToDeparture, departureTimestamp)
-}
 
-const Stops = ({routes, distance, name}) => (
-  <div className="Stops">
-    {routes
-      .filter(route => {
-        const timeToDeparture = minutesToDeparture(route.realtimeArrival, route.serviceDay)
-        return(!Number.isInteger(timeToDeparture) || timeToDeparture > 0)}
+  getCurrentGeolocation() {
+    if (navigator.geolocation) {
+      this.setState({ loading: true })
+      navigator.geolocation.getCurrentPosition(this.onSuccess, this.onError)
+    } else {
+      console.warn("Cannot get geolocation")
+    }
+  }
+
+  onError = (e) => {
+    console.warn(e)
+    this.setState({ locationDenied: true, loading: false })
+  }
+
+  onSuccess = (position) => {
+    if (position) {
+      this.updatePositionAndGetStopsData(position.coords.latitude, position.coords.longitude)
+    } else {
+      console.error("No position")
+    }
+  }
+
+  updatePositionAndGetStopsData = (lat, lon) =>
+    new Promise(resolve => {
+      this.setState({
+        lat, lon, hasLocation: true
+      })
+      resolve()
+    }).then(res => {
+      this.getStopsData()
+      setInterval(() => {
+        this.getStopsData()
+      } , 60000)
+    })
+
+  getStopsData() {
+    this.setState({ loading: true })
+    getStopsAndSchedulesByLocation(this.state.lat, this.state.lon, this.state.radius).then(stops => {
+      let stopsData = {}
+      stops.map( stop =>
+        stopsData[stop.node.stop.gtfsId] = {
+          distance: stop.node.distance,
+          name: stop.node.stop.name,
+          stopTimes: stop.node.stop.stoptimesWithoutPatterns,
+          id: stop.node.stop.gtfsId
+        }
       )
-      .slice(0, 3)
-      .map(route => {
-        const timeToDeparture = minutesToDeparture(route.realtimeArrival, route.serviceDay)
-        return(
-          <div className="Stops__box" key={`${route.trip.route.gtfsId}-${route.realtimeArrival}`}>
-            <div className="Stops__box--name">
-              {route.trip.route.shortName} {name} {distance}
-              <br/>
-              {route.trip.route.longName}
-            </div>
-            <div className={classNames('Stops__box--time',
-              {'Stops__box--small': !Number.isInteger(timeToDeparture) }
-            )}>
-                { timeToDeparture }
-            </div>
-          </div>
-        )
-      }
-    )}
-  </div>
-)
+      this.setState({
+        stops: stopsData,
+        loading: false
+       })
+    })
+  }
 
-Stops.propTypes = {
-  routes: PropTypes.array.isRequired,
-  distance: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired
+  render() {
+    const stops = this.state.stops
+    return (
+      <div className="Stops">
+        <SearchAddress updatePosition={this.updatePositionAndGetStopsData.bind(this)} />
+        { this.state.locationDenied &&
+          <Warning
+            message="Geolocation is not enabled in your browser. Enable it if you want to find stops using your current location."
+          />
+        }
+        { !this.state.locationDenied && !this.state.loading &&
+          <div className="Stops__updatelocation">
+            <button onClick={this.getCurrentGeolocation.bind(this)}>
+              Update current location
+            </button>
+          </div>
+        }
+        { this.state.loading &&
+          <p className="Stops__loading">Loading stops ... </p>
+        }
+        { this.state.stops &&
+          Object.keys(stops)
+          .map( key =>
+            <Routes
+              key={ key }
+              stopTimes={ stops[key].stopTimes }
+              distance={ stops[key].distance }
+              name={ stops[key].name }
+              id={ stops[key].id }
+            />
+          )
+        }
+      </div>
+    )
+  }
 }
 
 export default Stops

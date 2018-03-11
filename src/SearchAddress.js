@@ -6,7 +6,7 @@ import './SearchAddress.css'
 
 const options = {
   location: new google.maps.LatLng(60.1718730, 24.9414220),
-  radius: 2000,
+  radius: 500,
   types: ['address'],
 }
 
@@ -21,9 +21,7 @@ class SearchAddress extends Component {
   }
 
   handleFormSubmit = (event) => {
-    console.log(this.props)
     event.preventDefault()
-
     geocodeByAddress(this.state.address)
       .then(results => getLatLng(results[0]))
       .then(latLng => this.props.updatePosition(latLng.lat, latLng.lng))
@@ -31,10 +29,10 @@ class SearchAddress extends Component {
   }
 
   render() {
-    console.log('sadasda', this.props)
     const inputProps = {
       value: this.state.address || '',
       onChange: this.onChange,
+      placeholder: 'Type your location ...',
     }
 
     return (

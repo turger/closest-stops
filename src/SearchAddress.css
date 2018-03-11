@@ -1,3 +1,6 @@
+.SearchAddress {
+}
+
 .SearchAddress > form {
   display: flex;
   flex-wrap: wrap;
@@ -7,7 +10,7 @@
 }
 
 .SearchAddress > form > div {
-  flex-grow: 2;
+  flex-grow: 3;
   display: inline-block;
 }
 
@@ -16,9 +19,10 @@
   border: none;
   border-radius: 25px 0 0 25px;
   width: 100% !important;
-  padding: 10px 0 10px 15px !important;
-  margin: 0 -15px;
+  padding: 10px 0 10px 0 !important;
   font-size: 18px;
+  color: #000000;
+  text-indent: 16px;
 }
 
 .SearchAddress__button {
@@ -31,12 +35,35 @@
   overflow: hidden;
   padding: 0;
   margin: 0;
-  margin-left: 8px;
   width: 15%;
   font-size: 18px;
+  color: #000000;
 }
 
 .SearchAddress textarea:focus, input:focus, button:focus {
     outline: none;
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+.SearchAddress input::placeholder {
+  color: #000000;
+  opacity: 0.5;
+}
+
+/* dropdown field */
+.SearchAddress > form > div > div {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  border: none !important;
+  border-radius: 25px !important;
+}
+
+.SearchAddress > form > div > div > div {
+  background-color: transparent !important;
+  color: #d1d8e0 !important;
+  border-radius: 25px !important;
+  margin-left: 5px;
+}
+
+#PlacesAutocomplete__autocomplete-container {
+
 }
