@@ -91,15 +91,7 @@ class Stops extends Component {
           Object.keys(stops)
           .filter(stop => stops[stop].stopTimes.length)
           .map( key =>
-            <Routes
-              key={ key }
-              stopTimes={ stops[key].stopTimes }
-              distance={ stops[key].distance }
-              name={ stops[key].name }
-              id={ stops[key].id }
-              desc={ stops[key].desc }
-              directions={ stops[key].directions }
-            />
+            <Routes key={ key } {...stops[key]} />
           )
         }
       </div>
