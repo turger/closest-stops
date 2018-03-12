@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Direction from 'react-icons/lib/fa/long-arrow-right'
+import { uniqWith, isEqual } from 'lodash'
 import './Routes.css'
 
 export const getTimeIfMoreThan60min = (minutesToDeparture, departureTimestamp) => {
@@ -28,11 +28,11 @@ export const minutesToDeparture = (departureTimestamp, serviceDay, currDate = ne
   return getTimeIfMoreThan60min(minutesToDeparture, departureTimestamp)
 }
 
-const Routes = ({stopTimes, distance, name, id}) => (
+const Routes = ({stopTimes, distance, name, id, desc, directions}) => (
   <div className="Routes">
-    <div className="Routes__info">{name} {distance}m</div>
+    <div className="Routes__info">{name}, {desc} [{distance}m]</div>
     <div className="Routes__times">
-      {stopTimes
+      {uniqWith(stopTimes, isEqual)
         .filter(stopTime => {
           const timeToDeparture = minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay)
           return(!Number.isInteger(timeToDeparture) || timeToDeparture > 0)}
@@ -41,19 +41,19 @@ const Routes = ({stopTimes, distance, name, id}) => (
         .map(stopTime => {
           const timeToDeparture = minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay)
           const route = stopTime.trip.route
-          const longName = (route.longName.split("-").pop(-1)).replace(')', '')
+          const longName = directions[route.shortName] ? `to ${directions[route.shortName].direction}` : ''
           return(
-            <div className="Routes__box" key={`${id}-${route.gtfsId}-${stopTime.realtimeArrival}`}>
-              <div className="Routes__box__name__long">
-                <Direction/> { longName }
-              </div>
-              <div className="Routes__box__bottom">
+            <div className="Routes__box" key={`${id}-${route.gtfsId}-${stopTime.realtimeArrival}-${stopTime.serviceDay}`}>
+              <div className="Routes__box__col">
                 <div className="Routes__box__name__short">
                   { route.shortName }
                 </div>
                 <div className="Routes__box__time">
                   { timeToDeparture }
                 </div>
+              </div>
+              <div className="Routes__box__name__long">
+               { longName }
               </div>
             </div>
           )
@@ -68,6 +68,7 @@ Routes.propTypes = {
   distance: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  desc: PropTypes.string.isRequired,
 }
 
 export default Routes

@@ -5,12 +5,16 @@
 }
 
 .Routes__info {
+  font-family: 'Play', sans-serif;
+  letter-spacing: 1px;
   font-weight: bold;
-  background-color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.2);
+  font-size: 18px;
+  color: #d1d8e0;
+  background-color: rgba(0, 0, 0, 0.1);
   width: 100%;
   text-align: center;
   margin-top: 10px;
+  margin-bottom: 3px;
   padding: 3px;
 }
 
@@ -30,13 +34,13 @@
   justify-content: center;
   width: 30%;
   min-height: 40px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
   margin: 2px;
   padding: 3px;
 }
 
-.Routes__box__bottom {
+.Routes__box__col {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -48,12 +52,12 @@
   font-size: 20px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  padding: 2px;
+  padding: 3px 6px;
   color: #d1d8e0;
 }
 
 .Routes__box__name__long {
-  font-size: 11px;
+  font-size: 16px;
   text-align: center;
 }
 

@@ -1,0 +1,2 @@
+export const FETCH_STOPS = 'FETCH_STOPS'
+export const RECEIVE_STOPS = 'RECEIVE_STOPS'

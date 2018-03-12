@@ -1,6 +1,6 @@
 import React from 'react'
 import Stops from './Stops'
-import logo from './assets/bus-stop.svg'
+import logo from '../assets/bus-stop.svg'
 import './App.css'
 
 const App = () => (

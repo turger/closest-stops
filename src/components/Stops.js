@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { getStopsAndSchedulesByLocation } from './Requests'
+import { connect } from 'react-redux'
+import { getStopsAndSchedulesByLocation } from '../actions/stopsActions'
 import SearchAddress from './SearchAddress'
 import Routes from './Routes'
 import Warning from './Warning'
@@ -9,7 +10,6 @@ class Stops extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      stops: null,
       lat: null,
       lon: null,
       loading: false,
@@ -59,25 +59,16 @@ class Stops extends Component {
 
   getStopsData() {
     this.setState({ loading: true })
-    getStopsAndSchedulesByLocation(this.state.lat, this.state.lon, this.state.radius).then(stops => {
-      let stopsData = {}
-      stops.map( stop =>
-        stopsData[stop.node.stop.gtfsId] = {
-          distance: stop.node.distance,
-          name: stop.node.stop.name,
-          stopTimes: stop.node.stop.stoptimesWithoutPatterns,
-          id: stop.node.stop.gtfsId
-        }
-      )
+    this.props.getStopsAndSchedulesByLocation(this.state.lat, this.state.lon, this.state.radius).then(() =>
       this.setState({
-        stops: stopsData,
         loading: false
-       })
-    })
+      })
+    )
   }
 
   render() {
-    const stops = this.state.stops
+    const stops = this.props.stops
+    console.log(stops)
     return (
       <div className="Stops">
         <SearchAddress updatePosition={this.updatePositionAndGetStopsData.bind(this)} />
@@ -96,8 +87,9 @@ class Stops extends Component {
         { this.state.loading &&
           <p className="Stops__loading">Loading stops ... </p>
         }
-        { this.state.stops &&
+        { !!Object.keys(stops).length &&
           Object.keys(stops)
+          .filter(stop => stops[stop].stopTimes.length)
           .map( key =>
             <Routes
               key={ key }
@@ -105,6 +97,8 @@ class Stops extends Component {
               distance={ stops[key].distance }
               name={ stops[key].name }
               id={ stops[key].id }
+              desc={ stops[key].desc }
+              directions={ stops[key].directions }
             />
           )
         }
@@ -113,4 +107,8 @@ class Stops extends Component {
   }
 }
 
-export default Stops
+const mapStateToProps = state => ({
+  stops: state.stops.data
+})
+
+export default connect(mapStateToProps, { getStopsAndSchedulesByLocation })(Stops)
