@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getStopsAndSchedulesByLocation } from '../actions/stopsActions'
+import { getStopsAndSchedulesByLocation } from '../services/hslApi'
+import { setStops } from '../actions/stopsActions'
 import SearchAddress from './SearchAddress'
 import Routes from './Routes'
 import Warning from './Warning'
@@ -59,11 +60,12 @@ class Stops extends Component {
 
   getStopsData() {
     this.setState({ loading: true })
-    this.props.getStopsAndSchedulesByLocation(this.state.lat, this.state.lon, this.state.radius).then(() =>
+    getStopsAndSchedulesByLocation(this.state.lat, this.state.lon, this.state.radius).then(stops => {
       this.setState({
         loading: false
       })
-    )
+      this.props.setStops(stops)
+    })
   }
 
   render() {
@@ -103,4 +105,8 @@ const mapStateToProps = state => ({
   stops: state.stops.data
 })
 
-export default connect(mapStateToProps, { getStopsAndSchedulesByLocation })(Stops)
+const mapDispatchToProps = dispatch => ({
+  setStops: stops => dispatch(setStops(stops))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Stops)

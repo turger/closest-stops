@@ -1,0 +1,23 @@
+.Header-logo {
+  animation: Logo-shake 1 1.5s linear;
+  height: 80px;
+}
+
+.Header {
+  height: 150px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+.Header-title {
+  font-size: 1.5em;
+  color: #222;
+}
+
+@keyframes Logo-shake {
+  0% { transform: rotate(0deg); }
+  33% { transform: rotate(20deg); }
+  66% { transform: rotate(-20deg); }
+  100% { transform: rotate(0deg); }
+}

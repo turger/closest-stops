@@ -1,4 +1,4 @@
-import {FETCH_STOPS, RECEIVE_STOPS} from '../actions/actionTypes'
+import { SET_STOPS } from '../actions/actionTypes'
 
 const initialState = {
   data: {},
@@ -6,12 +6,10 @@ const initialState = {
 
 export default function stops(state = initialState, action) {
   switch (action.type) {
-    case FETCH_STOPS:
-      return action
-    case RECEIVE_STOPS:
+    case SET_STOPS:
       return {
         ...state,
-        data: action.data.reduce((accumulator, stop) => ({
+        data: action.stops.reduce((accumulator, stop) => ({
           ...accumulator,
           [stop.node.stop.gtfsId]: mapStop(stop)}), {})
       }
