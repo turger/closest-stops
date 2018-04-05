@@ -9,8 +9,8 @@ export default class Stops extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      lat: 60.168946, //null,
-      lon: 24.929691, // null,
+      lat: null,
+      lon: null,
       loading: false,
       radius: 1000,
       locationDenied: false,
@@ -22,7 +22,9 @@ export default class Stops extends Component {
   componentDidMount() {
     this.getCurrentGeolocation(true)
     // for testing
-    this.getStopsData()
+    if (window.location.host.includes("localhost")) {
+      this.setState({ lat: 60.168946, lon: 24.929691 }, () => this.getStopsData())
+    }
   }
 
   getCurrentGeolocation(firstAutoLocationGet) {
