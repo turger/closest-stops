@@ -1,18 +1,30 @@
 .Header-logo {
+  margin-top: 25px;
+  width: 87px;
+  height: 87px;
+  object-fit: contain;
   animation: Logo-shake 1 1.5s linear;
-  height: 80px;
 }
 
 .Header {
-  height: 150px;
-  padding: 20px;
-  color: white;
+  width: 100%;
+  height: 169px;
+  background-color: #ffffff;
+  box-shadow: 0 3px 16px 0 #d4d8ff;
   text-align: center;
 }
 
 .Header-title {
-  font-size: 1.5em;
-  color: #222;
+  object-fit: contain;
+  font-family: Avenir-Black;
+  font-size: 12px;
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: #5c45a0;
 }
 
 @keyframes Logo-shake {

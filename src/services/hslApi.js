@@ -26,6 +26,7 @@ export const getStopsAndSchedulesByLocation = (lat, lon, radius, startTime = get
                   gtfsId
                   longName
                   shortName
+                  mode
                 }
               }
             }

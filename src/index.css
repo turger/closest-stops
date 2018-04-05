@@ -8,3 +8,13 @@ body {
 html, #root {
   height: 100%;
 }
+
+@font-face {
+  font-family: Avenir-Medium;
+  src: url('./assets/Avenir-Medium.ttf')
+}
+
+@font-face {
+  font-family: Avenir-Blac;
+  src: url('./assets/Avenir-Black.ttf')
+}

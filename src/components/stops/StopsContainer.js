@@ -2,6 +2,9 @@ import { connect } from 'react-redux'
 import { setStops } from './stopsActions'
 import Stops from './Stops'
 
+// todo: kaikki toiminnallisuudet tänne
+// siirrä myös state stopsista
+
 const mapStateToProps = state => ({
   stops: state.stops.data
 })

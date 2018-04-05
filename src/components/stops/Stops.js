@@ -9,17 +9,20 @@ export default class Stops extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      lat: null,
-      lon: null,
+      lat: 60.168946, //null,
+      lon: 24.929691, // null,
       loading: false,
       radius: 1000,
       locationDenied: false,
-      firstAutoLocationGet: false
+      firstAutoLocationGet: false,
+      showSearchAddress: false,
     }
   }
 
   componentDidMount() {
     this.getCurrentGeolocation(true)
+    // for testing
+    this.getStopsData()
   }
 
   getCurrentGeolocation(firstAutoLocationGet) {
@@ -76,7 +79,9 @@ export default class Stops extends Component {
     console.log(stops)
     return (
       <div className="Stops">
-        <SearchAddress updatePosition={this.updatePositionAndGetStopsData.bind(this)} />
+        { this.state.showSearchAddress &&
+          <SearchAddress updatePosition={this.updatePositionAndGetStopsData.bind(this)} />
+        }
         { this.state.locationDenied &&
           <Warning
             message="Geolocation is not enabled in your browser. Enable it if you want to find stops using your current location."

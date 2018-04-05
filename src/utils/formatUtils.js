@@ -31,6 +31,7 @@ const formatStopTimes = stopTimes => {
         ...stopTime,
         minutesToDeparture: minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay),
         shortName: stopTime.trip.route.shortName,
-        id: `${stopTime.trip.route.gtfsId}-${stopTime.serviceDay}-${stopTime.realtimeArrival}`
+        id: `${stopTime.trip.route.gtfsId}-${stopTime.serviceDay}-${stopTime.realtimeArrival}`,
+        mode: stopTime.trip.route.mode
       }))
 }
