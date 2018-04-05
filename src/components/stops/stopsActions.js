@@ -1,4 +1,4 @@
-import { SET_STOPS } from './actionTypes'
+import { SET_STOPS } from './stopsActionTypes'
 
 export const setStops = stops => ({
   stops,

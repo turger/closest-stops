@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { getStopsAndSchedulesByLocation } from '../services/hslApi'
-import { setStops } from '../actions/stopsActions'
-import SearchAddress from './SearchAddress'
-import Routes from './Routes'
-import Warning from './Warning'
+import { getStopsAndSchedulesByLocation } from '../../services/hslApi'
+import SearchAddress from '../SearchAddress'
+import Routes from '../Routes'
+import Warning from '../Warning'
 import './Stops.css'
 
-class Stops extends Component {
+export default class Stops extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -15,17 +13,18 @@ class Stops extends Component {
       lon: null,
       loading: false,
       radius: 1000,
-      locationDenied: false
+      locationDenied: false,
+      firstAutoLocationGet: false
     }
   }
 
   componentDidMount() {
-    this.getCurrentGeolocation()
+    this.getCurrentGeolocation(true)
   }
 
-  getCurrentGeolocation() {
+  getCurrentGeolocation(firstAutoLocationGet) {
     if (navigator.geolocation) {
-      this.setState({ loading: true })
+      this.setState({ loading: true, firstAutoLocationGet: true })
       navigator.geolocation.getCurrentPosition(this.onSuccess, this.onError)
     } else {
       console.warn("Cannot get geolocation")
@@ -47,9 +46,13 @@ class Stops extends Component {
 
   updatePositionAndGetStopsData = (lat, lon) =>
     new Promise(resolve => {
-      this.setState({
-        lat, lon, hasLocation: true
-      })
+      if (!(this.state.hasLocation && this.state.firstAutoLocationGet)) {
+        this.setState({
+          lat, lon, hasLocation: true
+        })
+      } else {
+        console.log('Already has manually inputted address')
+      }
       resolve()
     }).then(res => {
       this.getStopsData()
@@ -81,7 +84,7 @@ class Stops extends Component {
         }
         { !this.state.locationDenied && !this.state.loading &&
           <div className="Stops__updatelocation">
-            <button onClick={this.getCurrentGeolocation.bind(this)}>
+            <button onClick={this.getCurrentGeolocation.bind(this, false)}>
               Update current location
             </button>
           </div>
@@ -100,13 +103,3 @@ class Stops extends Component {
     )
   }
 }
-
-const mapStateToProps = state => ({
-  stops: state.stops.data
-})
-
-const mapDispatchToProps = dispatch => ({
-  setStops: stops => dispatch(setStops(stops))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Stops)

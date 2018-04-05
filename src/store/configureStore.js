@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux'
 import promiseMiddleware from 'redux-promise'
-import rootReducer from '../reducers/rootReducer'
+import rootReducer from '../rootReducer'
 
 export default function configureStore() {
   return createStore(

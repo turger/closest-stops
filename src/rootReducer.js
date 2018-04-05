@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import stops from './stopsReducer'
+import stops from './components/stops/stopsReducer'
 
 const rootReducer = combineReducers({
   stops

@@ -1,8 +1,8 @@
 import React from 'react'
-import Stops from './Stops'
+import Stops from './stops/StopsContainer'
 import Header from './Header'
 import Menu from './Menu'
-import '../firebase.js'
+import '../services/firebase.js'
 import './App.css'
 
 const App = () => (
