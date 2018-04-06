@@ -1,4 +1,4 @@
-import { SET_STOPS } from './stopsActionTypes'
+import { SET_STOPS, SET_LOADING } from './stopsActionTypes'
 import { mapStop } from '../../utils/formatUtils'
 
 const initialState = {
@@ -13,6 +13,11 @@ export default function stops(state = initialState, action) {
         data: action.stops.reduce((accumulator, stop) => ({
           ...accumulator,
           [stop.node.stop.gtfsId]: mapStop(stop)}), {})
+      }
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: action.loading
       }
     default:
       return state

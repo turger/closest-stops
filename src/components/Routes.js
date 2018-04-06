@@ -18,7 +18,7 @@ const Routes = ({stopTimes, distance, name, id, desc, directions}) => (
             </div>
             <div className="Routes__times__box__right">
               <div className="Routes__times__box__time">
-                { stopTime.minutesToDeparture }
+                { stopTime.departureTime }
               </div>
             </div>
           </div>
@@ -27,18 +27,5 @@ const Routes = ({stopTimes, distance, name, id, desc, directions}) => (
     </div>
   </div>
 )
-
-
-/*<div className="Routes__box__col">
-  <div className="Routes__box__name__short">
-    { stopTime.shortName }
-  </div>
-  <div className="Routes__box__time">
-    { stopTime.minutesToDeparture }
-  </div>
-</div>
-<div className="Routes__box__name__long">
- { directions[stopTime.shortName] ? `to ${directions[stopTime.shortName].direction}` : '' }
-</div>*/
 
 export default Routes

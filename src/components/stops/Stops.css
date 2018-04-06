@@ -3,18 +3,6 @@
   width: 100%;
 }
 
-.Stops__updatelocation {
-  text-align: center;
-}
-
-.Stops__updatelocation button {
-  background-color: rgba(0, 0, 0, 0.1);
-  border: none;
-  border-radius: 25px;
-  padding: 3px 8px;
-  margin: 10px;
-}
-
 .Stops__loading {
   text-align: center;
 }

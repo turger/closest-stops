@@ -1,0 +1,10 @@
+.Menu__bar {
+  display: flex;
+  flex-direction: row;
+}
+
+.Menu img {
+  height: 40px;
+  color: #5c45a0;
+  fill: #5c45a0;
+}

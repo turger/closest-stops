@@ -1,0 +1,3 @@
+export const SET_COORDS = 'SET_COORDS'
+export const SET_RADIUS = 'SET_RADIUS'
+export const MANUAL_LOCATION_INPUT = 'MANUAL_LOCATION_INPUT'

@@ -1,4 +1,5 @@
-import { minutesToDeparture } from './calcUtils'
+import { minutesToDeparture, getDepartureTime } from './calcUtils'
+import { uniqWith, isEqual } from 'lodash'
 
 export const mapStop = stop => ({
   distance: stop.node.distance,
@@ -21,17 +22,17 @@ const mapDirections = directions => {
 }
 
 const formatStopTimes = stopTimes => {
-  return stopTimes
+  return uniqWith(stopTimes, isEqual)
     .filter(stopTime => {
       const timeToDeparture = minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay)
-      return(!Number.isInteger(timeToDeparture) || timeToDeparture > 0)
+      return(timeToDeparture > 0 && timeToDeparture < 60*2)
     })
     .slice(0, 6)
     .map(stopTime => ({
         ...stopTime,
-        minutesToDeparture: minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay),
+        departureTime: getDepartureTime(stopTime.realtimeArrival, stopTime.serviceDay),
         shortName: stopTime.trip.route.shortName,
-        id: `${stopTime.trip.route.gtfsId}-${stopTime.serviceDay}-${stopTime.realtimeArrival}`,
+        id: `${stopTime.trip.route.gtfsId}-${stopTime.serviceDay}-${stopTime.realtimeArrival}-${stopTime.scheduledArrival}`,
         mode: stopTime.trip.route.mode
       }))
 }

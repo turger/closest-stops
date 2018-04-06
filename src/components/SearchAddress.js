@@ -1,7 +1,8 @@
 /*global google*/
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { setCoords, setManualLocationInput } from './location/locationActions'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
-import PropTypes from 'prop-types'
 import './SearchAddress.css'
 
 const options = {
@@ -24,7 +25,10 @@ class SearchAddress extends Component {
     event.preventDefault()
     geocodeByAddress(this.state.address)
       .then(results => getLatLng(results[0]))
-      .then(latLng => this.props.updatePosition(latLng.lat, latLng.lng))
+      .then(latLng =>
+        this.props.setCoords({lat: latLng.lat, lon: latLng.lng}),
+        this.props.setManualLocationInput(true)
+      )
       .catch(error => console.error('Error', error))
   }
 
@@ -54,8 +58,13 @@ class SearchAddress extends Component {
   }
 }
 
-SearchAddress.propTypes = {
-  updatePosition: PropTypes.func.isRequired,
-}
+const mapStateToProps = state => ({
+  coords: state.location.coords
+})
 
-export default SearchAddress
+const mapDispatchToProps = dispatch => ({
+  setCoords: coords => dispatch(setCoords(coords)),
+  setManualLocationInput: manualLocationInput => dispatch(setManualLocationInput(manualLocationInput))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchAddress)
