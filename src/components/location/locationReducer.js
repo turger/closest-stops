@@ -1,6 +1,7 @@
-import { SET_COORDS, SET_RADIUS, MANUAL_LOCATION_INPUT } from './locationActionTypes'
+import { SET_COORDS, SET_RADIUS, MANUAL_LOCATION_INPUT, LOCATION_DENIED } from './locationActionTypes'
 
 const initialState = {
+  radius: 1000
 }
 
 export default function location(state = initialState, action) {
@@ -19,6 +20,11 @@ export default function location(state = initialState, action) {
       return {
         ...state,
         manualLocationInput: action.manualLocationInput
+      }
+    case LOCATION_DENIED:
+      return {
+        ...state,
+        locationDenied: action.locationDenied
       }
     default:
       return state

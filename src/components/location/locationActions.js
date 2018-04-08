@@ -1,4 +1,4 @@
-import { SET_COORDS, SET_RADIUS, MANUAL_LOCATION_INPUT } from './locationActionTypes'
+import { SET_COORDS, SET_RADIUS, MANUAL_LOCATION_INPUT, LOCATION_DENIED } from './locationActionTypes'
 
 export const setCoords = coords => ({
   coords,
@@ -13,4 +13,9 @@ export const setRadius = radius => ({
 export const setManualLocationInput = manualLocationInput => ({
   manualLocationInput,
   type: MANUAL_LOCATION_INPUT
+})
+
+export const setLocationDenied = locationDenied => ({
+  locationDenied,
+  type: LOCATION_DENIED
 })
