@@ -19,6 +19,10 @@ class Menu extends Component {
     this.props.setLoading()
     testing()
     getCurrentGeolocation()
+    setInterval(() => {
+      getCurrentGeolocation()
+    } , 6000)
+
   }
 
   handleSearchClick() {

@@ -34,7 +34,7 @@ const onError = (e) => {
 
 const onSuccess = (position) => {
   if (position) {
-    if (!store.manualLocationInput) {
+    if (!store.getState().location.manualLocationInput) {
       setLocation(position.coords.latitude, position.coords.longitude)
     } else {
       console.log('Already has manually inputted address')
