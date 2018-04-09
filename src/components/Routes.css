@@ -18,6 +18,27 @@
   width: 80%;
 }
 
+.Routes__location {
+  display: flex;
+  flex-direction: row;
+  font-size: 15px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1.4px;
+  text-align: left;
+  color: #2e2e2e;
+  width: 80%;
+}
+
+.Routes__location__platform {
+  margin-left: 10px;
+  padding: 0 5px 0 7px;
+  border: 1px solid #2e2e2e;
+  border-radius: 3px;
+}
+
 .Routes__times {
   display: flex;
   flex-wrap: wrap;
@@ -59,6 +80,11 @@
 }
 
 .Routes__times__box__shortName {
+  font-size: 14px;
+  padding-left: 10px;
+}
+
+.Routes__times__box__direction {
   padding-left: 10px;
 }
 
@@ -73,7 +99,7 @@
 
 .Routes__times__box__time {
   font-family: Avenir-Medium;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;
@@ -81,4 +107,5 @@
   letter-spacing: 1.3px;
   text-align: left;
   color: #2e2e2e;
+  white-space: nowrap;
 }

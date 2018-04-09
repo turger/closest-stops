@@ -5,6 +5,7 @@ export const mapStop = stop => ({
   distance: stop.node.distance,
   name: stop.node.stop.name,
   desc: stop.node.stop.desc,
+  platform: stop.node.stop.platformCode,
   stopTimes: formatStopTimes(stop.node.stop.stoptimesWithoutPatterns),
   id: stop.node.stop.gtfsId,
   directions: mapDirections(stop.node.stop.patterns)
@@ -13,9 +14,9 @@ export const mapStop = stop => ({
 const mapDirections = directions => {
   return directions.reduce((accumulator, direction) => ({
     ...accumulator,
-    [direction.name.split(" ")[0]]: {
-      routeName: direction.name.split(" ")[0],
-      direction: direction.name.split(" (HSL:")[0].split(" to ").splice(1).toString(),
+    [direction.route.shortName]: {
+      routeName: direction.route.shortName,
+      headsign: direction.headsign,
       original: direction.name
     }
   }), {})
@@ -27,12 +28,15 @@ const formatStopTimes = stopTimes => {
       const timeToDeparture = minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay)
       return(timeToDeparture > 0 && timeToDeparture < 60*2)
     })
-    .slice(0, 6)
-    .map(stopTime => ({
-        ...stopTime,
+    .reduce((accumulator, stopTime) => {
+      const id = stopTime.trip.route.gtfsId
+      accumulator[id] = accumulator[id] || []
+      accumulator[id].push({
         departureTime: getDepartureTime(stopTime.realtimeArrival, stopTime.serviceDay),
         shortName: stopTime.trip.route.shortName,
-        id: `${stopTime.trip.route.gtfsId}-${stopTime.serviceDay}-${stopTime.realtimeArrival}-${stopTime.scheduledArrival}`,
+        id: `${id}-${stopTime.serviceDay}-${stopTime.realtimeArrival}-${stopTime.scheduledArrival}`,
         mode: stopTime.trip.route.mode
-      }))
+      })
+      return accumulator
+    }, {})
 }

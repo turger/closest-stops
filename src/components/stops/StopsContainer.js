@@ -38,7 +38,7 @@ class StopsContainer extends Component {
   }
 
   render() {
-    console.log('props', this.props)
+    console.log('stops', this.props.stops)
     return (
       <Stops
         stops={this.props.stops}

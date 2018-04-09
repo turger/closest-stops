@@ -5,7 +5,7 @@ import './Vehicle.css'
 const Vechile = ({ mode }) => {
   return mode in vechileAssets ?
     <img className="Vehicle" src={vechileAssets[mode]} alt="vehicle"/> :
-    <img className="Vehicle" src={vechileAssets['BUS']} alt="vehicle"/> 
+    mode
 }
 
 export default Vechile

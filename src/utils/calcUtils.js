@@ -19,10 +19,7 @@ export const minutesToDeparture = (departureTimestamp, serviceDay, currDate = ne
 
 const getTimeIfMoreThan60min = (minutesToDeparture, departureTimestamp) => {
   if (minutesToDeparture >= 60) {
-    const depDate = new Date(departureTimestamp * 1000)
-    const hours = depDate.getUTCHours()
-    const minutes = ('0' + depDate.getUTCMinutes()).slice(-2)
-    return `${hours}:${minutes}`
+    return `${Math.floor(minutesToDeparture/60)}h ${minutesToDeparture%60}min`
   } else {
     return minutesToDeparture + ' min'
   }

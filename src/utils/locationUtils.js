@@ -26,7 +26,6 @@ export const getCurrentGeolocation = () => {
     }
   }
 
-
 const onError = (e) => {
   console.warn(e)
   store.dispatch(setLocationDenied(true))

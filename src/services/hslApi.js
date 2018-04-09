@@ -9,13 +9,19 @@ export const getStopsAndSchedulesByLocation = (lat, lon, radius, startTime = get
             gtfsId
             name
             desc
+            platformCode
             patterns {
               name
+              headsign
+              route {
+                longName
+                shortName
+              }
             }
             stoptimesWithoutPatterns(
               startTime: "${startTime}",
               timeRange: 180000,
-              numberOfDepartures:15
+              numberOfDepartures:30
             ) {
               scheduledArrival
               scheduledDeparture

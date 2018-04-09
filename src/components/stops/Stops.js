@@ -8,7 +8,7 @@ const Stops = ({ stops, loading }) => (
       <p className="Stops__loading">Loading stops ... </p>
     }
     { Object.keys(stops)
-      .filter(stop => stops[stop].stopTimes.length)
+      .filter(stop => Object.keys(stops[stop].stopTimes).length)
       .map( key =>
         <Routes key={ key } {...stops[key]} />
       )

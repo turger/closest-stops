@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-//import LocationContainer from './location/LocationContainer'
 import SearchAddress from './SearchAddress'
 import searchLocation from '../assets/search-location.svg'
 import updateLocation from '../assets/update-location.svg'
