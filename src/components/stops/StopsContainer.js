@@ -24,7 +24,6 @@ class StopsContainer extends Component {
     const coordsChanged = JSON.stringify(nextProps.coords) !== JSON.stringify(this.props.coords)
     this.props = nextProps
     if (coordsChanged) {
-      console.log('COORDS CHANGED')
       this.getStopsData()
     }
   }

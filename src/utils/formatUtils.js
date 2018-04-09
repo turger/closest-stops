@@ -6,6 +6,8 @@ export const mapStop = stop => ({
   name: stop.node.stop.name,
   desc: stop.node.stop.desc,
   platform: stop.node.stop.platformCode,
+  lat: stop.node.stop.lat,
+  lon: stop.node.stop.lon,
   stopTimes: formatStopTimes(stop.node.stop.stoptimesWithoutPatterns),
   id: stop.node.stop.gtfsId,
   directions: mapDirections(stop.node.stop.patterns)

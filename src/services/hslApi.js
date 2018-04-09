@@ -10,6 +10,8 @@ export const getStopsAndSchedulesByLocation = (lat, lon, radius, startTime = get
             name
             desc
             platformCode
+            lat
+            lon
             patterns {
               name
               headsign

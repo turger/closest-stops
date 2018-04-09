@@ -4,7 +4,7 @@ import SearchAddress from './SearchAddress'
 import searchLocation from '../assets/search-location.svg'
 import updateLocation from '../assets/update-location.svg'
 import './Menu.css'
-import { testing, getCurrentGeolocation, manualUpdateCurrentLocation } from '../utils/locationUtils'
+import { testing, getCurrentGeolocation, manualUpdateCurrentLocation } from '../services/locationService'
 import { setLoading } from '../components/stops/stopsActions'
 
 class Menu extends Component {
@@ -18,10 +18,10 @@ class Menu extends Component {
   componentDidMount() {
     this.props.setLoading()
     testing()
-    getCurrentGeolocation()
+    //getCurrentGeolocation()
     setInterval(() => {
-      getCurrentGeolocation()
-    } , 6000)
+      //getCurrentGeolocation()
+    } , 60000)
 
   }
 

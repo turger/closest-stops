@@ -3,8 +3,6 @@ import { setLoading } from '../components/stops/stopsActions'
 import store from '../store/configureStore'
 
 export const testing = () => { // set some default location for testing
-  console.log('testests')
-  setLocation(60.268946, 24.929691)
   if (window.location.host.includes("localhost")) {
     setTimeout(() => {
       setLocation(60.168946, 24.929691)

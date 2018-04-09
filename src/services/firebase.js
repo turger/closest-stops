@@ -9,6 +9,5 @@ var config = {
     messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID
 }
 if ( !firebase.apps.length ) {
-  console.log("Init firebase")
   firebase.initializeApp(config)
 }
