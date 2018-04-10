@@ -22,22 +22,25 @@ class Routes extends Component {
     const coords = store.getState().location.coords
     return(
       <div className="Routes">
-        <div className="Routes__info">{name}, {distance}m</div>
         <div className="Routes__location">
-          {desc} 
-          { platform && <div className="Routes__location__platform">{platform}</div> }
           <img
             className="Routes__location__showMap"
             src={locationMap}
             alt="Show map"
             onClick={this.handleMapClick.bind(this)}
           />
+          <div className="Routes__location__info">
+            {name}, {distance}m
+            <div className="Routes__location__info__address">
+              {desc} 
+              { platform && <div className="Routes__location__info__address__platform">{platform}</div> }
+            </div>
+          </div>
         </div>
-        
         { this.state.showMap && 
           <div className="Routes__map">
             <GoogleMaps 
-              currentLocation={{lat: coords.lat, lon: coords.lon}} 
+              origin={{lat: coords.lat, lon: coords.lon}} 
               destination={{lat: lat, lon: lon}}
               /> 
           </div>

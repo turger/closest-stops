@@ -5,7 +5,20 @@
   font-family: Avenir-Medium;
 }
 
-.Routes__info {
+.Routes__location {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  padding: 30px 10px 0 10px;
+  align-items: center;
+}
+
+.Routes__location__showMap {
+  height: 30px;
+  padding-right: 12px;
+}
+
+.Routes__location__info {
   font-size: 20px;
   font-weight: 500;
   font-style: normal;
@@ -14,11 +27,9 @@
   letter-spacing: 1.4px;
   text-align: left;
   color: #2e2e2e;
-  padding: 30px 10px 0 10px;
-  width: 80%;
 }
 
-.Routes__location {
+.Routes__location__info__address {
   display: flex;
   flex-direction: row;
   font-size: 15px;
@@ -32,12 +43,7 @@
   width: 80%;
 }
 
-.Routes__location__showMap {
-  height: 30px;
-  padding-left: 30px;
-}
-
-.Routes__location__platform {
+.Routes__location__info__address__platform {
   margin-left: 10px;
   padding: 0 5px 0 7px;
   border: 1px solid #2e2e2e;

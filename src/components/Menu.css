@@ -1,10 +1,11 @@
 .Menu__bar {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
 }
 
-.Menu img {
-  height: 40px;
-  color: #5c45a0;
+.Menu__updateLocation__svg, .Menu__search__svg {
+  height: 30px;
   fill: #5c45a0;
+  padding-right: 20px;
 }

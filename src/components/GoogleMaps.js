@@ -2,10 +2,11 @@
 import React from 'react'
 import { compose, withProps, lifecycle } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, DirectionsRenderer } from 'react-google-maps'
+import purpleStyle from '../styles/purple.json'
 
 const GoogleMaps = compose(
   withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places",
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJB_Kp1qeibdQD2Q1bRNSc8r3GW1MDGEE&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: '100%' }} />,
     containerElement: <div style={{ 
       height: '200px', 
@@ -20,9 +21,8 @@ const GoogleMaps = compose(
   lifecycle({
     componentDidMount() {
       const DirectionsService = new google.maps.DirectionsService()
-      console.log('MOUNT',this.props)
       DirectionsService.route({
-        origin: new google.maps.LatLng(this.props.currentLocation.lat, this.props.currentLocation.lon),
+        origin: new google.maps.LatLng(this.props.origin.lat, this.props.origin.lon),
         destination: new google.maps.LatLng(this.props.destination.lat, this.props.destination.lon),
         travelMode: google.maps.TravelMode.WALKING,
       }, (result, status) => {
@@ -39,6 +39,7 @@ const GoogleMaps = compose(
 )(props =>
   <GoogleMap
       defaultZoom={5}
+      defaultOptions={{ styles: purpleStyle }}
     >
     {props.directions && <DirectionsRenderer directions={props.directions} />}
   </GoogleMap>

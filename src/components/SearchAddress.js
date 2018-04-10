@@ -1,15 +1,11 @@
 /*global google*/
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import ReactSVG from 'react-svg'
 import { setCoords, setManualLocationInput } from './location/locationActions'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import location from '../assets/location-map.svg'
 import './SearchAddress.css'
-
-const options = {
-  location: new google.maps.LatLng(60.1718730, 24.9414220),
-  radius: 500,
-  types: ['address'],
-}
 
 class SearchAddress extends Component {
   constructor(props) {
@@ -21,8 +17,7 @@ class SearchAddress extends Component {
     this.onChange = (address) => this.setState({ address })
   }
 
-  handleFormSubmit = (event) => {
-    event.preventDefault()
+  handleSubmit = (event) => {
     geocodeByAddress(this.state.address)
       .then(results => getLatLng(results[0]))
       .then(latLng =>
@@ -39,20 +34,26 @@ class SearchAddress extends Component {
       placeholder: 'Type your location ...',
     }
 
+    const options = {
+      location: new google.maps.LatLng(60.1718730, 24.9414220),
+      radius: 500,
+      types: ['address'],
+    }
+
     return (
       <div className="SearchAddress">
-        <form onSubmit={this.handleFormSubmit.bind(this)}>
+        <div className="SearchAddress__textField">
+          <ReactSVG
+            path={ location }
+            className="SearchAddress__location__svg"
+            wrapperClassName="SearchAddress__location"
+          />
           <PlacesAutocomplete
             inputProps={inputProps}
             options={options}
+            onEnterKeyDown={this.handleSubmit.bind(this)}
           />
-          <button
-            className="SearchAddress__button"
-            type="submit"
-          >
-            Submit
-          </button>
-        </form>
+        </div>
       </div>
     )
   }
