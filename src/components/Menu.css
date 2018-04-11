@@ -4,7 +4,9 @@
   justify-content: flex-end;
 }
 
-.Menu__updateLocation__svg, .Menu__search__svg {
+.Menu__updateLocation__svg, 
+.Menu__search__svg, 
+.Menu__favorites__svg {
   height: 30px;
   fill: #5c45a0;
   padding-right: 20px;

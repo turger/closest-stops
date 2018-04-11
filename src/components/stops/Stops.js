@@ -2,7 +2,7 @@ import React from 'react'
 import Routes from '../Routes'
 import './Stops.css'
 
-const Stops = ({ stops, loading }) => (
+const Stops = ({ stops, loading }) =>
   <div className="Stops">
     { loading &&
       <p className="Stops__loading">Loading stops ... </p>
@@ -14,6 +14,5 @@ const Stops = ({ stops, loading }) => (
       )
     }
   </div>
-)
-
+  
 export default Stops

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
+import React, { Component } from 'react'
 import { setStops, setLoading } from './stopsActions'
 import Stops from './Stops'
-import React, { Component } from 'react'
 import { getStopsAndSchedulesByLocation } from '../../services/hslApi'
 
 class StopsContainer extends Component {

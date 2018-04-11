@@ -1,0 +1,58 @@
+import { connect } from 'react-redux'
+import React, { Component } from 'react'
+import { setFavoriteRoute, removeFavoriteRoute } from './favoritesActions'
+import Favorites from './Favorites'
+
+class FavoritesContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      routes: []
+    }
+  }
+
+  componentDidMount() {
+    const stops = this.props.stops
+    if (Object.keys(stops).length === 0) return
+    const routes = Object.keys(stops).reduce((accumulator, key) => {
+      accumulator = accumulator || []
+      const directions = stops[key].directions
+      accumulator.push.apply(accumulator, Object.keys(directions).map(key => directions[key].routeName))
+      return accumulator
+    }, [])
+    this.setState({ routes: [...new Set(routes)] })
+  }
+
+  handleRouteClick(route) {
+    if (this.props.favorites.includes(route)) {
+      this.props.removeFavoriteRoute(route)
+    } else {
+      this.props.setFavoriteRoute(route)
+    }
+  }
+
+  render() {
+    const routes = this.state.routes
+    const favorites = this.props.favorites
+    return (
+        routes &&
+          <Favorites
+            routes={ routes }
+            routeClick={ this.handleRouteClick.bind(this) }
+            favorites={ favorites }
+        />
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  favorites: state.favorites.routes,
+  stops: state.stops.data
+})
+
+const mapDispatchToProps = dispatch => ({
+  setFavoriteRoute: route => dispatch(setFavoriteRoute(route)),
+  removeFavoriteRoute: route => dispatch(removeFavoriteRoute(route))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoritesContainer)
