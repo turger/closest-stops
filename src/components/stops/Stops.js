@@ -28,9 +28,11 @@ class Stops extends Component {
         { loading &&
           <p className="Stops__loading">Loading stops ... </p>
         }
+        { Object.keys(visibleStops).length === 0 && !loading && 
+          <div className="Stops__empty">:(</div>
+        }
         { Object.keys(visibleStops)
-          .filter(stop => Object.keys(visibleStops[stop].stopTimes).length)
-          .map( key =>
+          .map( key => 
             <Routes key={ key } {...visibleStops[key]} />
           )
         }

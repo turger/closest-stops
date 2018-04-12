@@ -16,6 +16,7 @@ class StopsContainer extends Component {
   }
 
   componentDidMount() {
+    this.props.setLoading(true)
     setInterval(() => {
       this.getStopsData()
     } , 60000)
@@ -38,7 +39,7 @@ class StopsContainer extends Component {
     this.props.setLoading(true)
     getStopsAndSchedulesByLocation(this.props.coords.lat, this.props.coords.lon, this.props.radius).then(stops => {
       this.props.setLoading(false)
-      this.props.setStops(stops)
+      this.props.setStops(stops.filter(stop => stop.node.stop.stoptimesWithoutPatterns.length !== 0))
     })
   }
 

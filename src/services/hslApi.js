@@ -22,7 +22,7 @@ export const getStopsAndSchedulesByLocation = (lat, lon, radius, startTime = get
             }
             stoptimesWithoutPatterns(
               startTime: "${startTime}",
-              timeRange: 180000,
+              timeRange: 7200,
               numberOfDepartures:30
             ) {
               scheduledArrival

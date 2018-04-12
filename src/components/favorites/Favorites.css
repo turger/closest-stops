@@ -5,6 +5,7 @@
 .Favorites__route {
   margin: 2px;
   border-radius: 3px;
+  background-color: #fff;
 }
 
 .Favorites__route--selected {

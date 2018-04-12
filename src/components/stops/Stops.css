@@ -6,3 +6,9 @@
 .Stops__loading {
   text-align: center;
 }
+
+.Stops__empty {
+  text-align: center;
+  padding: 20px;
+  font-size: 30px;
+}

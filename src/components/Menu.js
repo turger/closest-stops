@@ -21,7 +21,6 @@ class Menu extends Component {
   }
 
   componentDidMount() {
-    this.props.setLoading()
     testing()
     getCurrentGeolocation()
     setInterval(() => {

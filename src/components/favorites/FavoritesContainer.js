@@ -14,6 +14,7 @@ class FavoritesContainer extends Component {
   componentDidMount() {
     const stops = this.props.stops
     if (Object.keys(stops).length === 0) return
+    // TODO: routes from stoptimes, not directions
     const routes = Object.keys(stops).reduce((accumulator, key) => {
       accumulator = accumulator || []
       const directions = stops[key].directions
@@ -36,7 +37,7 @@ class FavoritesContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   favorites: state.favorites.routes,
   stops: state.stops.data
 })

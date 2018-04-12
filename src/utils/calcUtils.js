@@ -3,7 +3,7 @@ export const getDepartureTime = (departureTimestamp, serviceDay) => {
   return getTimeIfMoreThan60min(minutes, departureTimestamp)
 }
 
-export const minutesToDeparture = (departureTimestamp, serviceDay, currDate = new Date()) => {
+const minutesToDeparture = (departureTimestamp, serviceDay, currDate = new Date()) => {
   const currDateInSeconds = (currDate.getHours()*60*60)+(currDate.getMinutes()*60)+currDate.getSeconds()
   const secondsInDay = 86400
   let minutesToDeparture = Math.floor((departureTimestamp-currDateInSeconds) / 60)

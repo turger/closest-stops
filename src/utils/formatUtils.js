@@ -1,4 +1,4 @@
-import { minutesToDeparture, getDepartureTime } from './calcUtils'
+import { getDepartureTime } from './calcUtils'
 import { uniqWith, isEqual } from 'lodash'
 
 export const mapStop = stop => ({
@@ -26,10 +26,6 @@ const mapDirections = directions => {
 
 const formatStopTimes = stopTimes => {
   return uniqWith(stopTimes, isEqual)
-    .filter(stopTime => {
-      const timeToDeparture = minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay)
-      return(timeToDeparture > 0 && timeToDeparture < 60*2)
-    })
     .reduce((accumulator, stopTime) => {
       const id = stopTime.trip.route.gtfsId
       accumulator[id] = accumulator[id] || []
