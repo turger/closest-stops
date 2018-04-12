@@ -23,14 +23,6 @@ class FavoritesContainer extends Component {
     this.setState({ routes: [...new Set(routes)] })
   }
 
-  handleRouteClick(route) {
-    if (this.props.favorites.includes(route)) {
-      this.props.removeFavoriteRoute(route)
-    } else {
-      this.props.setFavoriteRoute(route)
-    }
-  }
-
   render() {
     const routes = this.state.routes
     const favorites = this.props.favorites
@@ -38,14 +30,13 @@ class FavoritesContainer extends Component {
         routes &&
           <Favorites
             routes={ routes }
-            routeClick={ this.handleRouteClick.bind(this) }
             favorites={ favorites }
         />
     )
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   favorites: state.favorites.routes,
   stops: state.stops.data
 })

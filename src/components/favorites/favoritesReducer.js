@@ -1,4 +1,4 @@
-import { ADD_FAVORITE_ROUTE, REMOVE_FAVORITE_ROUTE, SET_FILTER_FAVORITES } from './favoritesActionTypes'
+import { ADD_FAVORITE_ROUTE, REMOVE_FAVORITE_ROUTE, SET_FILTER_FAVORITES, SET_FAVORITE_ROUTES } from './favoritesActionTypes'
 
 const initialSate = {
   routes: []
@@ -21,6 +21,12 @@ export default function favorites(state = initialSate, action) {
       return {
         ...state,
         filterFavorites: action.filter
+      }
+    }
+    case SET_FAVORITE_ROUTES: {
+      return {
+        ...state,
+        routes: action.route.split(',')
       }
     }
     default: 

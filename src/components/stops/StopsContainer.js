@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { setStops, setLoading } from './stopsActions'
+import { setFavoriteRoutes } from '../favorites/favoritesActions'
 import Stops from './Stops'
 import { getStopsAndSchedulesByLocation } from '../../services/hslApi'
 
@@ -18,13 +19,18 @@ class StopsContainer extends Component {
     setInterval(() => {
       this.getStopsData()
     } , 60000)
+    if (this.props.filter !== 'SHOW_ALL') this.props.setFavoriteRoutes(this.props.filter)
   }
 
   componentWillReceiveProps(nextProps) {
     const coordsChanged = JSON.stringify(nextProps.coords) !== JSON.stringify(this.props.coords)
+    const favoritesChanged = JSON.stringify(nextProps.filter) !== JSON.stringify(this.props.filter)
     this.props = nextProps
     if (coordsChanged) {
       this.getStopsData()
+    }
+    if (favoritesChanged && this.props.filter !== 'SHOW_ALL') {
+      this.props.setFavoriteRoutes(this.props.filter)
     }
   }
 
@@ -37,7 +43,7 @@ class StopsContainer extends Component {
   }
 
   render() {
-    console.log('stops', this.props.stops)
+    console.log('stops props', this.props)
     return (
       <Stops
         stops={this.props.stops}
@@ -56,7 +62,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setStops: stops => dispatch(setStops(stops)),
-  setLoading: loading => dispatch(setLoading(loading))
+  setLoading: loading => dispatch(setLoading(loading)),
+  setFavoriteRoutes: route => dispatch(setFavoriteRoutes(route))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StopsContainer)

@@ -59,6 +59,7 @@ class Menu extends Component {
             />
           </div>
         }
+
         <div onClick={this.handleFavoritesClick.bind(this)}>
           <ReactSVG
             path={ heart }
@@ -66,6 +67,7 @@ class Menu extends Component {
             wrapperClassName="Menu__favorites"
           />
         </div>
+
         <div onClick={this.handleSearchClick.bind(this)}>
           <ReactSVG
             path={ searchLocation }
@@ -84,8 +86,7 @@ class Menu extends Component {
 
 const mapStateToProps = state => ({
   loading: state.stops.loading,
-  locationDenied: state.location.locationDenied,
-  filterFavorites: state.favorites.filterFavorites
+  locationDenied: state.location.locationDenied
 })
 
 const mapDispatchToProps = dispatch => ({
