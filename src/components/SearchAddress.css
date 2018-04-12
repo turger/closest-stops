@@ -15,11 +15,11 @@
 .SearchAddress__location__svg {
   height: 20px;
   fill: #5c45a0;
-  padding: 10px;
   position: absolute;
-  top: 11px;
-  left: 10px;
+  top: 21px;
+  left: 4%;
   z-index: 1;
+  padding: 1px;
 }
 
 .SearchAddress #PlacesAutocomplete__root {
@@ -28,16 +28,13 @@
 }
 
 .SearchAddress #PlacesAutocomplete__root::after {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   content: '';
-  width: 94%;
+  width: 92%;
   height: 1px;
   background: #5c45a0;
   position: absolute;
   bottom: 10px;
-  left: 20px;
+  left: 4%;
  }
 
 .SearchAddress input {

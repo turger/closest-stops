@@ -26,7 +26,7 @@ export default function favorites(state = initialSate, action) {
     case SET_FAVORITE_ROUTES: {
       return {
         ...state,
-        routes: action.route.split(',')
+        routes: action.routes !== '' ? action.routes.split(',') : []
       }
     }
     default: 

@@ -7,7 +7,7 @@ import './App.css'
 const App = ({ match: { params } }) => (
   <div className="App">
     <Header/>
-    <Stops filter={params.filter || 'SHOW_ALL'}/> 
+    <Stops filter={params.filter || ''}/> 
   </div>
 )
 

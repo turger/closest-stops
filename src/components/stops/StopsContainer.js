@@ -19,7 +19,7 @@ class StopsContainer extends Component {
     setInterval(() => {
       this.getStopsData()
     } , 60000)
-    if (this.props.filter !== 'SHOW_ALL') this.props.setFavoriteRoutes(this.props.filter)
+    this.props.setFavoriteRoutes(this.props.filter)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,7 +29,7 @@ class StopsContainer extends Component {
     if (coordsChanged) {
       this.getStopsData()
     }
-    if (favoritesChanged && this.props.filter !== 'SHOW_ALL') {
+    if (favoritesChanged) {
       this.props.setFavoriteRoutes(this.props.filter)
     }
   }
@@ -48,6 +48,8 @@ class StopsContainer extends Component {
       <Stops
         stops={this.props.stops}
         loading={this.props.loading}
+        favoriteRoutes={this.props.favoriteRoutes}
+        filterFavorites={this.props.filterFavorites}
       />
     )
   }
@@ -57,13 +59,15 @@ const mapStateToProps = state => ({
   stops: state.stops.data,
   loading: state.stops.loading,
   coords: state.location.coords,
-  radius: state.location.radius
+  radius: state.location.radius,
+  filterFavorites: state.favorites.filterFavorites,
+  favoriteRoutes: state.favorites.routes
 })
 
 const mapDispatchToProps = dispatch => ({
   setStops: stops => dispatch(setStops(stops)),
   setLoading: loading => dispatch(setLoading(loading)),
-  setFavoriteRoutes: route => dispatch(setFavoriteRoutes(route))
+  setFavoriteRoutes: routes => dispatch(setFavoriteRoutes(routes))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StopsContainer)

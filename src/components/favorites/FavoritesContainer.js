@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import { setFavoriteRoute, removeFavoriteRoute } from './favoritesActions'
+import { addFavoriteRoute, removeFavoriteRoute } from './favoritesActions'
 import Favorites from './Favorites'
 
 class FavoritesContainer extends Component {
@@ -42,7 +42,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setFavoriteRoute: route => dispatch(setFavoriteRoute(route)),
+  addFavoriteRoute: route => dispatch(addFavoriteRoute(route)),
   removeFavoriteRoute: route => dispatch(removeFavoriteRoute(route))
 })
 

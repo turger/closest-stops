@@ -42,3 +42,18 @@ const formatStopTimes = stopTimes => {
       return accumulator
     }, {})
 }
+
+export const filterStops = (stops, favoriteRoutes) => {
+  const filteredStops = Object.keys(stops).reduce((accumulator, stop) => {
+    const filteredStopTimes = filterStopTimes(stops[stop].stopTimes, favoriteRoutes)
+    if (filteredStopTimes.length !== 0) accumulator[stop] = { ...stops[stop], stopTimes: filteredStopTimes } || [] 
+    return accumulator
+  }, {})
+  return filteredStops
+}
+
+const filterStopTimes = (stopTimes, favoriteRoutes) => {
+  return Object.keys(stopTimes)
+    .map(stopTime => stopTimes[stopTime].filter(st => favoriteRoutes.includes(st.shortName)) )
+    .filter(stopTime => stopTime.length !== 0)
+}

@@ -86,12 +86,13 @@ class Menu extends Component {
 
 const mapStateToProps = state => ({
   loading: state.stops.loading,
-  locationDenied: state.location.locationDenied
+  locationDenied: state.location.locationDenied,
+  filterFavorites: state.favorites.filterFavorites
 })
 
 const mapDispatchToProps = dispatch => ({
   setLoading: loading => dispatch(setLoading(loading)),
-  setFilterFavorites: filter => dispatch(setFilterFavorites(filter))
+  setFilterFavorites: favorites => dispatch(setFilterFavorites(favorites))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu)

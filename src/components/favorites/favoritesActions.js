@@ -1,6 +1,6 @@
 import { ADD_FAVORITE_ROUTE, REMOVE_FAVORITE_ROUTE, SET_FILTER_FAVORITES, SET_FAVORITE_ROUTES } from './favoritesActionTypes'
 
-export const setFavoriteRoute = route => ({
+export const addFavoriteRoute = route => ({
   route,
   type: ADD_FAVORITE_ROUTE
 })
@@ -15,7 +15,7 @@ export const setFilterFavorites = filter => ({
   type: SET_FILTER_FAVORITES
 })
 
-export const setFavoriteRoutes = route => ({
-  route,
+export const setFavoriteRoutes = routes => ({
+  routes,
   type: SET_FAVORITE_ROUTES
 })
