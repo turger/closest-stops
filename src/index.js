@@ -9,7 +9,7 @@ import store from './store/configureStore'
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <Route path="/:filter?" component={App} /> 
+      <Route path="/:filterFavorites?/:favoriteRoutes?" component={App} /> 
     </Router>
   </Provider>,
   document.getElementById('root')

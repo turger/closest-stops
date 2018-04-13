@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import { setStops, setLoading } from './stopsActions'
-import { setFavoriteRoutes } from '../favorites/favoritesActions'
+import { setFavoriteRoutes, setFilterFavorites } from '../favorites/favoritesActions'
 import Stops from './Stops'
 import { getStopsAndSchedulesByLocation } from '../../services/hslApi'
 
@@ -20,19 +21,20 @@ class StopsContainer extends Component {
     setInterval(() => {
       this.getStopsData()
     } , 60000)
-    this.props.setFavoriteRoutes(this.props.filter)
+    this.props.setFavoriteRoutes(this.props.favoriteRoutes)
   }
 
   componentWillReceiveProps(nextProps) {
     const coordsChanged = JSON.stringify(nextProps.coords) !== JSON.stringify(this.props.coords)
-    const favoritesChanged = JSON.stringify(nextProps.filter) !== JSON.stringify(this.props.filter)
+    const favoritesChanged = JSON.stringify(nextProps.favoriteRoutes) !== JSON.stringify(this.props.favoriteRoutes)
     this.props = nextProps
     if (coordsChanged) {
       this.getStopsData()
     }
     if (favoritesChanged) {
-      this.props.setFavoriteRoutes(this.props.filter)
+      this.props.setFavoriteRoutes(this.props.favoriteRoutes)
     }
+    this.props.setFilterFavorites(this.props.filterFavorites === 'favorites')
   }
 
   getStopsData() {
@@ -49,8 +51,8 @@ class StopsContainer extends Component {
       <Stops
         stops={this.props.stops}
         loading={this.props.loading}
-        favoriteRoutes={this.props.favoriteRoutes}
-        filterFavorites={this.props.filterFavorites}
+        favoriteRoutes={this.props.favoriteRoutesFromState}
+        filterFavorites={this.props.filterFavoritesFromState}
       />
     )
   }
@@ -61,14 +63,15 @@ const mapStateToProps = state => ({
   loading: state.stops.loading,
   coords: state.location.coords,
   radius: state.location.radius,
-  filterFavorites: state.favorites.filterFavorites,
-  favoriteRoutes: state.favorites.routes
+  filterFavoritesFromState: state.favorites.filterFavorites,
+  favoriteRoutesFromState: state.favorites.routes
 })
 
 const mapDispatchToProps = dispatch => ({
   setStops: stops => dispatch(setStops(stops)),
   setLoading: loading => dispatch(setLoading(loading)),
-  setFavoriteRoutes: routes => dispatch(setFavoriteRoutes(routes))
+  setFavoriteRoutes: routes => dispatch(setFavoriteRoutes(routes)),
+  setFilterFavorites: filter => dispatch(setFilterFavorites(filter))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(StopsContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(StopsContainer))

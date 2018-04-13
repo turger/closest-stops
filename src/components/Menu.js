@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import SearchAddress from './SearchAddress'
 import searchLocation from '../assets/search-location.svg'
 import updateLocation from '../assets/update-location.svg'
@@ -7,7 +8,6 @@ import heart from '../assets/heart.svg'
 import { testing, getCurrentGeolocation, manualUpdateCurrentLocation } from '../services/locationService'
 import { setLoading } from './stops/stopsActions'
 import ReactSVG from 'react-svg'
-import FavoritesContainer from './favorites/FavoritesContainer'
 import { setFilterFavorites } from './favorites/favoritesActions'
 import './Menu.css'
 
@@ -15,8 +15,7 @@ class Menu extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      showSearchAddress: false,
-      showFavorites: false
+      showSearchAddress: false
     }
   }
 
@@ -39,9 +38,8 @@ class Menu extends Component {
 
   handleFavoritesClick() {
     this.setState({ 
-      showFavorites: !this.state.showFavorites,
       showSearchAddress: false
-    })
+    })    
     this.props.setFilterFavorites(!this.props.filterFavorites)
   }
 
@@ -59,13 +57,15 @@ class Menu extends Component {
           </div>
         }
 
-        <div onClick={this.handleFavoritesClick.bind(this)}>
-          <ReactSVG
-            path={ heart }
-            className="Menu__favorites__svg"
-            wrapperClassName="Menu__favorites"
-          />
-        </div>
+        <Link to={'/'+(!this.props.filterFavorites ? 'favorites' : 'all')+'/'+this.props.favorites.toString()}>
+          <div onClick={this.handleFavoritesClick.bind(this)}>
+            <ReactSVG
+              path={ heart }
+              className="Menu__favorites__svg"
+              wrapperClassName="Menu__favorites"
+            />
+          </div>
+        </Link>
 
         <div onClick={this.handleSearchClick.bind(this)}>
           <ReactSVG
@@ -76,7 +76,6 @@ class Menu extends Component {
         </div>
       </div>
       { this.state.showSearchAddress && <SearchAddress/> }
-      { this.state.showFavorites && <FavoritesContainer/> }
     </div>
     )
   }
@@ -86,7 +85,8 @@ class Menu extends Component {
 const mapStateToProps = state => ({
   loading: state.stops.loading,
   locationDenied: state.location.locationDenied,
-  filterFavorites: state.favorites.filterFavorites
+  filterFavorites: state.favorites.filterFavorites,
+  favorites: state.favorites.routes
 })
 
 const mapDispatchToProps = dispatch => ({

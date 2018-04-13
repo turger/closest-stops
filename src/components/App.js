@@ -7,7 +7,7 @@ import './App.css'
 const App = ({ match: { params } }) => (
   <div className="App">
     <Header/>
-    <Stops filter={params.filter || ''}/> 
+    <Stops favoriteRoutes={params.favoriteRoutes || ''} filterFavorites={params.filterFavorites || ''}/> 
   </div>
 )
 

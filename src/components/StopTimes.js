@@ -68,7 +68,6 @@ class StopTimes extends Component {
   }
 
   handleStop(e, ui) {
-    console.log(e, ui)
     const distance = Math.abs(ui.lastX)
     this.resetPosition(ui.node)
     if (distance < DISTANCE_TRESHOLD) return
@@ -81,26 +80,25 @@ class StopTimes extends Component {
 
   updateFavorites() {
     const swipingRight = this.state.swipingRight
+    const route = this.props.stopTimes[0].shortName
+    const { favorites, history } = this.props
+    const rootUrl = '/'+(this.props.filterFavorites ? 'favorites' : 'all')+'/'
 
     if (swipingRight) {
       console.log('remove from favorites')
-      this.removeUrlRoute()
+      this.removeUrlRoute(route, favorites, history, rootUrl)
     } else {
       console.log('add to favorites')
-      this.addUrlRoute() 
+      this.addUrlRoute(route, favorites, history, rootUrl) 
     }
   }
 
-  removeUrlRoute() {
-    const route = this.props.stopTimes[0].shortName
-    const { favorites, history } = this.props
-    if (favorites.includes(route)) history.push(favorites.filter(e => e !== route).toString())
+  removeUrlRoute(route, favorites, history, rootUrl) {
+    if (favorites.includes(route)) history.push(rootUrl+favorites.filter(e => e !== route).toString())
   }
 
-  addUrlRoute() {
-    const route = this.props.stopTimes[0].shortName
-    const { favorites, history } = this.props
-    if (!favorites.includes(route)) history.push((favorites.length !== 0 ? `${favorites},` : '')+route)
+  addUrlRoute(route, favorites, history, rootUrl) {
+    if (!favorites.includes(route)) history.push(rootUrl+(favorites.length !== 0 ? `${favorites},` : '')+route)
   }
 
   resetPosition(node) {
@@ -172,7 +170,8 @@ class StopTimes extends Component {
 } 
 
 const mapStateToProps = state => ({
-  favorites: state.favorites.routes
+  favorites: state.favorites.routes,
+  filterFavorites: state.favorites.filterFavorites
 })
 
 export default connect(mapStateToProps)(withRouter(StopTimes))
