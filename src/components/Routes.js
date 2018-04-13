@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Vehicle from './Vehicle'
 import store from '../store/configureStore'
 import GoogleMaps from './GoogleMaps.js'
 import locationMap from '../assets/location-map.svg'
+import StopTimes from './StopTimes'
 import './Routes.css'
 
 class Routes extends Component {
@@ -45,32 +45,19 @@ class Routes extends Component {
               /> 
           </div>
         }
-        <div className="Routes__times">
+        {
+          <div className="Routes__stopTimes">
           {Object.keys(stopTimes)
-            .map(key =>
-              <div className="Routes__times__box" key={`${id}-${stopTimes[key][0].id}`}>
-                <div className="Routes__times__box__left">
-                  <Vehicle mode={stopTimes[key][0].mode}/>
-                  <div className="Routes__times__box__shortName">
-                    { stopTimes[key][0].shortName }
-                  </div>
-                  <div className="Routes__times__box__direction">
-                    { directions[stopTimes[key][0].shortName].headsign }
-                  </div>
-                </div>
-                <div className="Routes__times__box__right">
-                  <div className="Routes__times__box__time">
-                  { stopTimes[key]
-                    .slice(0,2)
-                    .map(stopTime => 
-                      <div key={stopTime.id}> { stopTime.departureTime }</div>
-                  )}
-                  </div>
-                </div>
-              </div>
+            .map(key =>          
+              <StopTimes
+                key={`${id}-${stopTimes[key][0].id}`}
+                stopTimes={ stopTimes[key] }
+                directions={ directions }
+              />
             )
           }
         </div>
+        }
       </div>
     ) 
   }

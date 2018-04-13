@@ -1,0 +1,117 @@
+.StopTimes {
+  position: relative;
+  width: 80%;
+  margin: 10px;
+  font-family: Avenir-Medium;
+}
+
+.StopTimes__swipe {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  color: #fff;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.StopTimes__swipe--alignRight {
+  text-align: right;
+}
+
+.StopTimes__swipe--add {
+  background-color: #a07cf5;
+  text-align: right;
+}
+
+.StopTimes--highlightSwipe .StopTimes__swipe--add {
+  background-color: #652aef;
+}
+
+.StopTimes__swipe--remove {
+  background-color: #76c4f7;
+}
+
+.StopTimes--highlightSwipe .StopTimes__swipe--remove {
+  background-color: #26a1f2;
+}
+
+.StopTimes__swipe--reset {
+  background-color: #ecf0f1;
+  color: #000000;
+}
+
+.StopTimes--highlightSwipe .StopTimes__swipe--reset {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.StopTimes__box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 64px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 3px 16px 0 #d7dbff;
+}
+
+.StopTimes__box__left {
+  display: flex;
+  flex: 2;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: Avenir-Medium;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.2px;
+  text-align: left;
+  color: #2e2e2e;
+  margin-left: 10px;
+}
+
+.StopTimes__box__shortName {
+  font-size: 14px;
+  padding-left: 10px;
+}
+
+.StopTimes__box__direction {
+  padding-left: 10px;
+}
+
+.StopTimes__box__right {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.StopTimes__box__time {
+  font-family: Avenir-Medium;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1.3px;
+  text-align: left;
+  color: #2e2e2e;
+  white-space: nowrap;
+}
