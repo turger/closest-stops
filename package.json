@@ -24,6 +24,7 @@
     "start-dev": "react-app-env --env-file=./.env start",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-fb": "react-scripts build && firebase deploy",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
