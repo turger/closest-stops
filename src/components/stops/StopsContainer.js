@@ -34,7 +34,7 @@ class StopsContainer extends Component {
     if (favoritesChanged) {
       this.props.setFavoriteRoutes(this.props.favoriteRoutes)
     }
-    this.props.setFilterFavorites(this.props.filterFavorites === 'favorites')
+    this.props.setFilterFavorites(this.props.location.pathname.split('/')[1] === 'favorites')
   }
 
   getStopsData() {
@@ -52,7 +52,7 @@ class StopsContainer extends Component {
         stops={this.props.stops}
         loading={this.props.loading}
         favoriteRoutes={this.props.favoriteRoutesFromState}
-        filterFavorites={this.props.filterFavoritesFromState}
+        filterFavorites={this.props.filterFavorites}
       />
     )
   }
@@ -63,7 +63,7 @@ const mapStateToProps = state => ({
   loading: state.stops.loading,
   coords: state.location.coords,
   radius: state.location.radius,
-  filterFavoritesFromState: state.favorites.filterFavorites,
+  filterFavorites: state.favorites.filterFavorites,
   favoriteRoutesFromState: state.favorites.routes
 })
 

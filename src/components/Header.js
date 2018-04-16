@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import logo from '../assets/logo.svg'
-import Menu from './Menu'
 import Warning from './Warning'
 import './Header.css'
 
@@ -16,7 +15,6 @@ class Header extends Component {
         }
         <img src={logo} className="Header-logo" alt="logo" />
         <h1 className="Header-title">Closest stops</h1>
-        <Menu/>
       </header>
     )
   }

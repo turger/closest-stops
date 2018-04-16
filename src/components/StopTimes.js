@@ -85,10 +85,8 @@ class StopTimes extends Component {
     const rootUrl = '/'+(this.props.filterFavorites ? 'favorites' : 'all')+'/'
 
     if (swipingRight) {
-      console.log('remove from favorites')
       this.removeUrlRoute(route, favorites, history, rootUrl)
     } else {
-      console.log('add to favorites')
       this.addUrlRoute(route, favorites, history, rootUrl) 
     }
   }

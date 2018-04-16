@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import ReactSVG from 'react-svg'
 import { setCoords, setManualLocationInput } from './location/locationActions'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import searchLocation from '../assets/search-location.svg'
 import location from '../assets/location-map.svg'
 import './SearchAddress.css'
 
@@ -11,10 +12,17 @@ class SearchAddress extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      address: null
+      address: null,
+      showSearchAddress: false
     }
 
     this.onChange = (address) => this.setState({ address })
+  }
+
+  handleSearchClick() {
+    this.setState({ 
+      showSearchAddress: !this.state.showSearchAddress,
+    })
   }
 
   handleSubmit = (event) => {
@@ -42,16 +50,25 @@ class SearchAddress extends Component {
 
     return (
       <div className="SearchAddress">
-        <div className="SearchAddress__textField">
+        { this.state.showSearchAddress && 
+          <div className="SearchAddress__textField">
+            <ReactSVG
+              path={ location }
+              className="SearchAddress__location__svg"
+              wrapperClassName="SearchAddress__location"
+            />
+            <PlacesAutocomplete
+              inputProps={inputProps}
+              options={options}
+              onEnterKeyDown={this.handleSubmit.bind(this)}
+            />
+          </div>
+        }
+        <div onClick={this.handleSearchClick.bind(this)}>
           <ReactSVG
-            path={ location }
-            className="SearchAddress__location__svg"
-            wrapperClassName="SearchAddress__location"
-          />
-          <PlacesAutocomplete
-            inputProps={inputProps}
-            options={options}
-            onEnterKeyDown={this.handleSubmit.bind(this)}
+            path={ searchLocation }
+            className="SearchAddress__button__svg"
+            wrapperClassName="SearchAddress__button"
           />
         </div>
       </div>

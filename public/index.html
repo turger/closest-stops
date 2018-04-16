@@ -5,8 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <!-- Start iOS optimizations -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Clops" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="transparent" />
+    <link rel="apple-touch-icon" href="bus_stop_violet.png">
+    <link rel="apple-touch-startup-image" href="bus_stop_violet.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <!-- End iOS optimizations -->
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <link href="https://fonts.googleapis.com/css?family=Play|Oxygen" rel="stylesheet">
     <title>Closest stops</title>
   </head>
   <body>
@@ -15,5 +22,5 @@
     </noscript>
     <div id="root"></div>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBM9xoOzq4uASUB-kwtv5MgSMiz2WD7Xbk&libraries=geometry,drawing,places"></script>
-  </body>
+  </body> 
 </html>

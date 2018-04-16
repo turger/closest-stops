@@ -1,24 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import classnames from 'classnames'
 import { Link } from 'react-router-dom'
-import SearchAddress from './SearchAddress'
-import searchLocation from '../assets/search-location.svg'
-import updateLocation from '../assets/update-location.svg'
 import heart from '../assets/heart.svg'
-import { testing, getCurrentGeolocation, manualUpdateCurrentLocation } from '../services/locationService'
+import list from '../assets/list.svg'
+import map from '../assets/map.svg'
+import { testing, getCurrentGeolocation } from '../services/locationService'
 import { setLoading } from './stops/stopsActions'
 import ReactSVG from 'react-svg'
 import { setFilterFavorites } from './favorites/favoritesActions'
 import './Menu.css'
 
 class Menu extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      showSearchAddress: false
-    }
-  }
-
   componentDidMount() {
     testing()
     getCurrentGeolocation()
@@ -28,54 +22,51 @@ class Menu extends Component {
 
   }
 
-  handleSearchClick() {
-    this.setState({ 
-      showSearchAddress: !this.state.showSearchAddress,
-      showFavorites: false
-    })
-    this.props.setFilterFavorites(false)
+  handleFavoritesClick(filter) {
+    this.props.setFilterFavorites(filter)
   }
 
-  handleFavoritesClick() {
-    this.setState({ 
-      showSearchAddress: false
-    })    
-    this.props.setFilterFavorites(!this.props.filterFavorites)
+  isActive(path) {
+    return this.props.location.pathname.includes('/'+path)
   }
 
   render() {
     return(
     <div className="Menu">
-      <div className="Menu__bar">
-        { window.location.host.includes("localhost") && 
-          <div onClick={manualUpdateCurrentLocation}>
-            <ReactSVG
-              path={ updateLocation }
-              className="Menu__updateLocation__svg"
-              wrapperClassName="Menu__updateLocation"
-            />
-          </div>
-        }
-
-        <Link to={'/'+(!this.props.filterFavorites ? 'favorites' : 'all')+'/'+this.props.favorites.toString()}>
-          <div onClick={this.handleFavoritesClick.bind(this)}>
-            <ReactSVG
-              path={ heart }
-              className="Menu__favorites__svg"
-              wrapperClassName="Menu__favorites"
-            />
-          </div>
-        </Link>
-
-        <div onClick={this.handleSearchClick.bind(this)}>
+      <Link 
+        to={'/favorites/'+this.props.favorites.toString()}
+        className={classnames('Menu__link', {'Menu__link--active': this.isActive('favorites')} )}
+      >
+        <div onClick={this.handleFavoritesClick.bind(this, true)}>
           <ReactSVG
-            path={ searchLocation }
-            className="Menu__search__svg"
-            wrapperClassName="Menu__search"
+            path={ heart }
+            className="Menu__favorites__svg"
+            wrapperClassName="Menu__favorites"
           />
         </div>
-      </div>
-      { this.state.showSearchAddress && <SearchAddress/> }
+      </Link>
+      <Link 
+        to={'/all/'+this.props.favorites.toString()}
+        className={classnames('Menu__link', {'Menu__link--active': this.isActive('all')} )}
+      >
+        <div onClick={this.handleFavoritesClick.bind(this, false)}>
+          <ReactSVG
+            path={ list }
+            className="Menu__list__svg"
+            wrapperClassName="Menu__list"
+          />
+        </div>
+      </Link>
+      <Link 
+        to={'/map/'+this.props.favorites.toString()}
+        className={classnames('Menu__link', {'Menu__link--active': this.isActive('map')} )}
+      >
+        <ReactSVG
+          path={ map }
+          className="Menu__map__svg"
+          wrapperClassName="Menu__map"
+        />
+      </Link>
     </div>
     )
   }
@@ -94,4 +85,4 @@ const mapDispatchToProps = dispatch => ({
   setFilterFavorites: favorites => dispatch(setFilterFavorites(favorites))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Menu)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu))

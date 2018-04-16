@@ -1,13 +1,34 @@
-.Menu__bar {
+.Menu {
+  position: fixed;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  box-shadow: 0 3px 16px 0 #d4d8ff;
+  width: 100%;
+  height: 60px;
+  bottom: 0;
+  z-index: 10;
 }
 
-.Menu__updateLocation__svg, 
-.Menu__search__svg, 
-.Menu__favorites__svg {
-  height: 30px;
+.Menu__link {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.Menu__link--active {
+  background: rgba(230, 232, 255, .5);
+}
+
+.Menu__favorites__svg,
+.Menu__list__svg,
+.Menu__map__svg {
+  height: 25px;
   fill: #5c45a0;
-  padding-right: 20px;
+  padding: 0 10px;
 }
