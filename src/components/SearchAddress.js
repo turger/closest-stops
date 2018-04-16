@@ -4,8 +4,10 @@ import { connect } from 'react-redux'
 import ReactSVG from 'react-svg'
 import { setCoords, setManualLocationInput } from './location/locationActions'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import { manualUpdateCurrentLocation } from '../services/locationService'
 import searchLocation from '../assets/search-location.svg'
 import location from '../assets/location-map.svg'
+import updateLocation from '../assets/update-location.svg'
 import './SearchAddress.css'
 
 class SearchAddress extends Component {
@@ -50,6 +52,13 @@ class SearchAddress extends Component {
 
     return (
       <div className="SearchAddress">
+        <div onClick={manualUpdateCurrentLocation}>
+          <ReactSVG
+            path={ updateLocation }
+            className="SearchAddress__updateLocation__svg"
+            wrapperClassName="SearchAddress__updateLocation"
+          />
+        </div>
         { this.state.showSearchAddress && 
           <div className="SearchAddress__textField">
             <ReactSVG
