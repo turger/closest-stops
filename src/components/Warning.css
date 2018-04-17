@@ -1,16 +1,26 @@
 .Warning {
+  position: absolute;
   display: flex;
-  flex-direction: row;
-  width: 85%;
-  align-items: center;
-  margin: 10px auto;
-  padding: 5px;
-  background: rgba(254, 211, 48, 0.3);
-  border-radius: 3px;
-  font-size: 12px;
 }
 
 .Warning svg {
+  margin: 13px;
+}
+
+.Warning__box {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  align-items: center;
+  margin: 8px;
+  padding: 5px;
+  background: rgba(254, 211, 48, 0.7);
+  border-radius: 3px;
+  font-size: 12px;
+  z-index: 20;
+}
+
+.Warning__box svg {
   width: 40px;
   height: 40px;
   margin: 0 10px 0 5px;

@@ -1,10 +1,9 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { setStops, setLoading } from './stopsActions'
 import { setFavoriteRoutes, setFilterFavorites } from '../favorites/favoritesActions'
+import { setStops, setLoading } from '../stops/stopsActions'
 import Stops from './Stops'
-import { getStopsAndSchedulesByLocation } from '../../services/hslApi'
 
 class StopsContainer extends Component {
   constructor(props) {
@@ -17,32 +16,16 @@ class StopsContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.setLoading(true)
-    setInterval(() => {
-      this.getStopsData()
-    } , 60000)
     this.props.setFavoriteRoutes(this.props.favoriteRoutes)
   }
 
   componentWillReceiveProps(nextProps) {
-    const coordsChanged = JSON.stringify(nextProps.coords) !== JSON.stringify(this.props.coords)
     const favoritesChanged = JSON.stringify(nextProps.favoriteRoutes) !== JSON.stringify(this.props.favoriteRoutes)
     this.props = nextProps
-    if (coordsChanged) {
-      this.getStopsData()
-    }
     if (favoritesChanged) {
       this.props.setFavoriteRoutes(this.props.favoriteRoutes)
     }
     this.props.setFilterFavorites(this.props.location.pathname.split('/')[1] === 'favorites')
-  }
-
-  getStopsData() {
-    this.props.setLoading(true)
-    getStopsAndSchedulesByLocation(this.props.coords.lat, this.props.coords.lon, this.props.radius).then(stops => {
-      this.props.setLoading(false)
-      this.props.setStops(stops.filter(stop => stop.node.stop.stoptimesWithoutPatterns.length !== 0))
-    })
   }
 
   render() {

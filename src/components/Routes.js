@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import store from '../store/configureStore'
-import GoogleMaps from './GoogleMaps.js'
+import GoogleMapsDirections from './GoogleMapsDirections.js'
 import locationMap from '../assets/location-map.svg'
 import StopTimes from './StopTimes'
 import './Routes.css'
@@ -39,7 +39,7 @@ class Routes extends Component {
         </div>
         { this.state.showMap && 
           <div className="Routes__map">
-            <GoogleMaps 
+            <GoogleMapsDirections 
               origin={{lat: coords.lat, lon: coords.lon}} 
               destination={{lat: lat, lon: lon}}
               /> 

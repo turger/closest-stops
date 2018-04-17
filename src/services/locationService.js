@@ -4,9 +4,7 @@ import store from '../store/configureStore'
 
 export const testing = () => { // set some default location for testing
   if (window.location.host.includes("localhost")) {
-    setTimeout(() => {
-      setLocation(60.168946, 24.929691)
-    }, 2000)
+    setLocation(60.168946, 24.929691)
   }
 }
 
