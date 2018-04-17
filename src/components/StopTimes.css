@@ -24,10 +24,6 @@
   text-transform: uppercase;
 }
 
-.StopTimes__swipe--alignRight {
-  text-align: right;
-}
-
 .StopTimes__swipe--add {
   background-color: #a07cf5;
   text-align: right;
@@ -39,6 +35,7 @@
 
 .StopTimes__swipe--remove {
   background-color: #76c4f7;
+  text-align: right;
 }
 
 .StopTimes--highlightSwipe .StopTimes__swipe--remove {
@@ -65,6 +62,10 @@
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0 3px 16px 0 #d7dbff;
+}
+
+.StopTimes__box--scrollable {
+  pointer-events: auto;
 }
 
 .StopTimes__box__left {

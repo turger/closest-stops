@@ -14,12 +14,10 @@ class StopTimes extends Component {
   constructor(props) {
     super()
     this.state = {
-      swipingRight: 0,
       highlightSwipe: false,
       resetPosition: null,
       dragging: false,
       scrolling: true,
-      showEvaluation: false,
     }
 
     this._dom = null
@@ -53,16 +51,15 @@ class StopTimes extends Component {
   }
 
   handleDrag(e, ui) {
-    this._dragY += Math.abs(ui.y)
+    this._dragY += ui.deltaY
     this._dragX += Math.abs(ui.deltaX)
 
     if (this.state.scrolling && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      window.scrollBy(0, ui.y * -1)
-      return false
+      window.scrollBy(0, this._dragY * -1)
+      //return false
     }
 
     this.setState({
-      swipingRight: ui.lastX > 0,
       highlightSwipe: Math.abs(ui.lastX) > DISTANCE_TRESHOLD,
     })
   }
@@ -74,17 +71,12 @@ class StopTimes extends Component {
     this.updateFavorites()
   }
 
-  setEvaluationBoxVisibility(state) {
-    this.setState({ showEvaluation: state })
-  }
-
   updateFavorites() {
-    const swipingRight = this.state.swipingRight
     const route = this.props.stopTimes[0].shortName
     const { favorites, history } = this.props
     const rootUrl = '/'+(this.props.filterFavorites ? 'favorites' : 'all')+'/'
 
-    if (swipingRight) {
+    if (favorites.includes(route)) {
       this.removeUrlRoute(route, favorites, history, rootUrl)
     } else {
       this.addUrlRoute(route, favorites, history, rootUrl) 
@@ -107,13 +99,13 @@ class StopTimes extends Component {
   }
 
   render() {
-    const { stopTimes, directions } = this.props
-    const { swipingRight } = this.state
+    const { stopTimes, directions, favorites } = this.props
 
     let swipeContent
     let swipeClasses = ['StopTimes__swipe']
+    const route = stopTimes[0].shortName
 
-    if (swipingRight) {
+    if (favorites.includes(route)) {
       swipeContent = 'Remove'
       swipeClasses.push('StopTimes__swipe--remove')
     } else {
@@ -138,17 +130,17 @@ class StopTimes extends Component {
           onDrag={ this.handleDrag }
           onStop={ this.handleStop }
           position={ this.state.resetPosition }
-          bounds={{top: 0, left: -120, right: 120, bottom: 0}}
-          value={ stopTimes[0].shortName }
+          bounds={{top: -50, left: -120, right: 0, bottom: 50}}
+          value={ route }
         >
-          <div className="StopTimes__box" value={ stopTimes[0].shortName }>
+          <div className="StopTimes__box" value={ route }>
             <div className="StopTimes__box__left">
               <Vehicle mode={ stopTimes[0].mode }/>
               <div className="StopTimes__box__shortName">
-                { stopTimes[0].shortName }
+                { route }
               </div>
               <div className="StopTimes__box__direction">
-                { directions[stopTimes[0].shortName].headsign }
+                { directions[route].headsign }
               </div>
             </div>
             <div className="StopTimes__box__right">
