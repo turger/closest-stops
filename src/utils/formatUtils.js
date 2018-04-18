@@ -1,4 +1,4 @@
-import { getDepartureTime } from './calcUtils'
+import { getDepartureTime, minutesToDeparture } from './calcUtils'
 import { uniqWith, isEqual } from 'lodash'
 
 export const mapStop = stop => ({
@@ -9,6 +9,7 @@ export const mapStop = stop => ({
   lat: stop.node.stop.lat,
   lon: stop.node.stop.lon,
   stopTimes: formatStopTimes(stop.node.stop.stoptimesWithoutPatterns),
+  nextFiveStopTimes: formatNextFiveStopTimes(stop.node.stop.stoptimesWithoutPatterns),
   id: stop.node.stop.gtfsId,
   directions: mapDirections(stop.node.stop.patterns)
 })
@@ -39,17 +40,41 @@ const formatStopTimes = stopTimes => {
     }, {})
 }
 
+const formatNextFiveStopTimes = stopTimes => {
+  return Array.from(uniqWith(stopTimes, isEqual)
+    .filter(stopTime => minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay) > 0)
+    .slice(0, 5)
+    .map(stopTime => ({
+      departureTime: getDepartureTime(stopTime.realtimeArrival, stopTime.serviceDay),
+      shortName: stopTime.trip.route.shortName
+    }))
+  )
+}
+
 export const filterStops = (stops, favoriteRoutes) => {
-  const filteredStops = Object.keys(stops).reduce((accumulator, stop) => {
+  return Object.keys(stops).reduce((accumulator, stop) => {
     const filteredStopTimes = filterStopTimes(stops[stop].stopTimes, favoriteRoutes)
     if (filteredStopTimes.length !== 0) accumulator[stop] = { ...stops[stop], stopTimes: filteredStopTimes } || [] 
     return accumulator
   }, {})
-  return filteredStops
 }
 
 const filterStopTimes = (stopTimes, favoriteRoutes) => {
   return Object.keys(stopTimes)
     .map(stopTime => stopTimes[stopTime].filter(st => favoriteRoutes.includes(st.shortName)) )
     .filter(stopTime => stopTime.length !== 0)
+}
+
+export const filterStopsForMap = stops => {
+  const stopsasd = Object.keys(stops).reduce((accumulator, id) => ({
+    ...accumulator,
+    [id]: {
+      id: id,
+      lat: stops[id].lat,
+      lon: stops[id].lon,
+      stoptimes: stops[id].nextFiveStopTimes,
+      expand: 1
+    }
+  }), {})
+  return stopsasd
 }

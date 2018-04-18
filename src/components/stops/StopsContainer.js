@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { setFavoriteRoutes, setFilterFavorites } from '../favorites/favoritesActions'
-import { setStops, setLoading } from '../stops/stopsActions'
+import { setStops } from '../stops/stopsActions'
 import Stops from './Stops'
 
 class StopsContainer extends Component {
@@ -52,7 +52,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setStops: stops => dispatch(setStops(stops)),
-  setLoading: loading => dispatch(setLoading(loading)),
   setFavoriteRoutes: routes => dispatch(setFavoriteRoutes(routes)),
   setFilterFavorites: filter => dispatch(setFilterFavorites(filter))
 })

@@ -18,6 +18,7 @@ class MenuContainer extends Component {
 
   componentDidMount() {
     testing()
+    this.props.setLoading(true)
     this.getStopsData()
     getCurrentGeolocation()
     setInterval(() => {
@@ -38,7 +39,6 @@ class MenuContainer extends Component {
 
   getStopsData() {
     if (!this.props.coords) return  
-    console.log('GET STOPS DATA')
     this.props.setLoading(true)
     getStopsAndSchedulesByLocation(this.props.coords.lat, this.props.coords.lon, this.props.radius).then(stops => {
       this.props.setLoading(false)

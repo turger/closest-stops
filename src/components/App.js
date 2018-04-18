@@ -2,7 +2,7 @@ import React from 'react'
 import Stops from './stops/StopsContainer'
 import Header from './Header'
 import SearchAddress from './SearchAddress'
-import Map from './Map'
+import Map from './map/MapContainer'
 import Menu from './menu/MenuContainer'
 import './App.css'
 

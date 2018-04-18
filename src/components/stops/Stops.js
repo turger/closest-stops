@@ -15,7 +15,7 @@ class Stops extends Component {
     const favoritesChanged = JSON.stringify(nextProps.favoriteRoutes) !== JSON.stringify(this.props.favoriteRoutes)
     const stopsChanged = JSON.stringify(nextProps.stops) !== JSON.stringify(this.props.stops)
     this.props = nextProps
-    if (favoritesChanged || stopsChanged) {
+    if (favoritesChanged || stopsChanged || Object.keys(this.state.filteredStops).length === 0) {
       this.setState({ filteredStops: filterStops(this.props.stops, this.props.favoriteRoutes) })
     }
   }
