@@ -1,8 +1,9 @@
 /*global google*/
 import React, { Component } from 'react'
-import {GoogleMap, withGoogleMap, withScriptjs} from 'react-google-maps'
+import { GoogleMap, Marker, withGoogleMap, withScriptjs } from 'react-google-maps'
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel"
 import dot from '../assets/dot.svg'
+import position from '../assets/position.svg'
 import './GoogleMapsStops.css'
 
 const GoogleMapsWrapper = withScriptjs(withGoogleMap(props => {
@@ -81,16 +82,24 @@ export default class GoogleMapsStops extends Component {
         center={{lat: lat, lng: lon}}
         onCenterChanged={this.handleCenterChanged.bind(this)}
       >
+          <Marker 
+            position={{ lat: this.props.coords.lat, lng: this.props.coords.lon }} 
+            icon={new google.maps.MarkerImage(
+              position,
+              null,null,null,
+              new google.maps.Size(35, 35)
+            )}
+          />
           { Object.keys(markers).map(key => (
             <MarkerWithLabel
               key={markers[key].id}
               position={{lat: markers[key].lat, lng: markers[key].lon}}
               onClick={this.click.bind(this, key)}
-              labelAnchor={new google.maps.Point(0, markers[key].expand === 2 ? 71 : 37)}
+              labelAnchor={new google.maps.Point(0, markers[key].expand === 2 ? 67 : 33)}
               icon={new google.maps.MarkerImage(
                 dot,
                 null,null,null,
-                new google.maps.Size(25, 25)
+                new google.maps.Size(15, 15)
               )}
             >
               <div 
