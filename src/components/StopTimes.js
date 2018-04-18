@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+import ReactSVG from 'react-svg'
 import Draggable from 'react-draggable'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
 import Vehicle from './Vehicle'
+import heart from '../assets/heart2.svg'
+import remove from '../assets/remove.svg'
 import './StopTimes.css'
 
 const DISTANCE_TRESHOLD = 80
@@ -56,7 +59,6 @@ class StopTimes extends Component {
 
     if (this.state.scrolling && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       window.scrollBy(0, this._dragY * -1)
-      //return false
     }
 
     this.setState({
@@ -106,10 +108,10 @@ class StopTimes extends Component {
     const route = stopTimes[0].shortName
 
     if (favorites.includes(route)) {
-      swipeContent = 'Remove'
+      swipeContent = remove
       swipeClasses.push('StopTimes__swipe--remove')
     } else {
-      swipeContent =  'Add'
+      swipeContent =  heart
       swipeClasses.push('StopTimes__swipe--add')
     }
 
@@ -123,7 +125,11 @@ class StopTimes extends Component {
         onTouchEnd={ this.handleMouseLeave }
       >
         <div className={swipeClasses.join(' ')}>
-          { swipeContent }
+          <ReactSVG
+            path={ swipeContent }
+            className="StopTimes__icon__svg"
+            wrapperClassName="StopTimes__icon"
+          />
         </div>
         <Draggable 
           axis="x"

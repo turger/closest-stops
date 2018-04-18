@@ -21,7 +21,19 @@
   box-sizing: border-box;
   padding: 10px;
   font-size: 15px;
-  text-transform: uppercase;
+}
+
+.StopTimes__icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.StopTimes__icon__svg {
+  width: 25px;
+  height: 25px;
+  fill: #fff;
+  padding: 9px 5px 5px 5px;
 }
 
 .StopTimes__swipe--add {
