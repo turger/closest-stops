@@ -136,7 +136,7 @@ class StopTimes extends Component {
           onDrag={ this.handleDrag }
           onStop={ this.handleStop }
           position={ this.state.resetPosition }
-          bounds={{top: -50, left: -120, right: 0, bottom: 50}}
+          bounds={{top: -50, left: 0, right: 120, bottom: 50}}
           value={ route }
         >
           <div className="StopTimes__box" value={ route }>

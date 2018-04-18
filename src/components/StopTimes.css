@@ -21,6 +21,7 @@
   box-sizing: border-box;
   padding: 10px;
   font-size: 15px;
+  text-align: left;
 }
 
 .StopTimes__icon {
@@ -38,7 +39,6 @@
 
 .StopTimes__swipe--add {
   background-color: #a07cf5;
-  text-align: right;
 }
 
 .StopTimes--highlightSwipe .StopTimes__swipe--add {
@@ -47,7 +47,6 @@
 
 .StopTimes__swipe--remove {
   background-color: #76c4f7;
-  text-align: right;
 }
 
 .StopTimes--highlightSwipe .StopTimes__swipe--remove {
