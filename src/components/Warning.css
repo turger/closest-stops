@@ -1,13 +1,25 @@
 .Warning {
   position: absolute;
   display: flex;
+  width: 100%;
 }
 
-.Warning svg {
-  margin: 13px;
+.Warning__button__svg {
+  fill: #cb9f01;
+  width: 15px;
+  height: 15px;
+  margin: 15px;
 }
 
 .Warning__box {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.Warning__box__content {
   display: flex;
   flex-direction: row;
   width: 80%;
@@ -20,8 +32,8 @@
   z-index: 20;
 }
 
-.Warning__box svg {
-  width: 40px;
-  height: 40px;
-  margin: 0 10px 0 5px;
+.Warning__icon__svg {
+  width: 18px;
+  height: 18px;
+  margin: 0 4px 0 2px;
 }

@@ -22,7 +22,7 @@ class Header extends Component {
       <header className="Header">
         { this.props.locationDenied &&
           <Warning
-            message="Geolocation is not enabled in your browser. Enable it if you want to find stops using your current location."
+            message="Enable geolocation if you want to find stops using your current location."
             handleClick={this.handleShowWarningClick.bind(this)}
             showWarning={this.state.showWarning}
           />

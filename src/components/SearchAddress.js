@@ -32,7 +32,8 @@ class SearchAddress extends Component {
       .then(results => getLatLng(results[0]))
       .then(latLng =>
         this.props.setCoords({lat: latLng.lat, lon: latLng.lng}),
-        this.props.setManualLocationInput(true)
+        this.props.setManualLocationInput(true),
+        this.setState({ showSearchAddress: false })
       )
       .catch(error => console.error('Error', error))
   }
