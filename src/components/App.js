@@ -12,8 +12,8 @@ const App = ({ match: { params, url } }) => (
     <SearchAddress/>
     { !url.includes('/map') &&
       <Stops 
-        favoriteRoutes={params.favoriteRoutes || ''}
         filterFavorites={url.includes('/favorites')}
+        favoriteRoutes={params.favoriteRoutes || ''}
       /> 
     }
     { url.includes('/map') &&

@@ -1,7 +1,8 @@
 import { SET_COORDS, SET_RADIUS, MANUAL_LOCATION_INPUT, LOCATION_DENIED } from './locationActionTypes'
 
 const initialState = {
-  radius: 1000
+  radius: 1000,
+  coords: {}
 }
 
 export default function location(state = initialState, action) {

@@ -40,6 +40,6 @@ const onSuccess = (position) => {
   }
 }
 
-const setLocation = (lat, lon) => {
+export const setLocation = (lat, lon) => {
   store.dispatch(setCoords({lat, lon}))
 }

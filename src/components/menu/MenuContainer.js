@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { testing, getCurrentGeolocation } from '../../services/locationService'
+import { testing, getCurrentGeolocation, setLocation } from '../../services/locationService'
 import { setStops, setLoading } from '../stops/stopsActions'
+import { setFavoriteRoutes } from '../favorites/favoritesActions'
+import { loadState } from '../../store/localStorage'
 import { getStopsAndSchedulesByLocation } from '../../services/hslApi'
 import Menu from './Menu'
 
@@ -17,6 +19,11 @@ class MenuContainer extends Component {
   }
 
   componentDidMount() {
+    const state = loadState()
+    if (state) {
+      setLocation(state.location.coords.lat, state.location.coords.lon)
+      this.props.setFavoriteRoutes(state.favorites.toString())
+    }
     testing()
     this.props.setLoading(true)
     this.getStopsData()
@@ -38,7 +45,7 @@ class MenuContainer extends Component {
   }
 
   getStopsData() {
-    if (!this.props.coords) return  
+    if (Object.keys(this.props.coords).length === 0) return
     this.props.setLoading(true)
     getStopsAndSchedulesByLocation(this.props.coords.lat, this.props.coords.lon, this.props.radius).then(stops => {
       this.props.setLoading(false)
@@ -70,7 +77,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setStops: stops => dispatch(setStops(stops)),
-  setLoading: loading => dispatch(setLoading(loading))
+  setLoading: loading => dispatch(setLoading(loading)),
+  setFavoriteRoutes: routes => dispatch(setFavoriteRoutes(routes))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MenuContainer))
