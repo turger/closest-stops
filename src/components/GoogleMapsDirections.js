@@ -2,7 +2,7 @@
 import React from 'react'
 import { compose, withProps, lifecycle } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, DirectionsRenderer } from 'react-google-maps'
-import purpleStyle from '../styles/purple.json'
+import gmapStyle from '../styles/gmapStyle.json'
 
 const GoogleMaps = compose(
   withProps({
@@ -13,7 +13,8 @@ const GoogleMaps = compose(
       width: '80%', 
       borderRadius: '10px',
       overflow: 'hidden' 
-    }} />,
+    }} 
+    />,
     mapElement: <div style={{ height: '100%' }} />,
   }),
   withScriptjs,
@@ -39,7 +40,17 @@ const GoogleMaps = compose(
 )(props =>
   <GoogleMap
       defaultZoom={5}
-      defaultOptions={{ styles: purpleStyle }}
+      defaultOptions={{ 
+        styles: gmapStyle,
+        streetViewControl: false,
+        scaleControl: false,
+        mapTypeControl: false,
+        panControl: false,
+        zoomControl: false,
+        rotateControl: false,
+        fullscreenControl: false
+      }}
+      disableDefaultUI
     >
     {props.directions && <DirectionsRenderer directions={props.directions} />}
   </GoogleMap>

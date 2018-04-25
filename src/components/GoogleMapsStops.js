@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import { GoogleMap, Marker, withGoogleMap, withScriptjs } from 'react-google-maps'
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel"
 import dot from '../assets/dot.svg'
-import position from '../assets/position.svg'
+import currentLocation from '../assets/current-location.svg'
+import gmapStyle from '../styles/gmapStyle.json'
 import './GoogleMapsStops.css'
 
 const GoogleMapsWrapper = withScriptjs(withGoogleMap(props => {
@@ -81,13 +82,24 @@ export default class GoogleMapsStops extends Component {
         defaultClickableIcons={false}
         center={{lat: lat, lng: lon}}
         onCenterChanged={this.handleCenterChanged.bind(this)}
+        defaultOptions={{
+          styles: gmapStyle,
+          streetViewControl: false,
+          scaleControl: false,
+          mapTypeControl: false,
+          panControl: false,
+          zoomControl: true,
+          rotateControl: false,
+          fullscreenControl: false
+        }}
+        disableDefaultUI
       >
           <Marker 
             position={{ lat: this.props.coords.lat, lng: this.props.coords.lon }} 
             icon={new google.maps.MarkerImage(
-              position,
+              currentLocation,
               null,null,null,
-              new google.maps.Size(35, 35)
+              new google.maps.Size(40, 40)
             )}
           />
           { Object.keys(markers).map(key => (

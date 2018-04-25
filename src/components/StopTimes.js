@@ -57,6 +57,8 @@ class StopTimes extends Component {
     this._dragY += ui.deltaY
     this._dragX += Math.abs(ui.deltaX)
 
+    console.log(this._dragY,this._dragX)
+
     if (this.state.scrolling && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       window.scrollBy(0, this._dragY * -1)
     }
