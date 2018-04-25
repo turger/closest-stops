@@ -5,6 +5,10 @@
   font-family: Avenir-Medium;
 }
 
+.Routes:last-child {
+  padding-bottom: 100px;
+}
+
 .Routes__location {
   width: 80%;
   display: flex;
