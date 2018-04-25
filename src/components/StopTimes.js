@@ -57,8 +57,6 @@ class StopTimes extends Component {
     this._dragY += ui.deltaY
     this._dragX += Math.abs(ui.deltaX)
 
-    console.log(this._dragY,this._dragX)
-
     if (this.state.scrolling && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       window.scrollBy(0, this._dragY * -1)
     }
@@ -143,7 +141,7 @@ class StopTimes extends Component {
         >
           <div className="StopTimes__box" value={ route }>
             <div className="StopTimes__box__left">
-              <Vehicle mode={ stopTimes[0].mode }/>
+              <Vehicle mode={ stopTimes[0].mode } love={ favorites.includes(route) }/>
               <div className="StopTimes__box__shortName">
                 { route }
               </div>
