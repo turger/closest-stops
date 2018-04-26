@@ -1,11 +1,30 @@
 import React from 'react'
-import vechileAssets from './vehicleAssets'
+import classNames from 'classnames'
+import ReactSVG from 'react-svg'
+import vehicleAssets from './vehicleAssets'
+import heart from '../assets/love.svg'
 import './Vehicle.css'
 
-const Vechile = ({ mode, love }) => {
-  return mode in vechileAssets ?
-    <img className="Vehicle" src={love ? vechileAssets[mode+'-LOVE'] : vechileAssets[mode]} alt="vehicle"/> :
-    mode
+const Vehicle = ({ mode, love }) => {
+  return (
+    <div className={classNames("Vehicle", "Vehicle--"+mode)}>
+    { mode in vehicleAssets &&
+      <ReactSVG
+        path={ love ? vehicleAssets[mode+'-LOVE'] : vehicleAssets[mode] }
+        className="Vehicle__icon__svg"
+        wrapperClassName="Vehicle__icon"
+      /> 
+    }
+    { love &&  
+      <ReactSVG
+        path={ heart }
+        className="Vehicle__heart__svg"
+        wrapperClassName="Vehicle__heart"
+      /> 
+    }
+    { !(mode in vehicleAssets) && mode }
+    </div>
+  ) 
 }
 
-export default Vechile
+export default Vehicle

@@ -3,11 +3,11 @@ import busLove from '../assets/bus-love.svg'
 import tram from '../assets/tram.svg'
 import tramLove from '../assets/tram-love.svg'
 import metro from '../assets/metro.svg'
-import metroLove from '../assets/metro.svg'
+import metroLove from '../assets/metro-love.svg'
 import train from '../assets/train.svg'
-import trainLove from '../assets/train.svg'
+import trainLove from '../assets/train-love.svg'
 import ferry from '../assets/ferry.svg'
-import ferryLove from '../assets/ferry.svg'
+import ferryLove from '../assets/ferry-love.svg'
 
 export default {
   'BUS': bus,
