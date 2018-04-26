@@ -23,7 +23,6 @@ class StopTimes extends Component {
       scrolling: true,
     }
 
-    this._dom = null
     this._dragY = 0
     this._dragX = 0
 
@@ -31,12 +30,6 @@ class StopTimes extends Component {
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
     this.handleDrag = this.handleDrag.bind(this)
     this.handleStop = this.handleStop.bind(this)
-  }
-
-
-  componentDidMount() {
-    const dom = this._dom
-    dom.addEventListener('mousemove', e => this.handleMouseMove(e))
   }
 
   handleMouseMove(p, e) {
@@ -118,7 +111,6 @@ class StopTimes extends Component {
     return(
       <div
         className={classnames('StopTimes', { 'StopTimes--highlightSwipe': this.state.highlightSwipe })}
-        ref={ dom => this._dom = dom }
         onMouseMove={ this.handleMouseMove }
         onTouchMove={ this.handleMouseMove }
         onMouseLeave={ this.handleMouseLeave }
