@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { testing, getCurrentGeolocation, setLocation } from '../../services/locationService'
-import { setStops, setLoading } from '../stops/stopsActions'
+import { setStops, setLoading, setHiddenVehicles } from '../stops/stopsActions'
 import { setFavoriteRoutes } from '../favorites/favoritesActions'
 import { loadState } from '../../store/localStorage'
 import { getStopsAndSchedulesByLocation } from '../../services/hslApi'
@@ -28,12 +28,9 @@ class MenuContainer extends Component {
     this.props.setLoading(true)
     this.getStopsData()
     getCurrentGeolocation()
-    setInterval(() => {
+    /*setInterval(() => {
       getCurrentGeolocation()
-    } , 60000)
-    setInterval(() => {
-      this.getStopsData()
-    } , 60000)
+    } , 60000)*/
   }
 
   componentWillReceiveProps(nextProps) {
@@ -78,7 +75,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setStops: stops => dispatch(setStops(stops)),
   setLoading: loading => dispatch(setLoading(loading)),
-  setFavoriteRoutes: routes => dispatch(setFavoriteRoutes(routes))
+  setFavoriteRoutes: routes => dispatch(setFavoriteRoutes(routes)),
+  setHiddenVehicles: vehicles => dispatch(setHiddenVehicles(vehicles)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MenuContainer))

@@ -1,44 +1,20 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Routes from '../Routes'
-import { filterStops } from '../../utils/formatUtils'
 import './Stops.css'
 
-class Stops extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      filteredStops: {}
+const Stops = ({ stops, loading }) =>
+  <div className="Stops">
+    { loading &&
+      <p className="Stops__loading">Loading stops ... </p>
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const favoritesChanged = JSON.stringify(nextProps.favoriteRoutes) !== JSON.stringify(this.props.favoriteRoutes)
-    const stopsChanged = JSON.stringify(nextProps.stops) !== JSON.stringify(this.props.stops)
-    this.props = nextProps
-    if (favoritesChanged || stopsChanged || Object.keys(this.state.filteredStops).length === 0) {
-      this.setState({ filteredStops: filterStops(this.props.stops, this.props.favoriteRoutes) })
+    { Object.keys(stops).length === 0 && !loading && 
+      <div className="Stops__empty">:(</div>
     }
-  }
-
-  render() {
-    const { stops, loading, filterFavorites } = this.props
-    const visibleStops = filterFavorites ? this.state.filteredStops : stops
-    return(
-      <div className="Stops">
-        { loading &&
-          <p className="Stops__loading">Loading stops ... </p>
-        }
-        { Object.keys(visibleStops).length === 0 && !loading && 
-          <div className="Stops__empty">:(</div>
-        }
-        { Object.keys(visibleStops)
-          .map( key => 
-            <Routes key={ key } {...visibleStops[key]} />
-          )
-        }
-      </div>
-    )
-  }
-}
+    { Object.keys(stops)
+      .map( key => 
+        <Routes key={ key } {...stops[key]} />
+      )
+    }
+  </div>
   
 export default Stops

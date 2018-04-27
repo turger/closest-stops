@@ -34,7 +34,9 @@ const formatStopTimes = stopTimes => {
         departureTime: getDepartureTime(stopTime.realtimeArrival, stopTime.serviceDay),
         shortName: stopTime.trip.route.shortName,
         id: `${id}-${stopTime.serviceDay}-${stopTime.realtimeArrival}-${stopTime.scheduledArrival}`,
-        mode: stopTime.trip.route.mode
+        mode: stopTime.trip.route.mode,
+        realtimeArrival: stopTime.realtimeArrival, 
+        serviceDay: stopTime.serviceDay
       })
       return accumulator
     }, {})
@@ -51,18 +53,31 @@ const formatNextFiveStopTimes = stopTimes => {
   )
 }
 
-export const filterStops = (stops, favoriteRoutes) => {
+export const filterStops = (stops, filterFavorites, favoriteRoutes, vehiclesToHide) => {
   return Object.keys(stops).reduce((accumulator, stop) => {
-    const filteredStopTimes = filterStopTimes(stops[stop].stopTimes, favoriteRoutes)
+    const filteredStopTimes = filterStopTimes(stops[stop].stopTimes, filterFavorites, favoriteRoutes, vehiclesToHide)
     if (filteredStopTimes.length !== 0) accumulator[stop] = { ...stops[stop], stopTimes: filteredStopTimes } || [] 
     return accumulator
   }, {})
 }
 
-const filterStopTimes = (stopTimes, favoriteRoutes) => {
+const filterStopTimes = (stopTimes, filterFavorites, favoriteRoutes, vehiclesToHide) => {
   return Object.keys(stopTimes)
-    .map(stopTime => stopTimes[stopTime].filter(st => favoriteRoutes.includes(st.shortName)) )
-    .filter(stopTime => stopTime.length !== 0)
+    .map(stopTime => stopTimes[stopTime]
+      .reduce((accumulator, st) => {
+        if (minutesToDeparture(st.realtimeArrival, st.serviceDay) > 0) {
+          accumulator.push({
+            ...st,
+            departureTime: getDepartureTime(st.realtimeArrival, st.serviceDay)
+          })
+        }
+        return accumulator
+      }, [])
+      .filter(st => 
+        filterFavorites 
+        ? favoriteRoutes.includes(st.shortName) && !vehiclesToHide.includes(st.mode)
+        : !vehiclesToHide.includes(st.mode) ))
+      .filter(st => st.length !== 0)
 }
 
 export const filterStopsForMap = stops => {

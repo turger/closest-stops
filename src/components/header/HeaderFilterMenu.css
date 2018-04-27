@@ -1,0 +1,35 @@
+.HeaderFilterMenu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.HeaderFilterMenu__vehicle__icon__svg {
+  height: 20px;
+  padding: 0 10px;
+}
+
+.HeaderFilterMenu__vehicle--BUS .HeaderFilterMenu__vehicle__icon__svg path {
+  fill: #68c1fd !important;
+}
+
+.HeaderFilterMenu__vehicle--TRAM .HeaderFilterMenu__vehicle__icon__svg path {
+  fill: #00cc7e !important;
+}
+
+.HeaderFilterMenu__vehicle--SUBWAY .HeaderFilterMenu__vehicle__icon__svg path {
+  fill: #ffa880 !important;
+}
+
+.HeaderFilterMenu__vehicle--RAIL .HeaderFilterMenu__vehicle__icon__svg path {
+  fill: #b373bf !important;
+}
+
+.HeaderFilterMenu__vehicle--FERRY .HeaderFilterMenu__vehicle__icon__svg path {
+  fill: #68e1fd !important;
+}
+
+.HeaderFilterMenu__vehicle--hidden .HeaderFilterMenu__vehicle__icon__svg path {
+  fill: #afafaf !important;
+}

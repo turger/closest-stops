@@ -1,6 +1,6 @@
 import React from 'react'
 import Stops from './stops/StopsContainer'
-import Header from './Header'
+import Header from './header/HeaderContainer'
 import SearchAddress from './SearchAddress'
 import Map from './map/MapContainer'
 import Menu from './menu/MenuContainer'

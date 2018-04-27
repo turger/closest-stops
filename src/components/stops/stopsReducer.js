@@ -1,8 +1,9 @@
-import { SET_STOPS, SET_LOADING } from './stopsActionTypes'
+import { SET_STOPS, SET_LOADING, SET_HIDDEN_VEHICLES } from './stopsActionTypes'
 import { mapStop } from '../../utils/formatUtils'
 
 const initialState = {
   data: {},
+  hiddenVehicles: []
 }
 
 export default function stops(state = initialState, action) {
@@ -18,6 +19,11 @@ export default function stops(state = initialState, action) {
       return {
         ...state,
         loading: action.loading
+      }
+    case SET_HIDDEN_VEHICLES:
+      return {
+        ...state,
+        hiddenVehicles: action.hiddenVehicles
       }
     default:
       return state

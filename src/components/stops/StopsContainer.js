@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { setFavoriteRoutes, setFilterFavorites } from '../favorites/favoritesActions'
 import { setStops } from '../stops/stopsActions'
+import { filterStops } from '../../utils/formatUtils'
 import Stops from './Stops'
 
 class StopsContainer extends Component {
@@ -17,13 +18,22 @@ class StopsContainer extends Component {
 
   componentDidMount() {
     this.props.setFavoriteRoutes(this.props.favoriteRoutes)
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), 60000)   
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   componentWillReceiveProps(nextProps) {
+    const hiddenVehiclesChanged = JSON.stringify(nextProps.hiddenVehicles) !== JSON.stringify(this.props.hiddenVehicles)
     const favoritesChanged = JSON.stringify(nextProps.favoriteRoutes) !== JSON.stringify(this.props.favoriteRoutes)
     this.props = nextProps
     if (favoritesChanged) {
       this.props.setFavoriteRoutes(this.props.favoriteRoutes)
+    }
+    if (hiddenVehiclesChanged) {
+      this.setState({ time: Date.now() })
     }
     this.props.setFilterFavorites(this.props.location.pathname.split('/')[1] === 'favorites')
   }
@@ -32,7 +42,7 @@ class StopsContainer extends Component {
     console.log('stops props', this.props)
     return (
       <Stops
-        stops={this.props.stops}
+        stops={filterStops(this.props.stops, this.props.filterFavorites, this.props.favoriteRoutesFromState, this.props.hiddenVehicles)}
         loading={this.props.loading}
         favoriteRoutes={this.props.favoriteRoutesFromState}
         filterFavorites={this.props.filterFavorites}
@@ -47,7 +57,8 @@ const mapStateToProps = state => ({
   coords: state.location.coords,
   radius: state.location.radius,
   filterFavorites: state.favorites.filterFavorites,
-  favoriteRoutesFromState: state.favorites.routes
+  favoriteRoutesFromState: state.favorites.routes,
+  hiddenVehicles: state.stops.hiddenVehicles
 })
 
 const mapDispatchToProps = dispatch => ({

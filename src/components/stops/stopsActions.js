@@ -1,4 +1,4 @@
-import { SET_STOPS, SET_LOADING } from './stopsActionTypes'
+import { SET_STOPS, SET_LOADING, SET_HIDDEN_VEHICLES } from './stopsActionTypes'
 
 export const setStops = stops => ({
   stops,
@@ -8,4 +8,9 @@ export const setStops = stops => ({
 export const setLoading = loading => ({
   loading,
   type: SET_LOADING 
+})
+
+export const setHiddenVehicles = hiddenVehicles => ({
+  hiddenVehicles,
+  type: SET_HIDDEN_VEHICLES
 })
