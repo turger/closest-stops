@@ -23,6 +23,7 @@ class MenuContainer extends Component {
     if (state) {
       setLocation(state.location.coords.lat, state.location.coords.lon)
       this.props.setFavoriteRoutes(state.favorites.toString())
+      this.props.setHiddenVehicles(state.hiddenVehicles)
     }
     testing()
     this.props.setLoading(true)
