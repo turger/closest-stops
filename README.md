@@ -10,19 +10,23 @@ Add firebase:
 Login to firebase:  
 `firebase login`
 
-add .env file to /src:  
+add .env file to project root:  
 REACT_APP_APIKEY=  
 REACT_APP_AUTHDOMAIN=  
 REACT_APP_DATABASEURL=  
 REACT_APP_PROJECTID=  
 REACT_APP_STORAGEBUCKET=  
 REACT_APP_MESSAGINGSENDERID=  
+REACT_APP_GMAPS_KEY=  
 
 `yarn`
 
 `yarn start`
 
+or 
+
+`yarn build && firebase serve`
+
 ## Deploy to firebase
 
-`yarn build`  
-`firebase deploy`
+`yarn build-fb`

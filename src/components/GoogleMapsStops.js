@@ -69,6 +69,7 @@ export default class GoogleMapsStops extends Component {
   }
 
   render() {
+
     const markers = this.state.markers
     if (!this.props.coords) return null
     const lat = this.state.lat || this.props.coords.lat
@@ -76,7 +77,7 @@ export default class GoogleMapsStops extends Component {
     return (
       <GoogleMapsWrapper
         onMapMounted={this.handleMapMounted}
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJB_Kp1qeibdQD2Q1bRNSc8r3GW1MDGEE&v=3.exp&libraries=geometry,drawing,places"
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GMAPS_KEY}&v=3.exp&libraries=geometry,drawing,places`}
         loadingElement={<div style={{height: `100%`}}/>}
         containerElement={<div style={{height: `100%`}}/>}
         mapElement={<div style={{height: `100%`}}/>}
