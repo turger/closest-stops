@@ -7,16 +7,6 @@ import store from './store/configureStore'
 import './services/firebase.js'
 import './index.css'
 
-if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-  navigator.serviceWorker.register('../service-worker.js')
-    .then(function(reg){
-      reg.update()
-      console.log('Hooray. Service worker registration successful, scope is:', reg.scope)
-    }).catch(function(err) {
-      console.log('Whoops. Service worker registration failed, error:', err)
-    })
-}
-
 ReactDOM.render(
   <Provider store={store}>
     <Router>
