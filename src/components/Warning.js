@@ -8,9 +8,9 @@ const Warning = ({message, handleClick, showWarning}) =>
     { !showWarning && 
       <div onClick={handleClick}>
       <ReactSVG
-        path={ warning }
-        className="Warning__button__svg"
-        wrapperClassName="Warning__button"
+        src={ warning }
+        svgClassName="Warning__button__svg"
+        className="Warning__button"
       />
     </div>
     }
@@ -18,9 +18,9 @@ const Warning = ({message, handleClick, showWarning}) =>
     <div className="Warning__box" onClick={handleClick}>
       <div className="Warning__box__content">
         <ReactSVG
-          path={ warning }
-          className="Warning__icon__svg"
-          wrapperClassName="Warning__icon"
+          src={ warning }
+          svgClassName="Warning__icon__svg"
+          className="Warning__icon"
         />
       { message }
       </div>

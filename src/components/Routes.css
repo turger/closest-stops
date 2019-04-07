@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: Avenir-Medium;
+  font-family: Avenir-Medium, sans-serif;
 }
 
 .Routes:last-child {

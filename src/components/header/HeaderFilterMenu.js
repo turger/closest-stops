@@ -1,5 +1,5 @@
 import React from 'react'
-import classNames from 'classnames'
+import classnames from 'classnames'
 import ReactSVG from 'react-svg'
 import vehicleAssets from '../vehicleAssets'
 import './HeaderFilterMenu.css'
@@ -11,7 +11,7 @@ const HeaderFilterMenu = ({ hiddenVehicles, handleVehicleClick }) =>
     { vehicles.map(vehicle => 
       <div 
         key={ vehicle } 
-        className={classNames(
+        className={classnames(
           "HeaderFilterMenu__vehicle", 
           "HeaderFilterMenu__vehicle--"+vehicle, 
           {"HeaderFilterMenu__vehicle--hidden" : hiddenVehicles.includes(vehicle)} 
@@ -19,9 +19,9 @@ const HeaderFilterMenu = ({ hiddenVehicles, handleVehicleClick }) =>
         onClick={() => handleVehicleClick(vehicle)}
       >
         <ReactSVG
-          path={ vehicleAssets[vehicle] }
-          className="HeaderFilterMenu__vehicle__icon__svg"
-          wrapperClassName="HeaderFilterMenu__vehicle__icon"
+          src={ vehicleAssets[vehicle] }
+          svgClassName="HeaderFilterMenu__vehicle__icon__svg"
+          className="HeaderFilterMenu__vehicle__icon"
         />
       </div>
     )}

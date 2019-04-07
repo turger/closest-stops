@@ -118,9 +118,9 @@ class StopTimes extends Component {
       >
         <div className={swipeClasses.join(' ')}>
           <ReactSVG
-            path={ swipeContent }
-            className="StopTimes__icon__svg"
-            wrapperClassName="StopTimes__icon"
+            src={ swipeContent }
+            svgClassName="StopTimes__icon__svg"
+            className="StopTimes__icon"
           />
         </div>
         <Draggable 

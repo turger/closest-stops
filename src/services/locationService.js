@@ -9,7 +9,7 @@ export const testing = () => { // set some default location for testing
 }
 
 export const manualUpdateCurrentLocation = () => {
-  console.log('manual update location')
+  console.log('Manual click to locate user')
   store.dispatch(setManualLocationInput(false))
   getCurrentGeolocation()
 }

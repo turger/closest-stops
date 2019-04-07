@@ -22,9 +22,9 @@ class Menu extends Component {
         onClick={() => setActivePath('favorites')}
       >
         <ReactSVG
-          path={ heart }
-          className="Menu__favorites__svg"
-          wrapperClassName="Menu__favorites"
+          src={ heart }
+          svgClassName="Menu__favorites__svg"
+          className="Menu__favorites"
         />
       </Link>
       <Link 
@@ -33,9 +33,9 @@ class Menu extends Component {
         onClick={() => setActivePath('all')}
       >
         <ReactSVG
-          path={ list }
-          className="Menu__list__svg"
-          wrapperClassName="Menu__list"
+          src={ list }
+          svgClassName="Menu__list__svg"
+          className="Menu__list"
         />
       </Link>
       <Link 
@@ -44,9 +44,9 @@ class Menu extends Component {
         onClick={() => setActivePath('map')}
       >
         <ReactSVG
-          path={ map }
-          className="Menu__map__svg"
-          wrapperClassName="Menu__map"
+          src={ map }
+          svgClassName="Menu__map__svg"
+          className="Menu__map"
         />
       </Link>
     </div>

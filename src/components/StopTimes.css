@@ -2,7 +2,7 @@
   position: relative;
   width: 80%;
   margin: 10px;
-  font-family: Avenir-Medium;
+  font-family: Avenir-Medium, sans-serif;
 }
 
 .StopTimes__swipe {
@@ -85,7 +85,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  font-family: Avenir-Medium;
+  font-family: Avenir-Medium, sans-serif;
   font-size: 12px;
   font-weight: 500;
   font-style: normal;
@@ -116,7 +116,7 @@
 }
 
 .StopTimes__box__time {
-  font-family: Avenir-Medium;
+  font-family: Avenir-Medium, sans-serif;
   font-size: 14px;
   font-weight: 500;
   font-style: normal;

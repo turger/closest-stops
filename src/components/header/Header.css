@@ -20,7 +20,7 @@
 
 .Header-title {
   object-fit: contain;
-  font-family: Avenir-Black;
+  font-family: Avenir-Black, sans-serif;
   font-size: 8px;
   font-weight: 900;
   font-style: normal;

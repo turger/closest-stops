@@ -1,6 +1,6 @@
 .SearchAddress {
   position: fixed;
-  top: 90px;
+  top: 130px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -12,7 +12,7 @@
   position: relative;
   width: 90%;
   height: 60px;
-  margin: 40px 10px 0 10px;
+  margin: 10px 10px 0 10px;
 }
 
 .SearchAddress__location__svg {
@@ -25,22 +25,33 @@
   padding: 1px;
 }
 
-.SearchAddress__button {
+.SearchAddress__delete__svg {
+  height: 15px;
+  width: 15px;
+  fill: #5c45a0;
   position: absolute;
-  top: 5px;
+  top: 15px;
+  right: 4%;
+  z-index: 1;
+  padding: 1px;
+}
+
+.SearchAddress__manual__button {
+  position: absolute;
+  top: -33px;
   right: 3px;
   margin: 0 10px;
 }
 
-.SearchAddress__updateLocation {
+.SearchAddress__locate__button {
   position: absolute;
-  top: 5px;
+  top: -33px;
   left: 3px;
   margin: 0 10px;
 }
 
-.SearchAddress__button__svg,
-.SearchAddress__updateLocation__svg {
+.SearchAddress__manual__svg,
+.SearchAddress__locate__svg {
   height: 20px;
   fill: #5c45a0;
 }
@@ -60,7 +71,7 @@
   left: 4%;
  }
 
-.SearchAddress input {
+.SearchAddress__search__input {
   box-sizing: border-box;
   border-radius: 10px;
   background-color: #ffffff;
@@ -69,8 +80,14 @@
   height: 50px;
   width: 100%;
   font-size: 14px;
-  font-family: Avenir-Medium;
-  text-indent: 45px;
+  font-family: Avenir-Medium, sans-serif;
+  padding: 0 40px;
+  text-overflow: ellipsis;
+}
+
+.SearchAddress__search__input--error {
+  background-color: #fad1e4 !important;
+  animation: pulse 1s normal forwards ease-in-out;
 }
 
 .SearchAddress textarea:focus, input:focus, button:focus {
@@ -84,20 +101,33 @@
 }
 
 /* dropdown field */
-.SearchAddress > form > div > div {
-  background-color: rgba(0, 0, 0, 0.7) !important;
+.SearchAddress__dropdown__container {
+  background-color: #fff;
+  border-radius: 25px !important;
+}
+
+.SearchAddress__dropdown__container > .suggestion-item {
   border: none !important;
   border-radius: 25px !important;
-}
-
-.SearchAddress > form > div > div > div {
-  background-color: transparent !important;
-  color: #d1d8e0 !important;
-  border-radius: 25px !important;
-}
-
-#PlacesAutocomplete__autocomplete-container {
-  border-radius: 10px;
-  border: solid #d1d8e0 1px !important;
+  padding: 10px;
   overflow: hidden;
+}
+
+.SearchAddress__dropdown__container > .suggestion-item--active {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  padding: 10px;
+  border-radius: 25px !important;
+  overflow: hidden;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(175,18,90, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(175,18,90, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(175,18,90, 0);
+  }
 }

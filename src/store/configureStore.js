@@ -1,16 +1,17 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import promiseMiddleware from 'redux-promise'
 import rootReducer from '../rootReducer'
 import { saveState, loadState } from './localStorage'
 import _ from 'lodash'
 
 let FIRST_UPDATE = true
+const initialState = {}
 
 const configureStore = () => {
   return createStore(
     rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(promiseMiddleware)
+    initialState,
+    compose(applyMiddleware(promiseMiddleware))
   )
 }
 

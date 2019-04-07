@@ -39,7 +39,6 @@ class StopsContainer extends Component {
   }
 
   render() {
-    console.log('stops props', this.props)
     return (
       <Stops
         stops={filterStops(this.props.stops, this.props.filterFavorites, this.props.favoriteRoutesFromState, this.props.hiddenVehicles)}

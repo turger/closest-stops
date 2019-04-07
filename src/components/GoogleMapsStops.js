@@ -6,6 +6,7 @@ import dot from '../assets/dot.svg'
 import currentLocation from '../assets/current-location.svg'
 import gmapStyle from '../styles/gmapStyle.json'
 import './GoogleMapsStops.css'
+import classnames from 'classnames'
 
 const GoogleMapsWrapper = withScriptjs(withGoogleMap(props => {
   const {onMapMounted, ...otherProps} = props
@@ -15,7 +16,7 @@ const GoogleMapsWrapper = withScriptjs(withGoogleMap(props => {
 
 
 export default class GoogleMapsStops extends Component {
-  constructor(props) {
+  constructor() {
     super()
     this.state = {
       markers: {},
@@ -28,6 +29,7 @@ export default class GoogleMapsStops extends Component {
 
   componentDidMount() {
     this.setState({ markers: this.props.stops })
+    this.setState({ lat: this.props.coords.lat, lon: this.props.coords.lon })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,19 +39,19 @@ export default class GoogleMapsStops extends Component {
     if (stopsChanged) {
       this.setState({markers: this.props.stops})
     }
-    if (coordsChanged && (this.props.manualLocationInput || !this.state.lat)) {
+    if (coordsChanged) {
       this.setState({ lat: this.props.coords.lat, lon: this.props.coords.lon })
     }
   }
 
-  click(id) {
+  click = (id) => {
     const markers = this.state.markers
     this.setState({ 
       markers: Object.keys(markers).reduce((accumulator, key) => ({
         ...accumulator,
         [key]: {
           ...markers[key],
-          expand: key===id ? (markers[key].expand >= 2 ? 0 : markers[key].expand+1) : markers[key].expand
+          expand: key === id ? (markers[key].expand >= 2 ? 0 : markers[key].expand+1) : markers[key].expand
         }
       }), {}),
       lat: this._map.props.center.lat,
@@ -114,24 +116,24 @@ export default class GoogleMapsStops extends Component {
                 new google.maps.Size(15, 15)
               )}
             >
-              <div 
-                className="GoogleMapsStops__label"
+              <div
+                className={classnames('GoogleMapsStops__label', { 'GoogleMapsStops__label--bg': markers[key].expand !== 0 })}
                 onClick={this.click.bind(this, key)}
               >
-                { Object.keys(this.props.stops).length !== 0 && markers[key].stoptimes
-                .slice(0, markers[key].expand === 2 ? 3 : markers[key].expand)
-                .map((stopTime, i) => (
-                  <div 
-                    key={markers[key].id+i} 
-                    className="GoogleMapsStops__label__stopTime"
-                  > 
-                    <div className="GoogleMapsStops__label__stopTime__route">
-                      {stopTime.shortName}
-                    </div> 
-                    <div className="GoogleMapsStops__label__stopTime__minutes">
-                      {stopTime.departureTime}
-                    </div> 
-                  </div>
+                { Object.keys(markers[key].stoptimes).length !== 0 && markers[key].stoptimes
+                  .slice(0, markers[key].expand === 2 ? 3 : markers[key].expand)
+                  .map((stopTime, i) => (
+                    <div
+                      key={markers[key].id+i}
+                      className="GoogleMapsStops__label__stopTime"
+                    >
+                      <div className="GoogleMapsStops__label__stopTime__route">
+                        {stopTime.shortName}
+                      </div>
+                      <div className="GoogleMapsStops__label__stopTime__minutes">
+                        {stopTime.departureTime}
+                      </div>
+                    </div>
                 ))}
               </div>
             </MarkerWithLabel>

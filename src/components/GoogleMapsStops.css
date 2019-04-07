@@ -1,9 +1,12 @@
 .GoogleMapsStops__label {
   position: relative;
-  background-color: #fff;
   padding: 3px;
   white-space: nowrap;
   border-radius: 10px 10px 10px 0;
+}
+
+.GoogleMapsStops__label--bg {
+  background-color: #fff;
 }
 
 .GoogleMapsStops__label__stopTime {

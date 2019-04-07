@@ -8,77 +8,114 @@ import { manualUpdateCurrentLocation } from '../services/locationService'
 import searchLocation from '../assets/search-location.svg'
 import location from '../assets/location-map.svg'
 import updateLocation from '../assets/update-location.svg'
+import deleteButton from '../assets/round-delete-button.svg'
 import './SearchAddress.css'
+import classnames from 'classnames'
 
 class SearchAddress extends Component {
   constructor(props) {
     super(props)
     this.state = {
       address: null,
-      showSearchAddress: false
+      showSearchAddress: false,
+      errorInAddress: false
     }
-
-    this.onChange = (address) => this.setState({ address })
   }
 
-  handleSearchClick() {
-    this.setState({ 
-      showSearchAddress: !this.state.showSearchAddress,
+  onChange = (address) => this.setState({ address, errorInAddress: false })
+
+  handleSearchClick = () => {
+    this.setState({
+      showSearchAddress: !this.state.showSearchAddress
     })
   }
 
-  handleSubmit = (event) => {
-    geocodeByAddress(this.state.address)
+  handleSubmit = (address) => {
+    this.setState({ address })
+    geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(latLng =>
         this.props.setCoords({lat: latLng.lat, lon: latLng.lng}),
         this.props.setManualLocationInput(true),
-        this.setState({ showSearchAddress: false })
+        this.setState({showSearchAddress: false})
       )
-      .catch(error => console.error('Error', error))
+      .catch(error => {
+        console.log('Google Maps API returned error: ', error)
+        this.setState({errorInAddress: true, showSearchAddress: true})
+      })
   }
 
   render() {
-    const inputProps = {
-      value: this.state.address || '',
-      onChange: this.onChange,
-      placeholder: 'Type your location ...',
-    }
-
-    const options = {
+    const searchOptions = {
       location: new google.maps.LatLng(60.1718730, 24.9414220),
-      radius: 500,
-      types: ['address'],
+      radius: 2000
     }
-
     return (
       <div className="SearchAddress">
         <div onClick={manualUpdateCurrentLocation}>
           <ReactSVG
-            path={ updateLocation }
-            className="SearchAddress__updateLocation__svg"
-            wrapperClassName="SearchAddress__updateLocation"
+            src={ updateLocation }
+            svgClassName="SearchAddress__locate__svg"
+            className="SearchAddress__locate__button"
           />
         </div>
         { this.state.showSearchAddress && 
           <div className="SearchAddress__textField">
             <ReactSVG
-              path={ location }
-              className="SearchAddress__location__svg"
-              wrapperClassName="SearchAddress__location"
+              src={ location }
+              svgClassName="SearchAddress__location__svg"
+              className="SearchAddress__location"
             />
             <PlacesAutocomplete
-              inputProps={inputProps}
-              options={options}
-              onEnterKeyDown={this.handleSubmit.bind(this)}
-            />
+              value={this.state.address || ''}
+              onChange={this.onChange}
+              onEnterKeyDown={this.handleSubmit}
+              onSelect={this.handleSubmit}
+              searchOptions={searchOptions}
+            >
+              {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                <div>
+                  <input
+                    {...getInputProps({
+                      placeholder: 'Search address ...',
+                      className: classnames('SearchAddress__search__input', {'SearchAddress__search__input--error': this.state.errorInAddress} )
+
+                    })}
+                  />
+                  <div className="SearchAddress__dropdown__container">
+                    {loading && <div>...</div>}
+                    {suggestions.map(suggestion => {
+                      const className = suggestion.active
+                        ? 'suggestion-item--active'
+                        : 'suggestion-item'
+                      return (
+                        <div
+                          {...getSuggestionItemProps(suggestion, {
+                            className
+                          })}
+                        >
+                          <span>{suggestion.description}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </PlacesAutocomplete>
+            <div onClick={() => this.setState({address: null})}>
+              <ReactSVG
+                src={ deleteButton }
+                svgClassName="SearchAddress__delete__svg"
+                className="SearchAddress__delete__button"
+              />
+            </div>
           </div>
         }
-        <div onClick={this.handleSearchClick.bind(this)}>
+        <div onClick={() => this.handleSearchClick()}>
           <ReactSVG
-            path={ searchLocation }
-            className="SearchAddress__button__svg"
-            wrapperClassName="SearchAddress__button"
+            src={ searchLocation }
+            svgClassName="SearchAddress__manual__svg"
+            className="SearchAddress__manual__button"
           />
         </div>
       </div>
