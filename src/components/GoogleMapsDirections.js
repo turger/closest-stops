@@ -1,8 +1,9 @@
 /*global google*/
 import React from 'react'
-import { compose, withProps, lifecycle } from "recompose"
+import { compose, withProps, lifecycle } from 'recompose'
 import { withScriptjs, withGoogleMap, GoogleMap, DirectionsRenderer } from 'react-google-maps'
 import gmapStyle from '../styles/gmapStyle.json'
+import dot from '../assets/dot.svg'
 
 const GoogleMaps = compose(
   withProps({
@@ -52,7 +53,15 @@ const GoogleMaps = compose(
       }}
       disableDefaultUI
     >
-    {props.directions && <DirectionsRenderer directions={props.directions} />}
+    {props.directions &&
+      <DirectionsRenderer
+        directions={props.directions}
+        defaultOptions={{
+          polylineOptions: { strokeColor: '#825abc', strokeOpacity: 0.9, strokeWeight: 4 },
+          markerOptions: { icon: { url: dot, scaledSize: new google.maps.Size(15, 15)} }
+        }}
+      />
+    }
   </GoogleMap>
 )
 
