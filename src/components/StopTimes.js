@@ -14,7 +14,7 @@ const DRAG_THRESHOLD = 10
 const SCROLL_THRESHOLD = 15
 
 class StopTimes extends Component {
-  constructor(props) {
+  constructor() {
     super()
     this.state = {
       highlightSwipe: false,
@@ -25,14 +25,9 @@ class StopTimes extends Component {
 
     this._dragY = 0
     this._dragX = 0
-
-    this.handleMouseMove = this.handleMouseMove.bind(this)
-    this.handleMouseLeave = this.handleMouseLeave.bind(this)
-    this.handleDrag = this.handleDrag.bind(this)
-    this.handleStop = this.handleStop.bind(this)
   }
 
-  handleMouseMove(p, e) {
+  handleMouseMove = () => {
     if (this._dragY > SCROLL_THRESHOLD && !this.state.dragging) {
       this.setState({ scrolling: true, dragging: false })
     } else if (this._dragX > DRAG_THRESHOLD && this._dragY < SCROLL_THRESHOLD) {
@@ -40,13 +35,13 @@ class StopTimes extends Component {
     }
   }
 
-  handleMouseLeave(p, e) {
+  handleMouseLeave = () => {
     this.setState({ scrolling: true, dragging: false })
     this._dragY = 0
     this._dragX = 0
   }
 
-  handleDrag(e, ui) {
+  handleDrag = (e, ui) => {
     this._dragY += ui.deltaY
     this._dragX += Math.abs(ui.deltaX)
 
@@ -59,14 +54,14 @@ class StopTimes extends Component {
     })
   }
 
-  handleStop(e, ui) {
+  handleStop = (e, ui) => {
     const distance = Math.abs(ui.lastX)
     this.resetPosition(ui.node)
     if (distance < DISTANCE_TRESHOLD) return
     this.updateFavorites()
   }
 
-  updateFavorites() {
+  updateFavorites = () => {
     const route = this.props.stopTimes[0].shortName
     const { favorites, history } = this.props
     const rootUrl = '/'+(this.props.filterFavorites ? 'favorites' : 'all')+'/'
@@ -78,15 +73,15 @@ class StopTimes extends Component {
     }
   }
 
-  removeUrlRoute(route, favorites, history, rootUrl) {
+  removeUrlRoute = (route, favorites, history, rootUrl) => {
     if (favorites.includes(route)) history.push(rootUrl+favorites.filter(e => e !== route).toString())
   }
 
-  addUrlRoute(route, favorites, history, rootUrl) {
+  addUrlRoute = (route, favorites, history, rootUrl) => {
     if (!favorites.includes(route)) history.push(rootUrl+(favorites.length !== 0 ? `${favorites},` : '')+route)
   }
 
-  resetPosition(node) {
+  resetPosition = () => {
     this.setState({
       resetPosition: {x: 0, y: 0},
       highlightSwipe: false,
@@ -131,7 +126,7 @@ class StopTimes extends Component {
           bounds={{top: -50, left: 0, right: 120, bottom: 50}}
           value={ route }
         >
-          <div className="StopTimes__box" value={ route }>
+          <div className="StopTimes__box">
             <div className="StopTimes__box__left">
               <Vehicle mode={ stopTimes[0].mode } love={ favorites.includes(route) }/>
               <div className="StopTimes__box__shortName">

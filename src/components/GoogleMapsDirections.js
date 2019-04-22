@@ -1,68 +1,91 @@
 /*global google*/
-import React from 'react'
-import { compose, withProps, lifecycle } from 'recompose'
-import { withScriptjs, withGoogleMap, GoogleMap, DirectionsRenderer } from 'react-google-maps'
-import gmapStyle from '../styles/gmapStyle.json'
-import dot from '../assets/dot.svg'
+import React, { Component } from 'react'
+import { DirectionsRenderer, Marker } from 'react-google-maps'
+import stop from '../assets/stop-map.svg'
+import start from '../assets/current-location-map.svg'
 
-const GoogleMaps = compose(
-  withProps({
-    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GMAPS_KEY}&v=3.exp&libraries=geometry,drawing,places`,
-    loadingElement: <div style={{ height: '100%' }} />,
-    containerElement: <div style={{ 
-      height: '200px', 
-      width: '80%', 
-      borderRadius: '10px',
-      overflow: 'hidden' 
-    }} 
-    />,
-    mapElement: <div style={{ height: '100%' }} />,
-  }),
-  withScriptjs,
-  withGoogleMap,
-  lifecycle({
-    componentDidMount() {
-      const DirectionsService = new google.maps.DirectionsService()
-      DirectionsService.route({
-        origin: new google.maps.LatLng(this.props.origin.lat, this.props.origin.lon),
-        destination: new google.maps.LatLng(this.props.destination.lat, this.props.destination.lon),
-        travelMode: google.maps.TravelMode.WALKING,
-      }, (result, status) => {
-        if (status === google.maps.DirectionsStatus.OK) {
+
+class GoogleMapsDirections extends Component {
+  state = {
+    directions: null,
+  }
+  delayFactor = 0
+
+  componentDidMount() {
+    const origin = new google.maps.LatLng(this.props.origin.lat, this.props.origin.lon)
+    const destination = new google.maps.LatLng(this.props.destination.lat, this.props.destination.lon)
+    this.getDirections(origin, destination)
+  }
+
+  async getDirections(origin, destination) {
+    console.log(origin, destination)
+    const directionService = new window.google.maps.DirectionsService()
+    directionService.route(
+      {
+        origin,
+        destination,
+        travelMode: google.maps.TravelMode.WALKING
+      },
+      (result, status) => {
+        if (status === window.google.maps.DirectionsStatus.OK) {
           this.setState({
             directions: result,
           })
+        } else if (
+          status === window.google.maps.DirectionsStatus.OVER_QUERY_LIMIT
+        ) {
+          this.delayFactor += 0.2
+          setTimeout(() => {
+            this.getDirections(origin, destination)
+          }, this.delayFactor * 200)
         } else {
           console.error(`error fetching directions ${result}`)
         }
-      })
-    }
-  })
-)(props =>
-  <GoogleMap
-      defaultZoom={5}
-      defaultOptions={{ 
-        styles: gmapStyle,
-        streetViewControl: false,
-        scaleControl: false,
-        mapTypeControl: false,
-        panControl: false,
-        zoomControl: false,
-        rotateControl: false,
-        fullscreenControl: false
-      }}
-      disableDefaultUI
-    >
-    {props.directions &&
-      <DirectionsRenderer
-        directions={props.directions}
-        defaultOptions={{
-          polylineOptions: { strokeColor: '#825abc', strokeOpacity: 0.9, strokeWeight: 4 },
-          markerOptions: { icon: { url: dot, scaledSize: new google.maps.Size(15, 15)} }
-        }}
-      />
-    }
-  </GoogleMap>
-)
+      }
+    )
+  }
 
-export default GoogleMaps
+  render() {
+    let originMarker = null
+    let destinationMarker = null
+    if (this.state.directions) {
+      originMarker = (
+        <Marker
+          clickable={false}
+          defaultIcon={{url: start, scaledSize: new google.maps.Size(30, 30)}}
+          position={{
+            lat: parseFloat(this.props.origin.lat),
+            lng: parseFloat(this.props.origin.lon)
+          }}
+        />
+      )
+      destinationMarker = (
+        <Marker
+          clickable={false}
+          defaultIcon={{url: stop, scaledSize: new google.maps.Size(30, 30)}}
+          position={{
+            lat: parseFloat(this.props.destination.lat),
+            lng: parseFloat(this.props.destination.lon)
+          }}
+        />
+      )
+    }
+    return (
+      <div>
+        {originMarker}
+        {destinationMarker}
+        {this.state.directions && (
+          <DirectionsRenderer
+            directions={this.state.directions}
+            defaultOptions={{
+              polylineOptions: { strokeColor: '#5c45a0', strokeOpacity: 0.6, strokeWeight: 4 },
+              suppressMarkers: true
+            }}
+          />
+        )}
+      </div>
+    )
+  }
+}
+
+export default GoogleMapsDirections

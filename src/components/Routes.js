@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import store from '../store/configureStore'
-import GoogleMapsDirections from './GoogleMapsDirections.js'
+import GoogleMapsDirections from './GoogleMapsDirectionsIndex'
 import locationMap from '../assets/location-map.svg'
 import StopTimes from './StopTimes'
 import './Routes.css'

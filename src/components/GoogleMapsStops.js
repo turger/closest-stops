@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { GoogleMap, Marker, withGoogleMap, withScriptjs } from 'react-google-maps'
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel"
 import dot from '../assets/dot.svg'
-import currentLocation from '../assets/current-location.svg'
+import currentLocation from '../assets/current-location-map.svg'
 import gmapStyle from '../styles/gmapStyle.json'
 import './GoogleMapsStops.css'
 import classnames from 'classnames'
