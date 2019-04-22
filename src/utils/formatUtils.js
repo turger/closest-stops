@@ -44,7 +44,6 @@ const formatStopTimes = stopTimes => {
 
 const formatNextFiveStopTimes = stopTimes => {
   return Array.from(uniqWith(stopTimes, isEqual)
-    .filter(stopTime => minutesToDeparture(stopTime.realtimeArrival, stopTime.serviceDay) > 0)
     .slice(0, 5)
     .map(stopTime => ({
       departureTime: getDepartureTime(stopTime.realtimeArrival, stopTime.serviceDay),

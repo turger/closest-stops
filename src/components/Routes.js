@@ -13,7 +13,7 @@ class Routes extends Component {
     }
   }
 
-  handleMapClick(id) {
+  handleMapClick = () => {
     this.setState({ showMap: !this.state.showMap })
   }
 
@@ -27,7 +27,7 @@ class Routes extends Component {
             className="Routes__location__showMap"
             src={locationMap}
             alt="Show map"
-            onClick={this.handleMapClick.bind(this)}
+            onClick={this.handleMapClick}
           />
           <div className="Routes__location__info">
             {name}, {distance}m
