@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import HeaderFilterMenu from './HeaderFilterMenu'
-import { setStops, setLoading, setHiddenVehicles } from '../stops/stopsActions'
+import { setHiddenVehicles } from '../stops/stopsActions'
 import Header from './Header'
 
 class HeaderContainer extends Component {
@@ -51,8 +51,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setStops: stops => dispatch(setStops(stops)),
-  setLoading: loading => dispatch(setLoading(loading)),
   setHiddenVehicles: vehicles => dispatch(setHiddenVehicles(vehicles))
 })
 

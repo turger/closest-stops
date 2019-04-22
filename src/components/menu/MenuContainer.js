@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 import { testing, getCurrentGeolocation, setLocation } from '../../services/locationService'
 import { setStops, setLoading, setHiddenVehicles } from '../stops/stopsActions'
 import { setFavoriteRoutes } from '../favorites/favoritesActions'
@@ -29,9 +30,9 @@ class MenuContainer extends Component {
     this.props.setLoading(true)
     this.getStopsData()
     getCurrentGeolocation()
-    /*setInterval(() => {
+    setInterval(() => {
       getCurrentGeolocation()
-    } , 60000)*/
+    } , 60000)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,7 +44,7 @@ class MenuContainer extends Component {
   }
 
   getStopsData() {
-    if (Object.keys(this.props.coords).length === 0) return
+    if (!_.get(this.props.coords, 'lat')) return
     this.props.setLoading(true)
     getStopsAndSchedulesByLocation(this.props.coords.lat, this.props.coords.lon, this.props.radius).then(stops => {
       this.props.setLoading(false)

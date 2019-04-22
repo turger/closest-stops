@@ -91,8 +91,8 @@
 }
 
 .SearchAddress textarea:focus, input:focus, button:focus {
-    outline: none;
-    background-color: #eef0ff;
+  outline: none;
+  background-color: #eef0ff;
 }
 
 .SearchAddress input::placeholder {
@@ -104,6 +104,7 @@
 .SearchAddress__dropdown__container {
   background-color: #fff;
   border-radius: 10px !important;
+  box-shadow: 0 3px 10px 0 #d7dbff;
 }
 
 .SearchAddress__dropdown__container > .suggestion-item {
@@ -114,7 +115,7 @@
 }
 
 .SearchAddress__dropdown__container > .suggestion-item--active {
-  background-color: rgba(0, 0, 0, 0.3) !important;
+  background-color: rgba(215, 219, 255, 0.3) !important;
   padding: 10px;
   border-radius: 10px !important;
   overflow: hidden;
