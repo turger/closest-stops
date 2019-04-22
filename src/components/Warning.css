@@ -2,11 +2,11 @@
   position: absolute;
   display: flex;
   width: 100%;
-  color: #7f6401;
+  color: #b38c00;
 }
 
 .Warning__icon {
-  fill: #7f6401;
+  fill: #b38c00;
   padding: 3px 8px 0 8px;
 }
 
@@ -32,7 +32,7 @@
   align-items: center;
   margin: 8px;
   padding: 5px;
-  background: rgba(254, 211, 48, 0.7);
+  background: rgba(255, 238, 179, 0.7);
   border-radius: 3px;
   font-size: 12px;
   z-index: 20;
