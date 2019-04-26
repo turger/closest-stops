@@ -48,7 +48,8 @@ class SearchAddress extends Component {
   render() {
     const searchOptions = {
       location: new google.maps.LatLng(60.1718730, 24.9414220),
-      radius: 2000
+      radius: 2000,
+      componentRestrictions: { country: ['fi'] }
     }
     return (
       <div className="SearchAddress">
