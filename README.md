@@ -30,3 +30,7 @@ or
 ## Deploy to firebase
 
 `yarn build-fb`
+
+## 🔥Try it out! 🔥
+
+https://clopspops.firebaseapp.com
