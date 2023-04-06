@@ -1,30 +1,34 @@
 import React from 'react'
-import ReactSVG from 'react-svg'
+import { ReactSVG } from 'react-svg'
 import warning from '../assets/warning.svg'
 import './Warning.css'
 
-const Warning = ({message, handleClick, showWarning}) =>
+const Warning = ({ message, handleClick, showWarning }) =>
   <div className="Warning">
-    { !showWarning && 
+    {!showWarning &&
       <div onClick={handleClick}>
-      <ReactSVG
-        src={ warning }
-        svgClassName="Warning__button__svg"
-        className="Warning__button"
-      />
-    </div>
-    }
-    { showWarning && 
-    <div className="Warning__box" onClick={handleClick}>
-      <div className="Warning__box__content">
         <ReactSVG
-          src={ warning }
-          svgClassName="Warning__icon__svg"
-          className="Warning__icon"
+          src={warning}
+          beforeInjection={(svg) => {
+            svg.classList.add('Warning__button__svg')
+          }}
+          className="Warning__button"
         />
-      { message }
       </div>
-    </div>
+    }
+    {showWarning &&
+      <div className="Warning__box" onClick={handleClick}>
+        <div className="Warning__box__content">
+          <ReactSVG
+            src={warning}
+            beforeInjection={(svg) => {
+              svg.classList.add('Warning__icon__svg')
+            }}
+            className="Warning__icon"
+          />
+          {message}
+        </div>
+      </div>
     }
   </div>
 

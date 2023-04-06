@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import ReactSVG from 'react-svg'
+import { ReactSVG } from 'react-svg'
 import Draggable from 'react-draggable'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
@@ -63,27 +63,27 @@ class StopTimes extends Component {
 
   updateFavorites = () => {
     const route = this.props.stopTimes[0].shortName
-    const { favorites, history } = this.props
-    const rootUrl = '/'+(this.props.filterFavorites ? 'favorites' : 'all')+'/'
+    const { favorites, history } = this.props
+    const rootUrl = '/' + (this.props.filterFavorites ? 'favorites' : 'all') + '/'
 
     if (favorites.includes(route)) {
       this.removeUrlRoute(route, favorites, history, rootUrl)
     } else {
-      this.addUrlRoute(route, favorites, history, rootUrl) 
+      this.addUrlRoute(route, favorites, history, rootUrl)
     }
   }
 
   removeUrlRoute = (route, favorites, history, rootUrl) => {
-    if (favorites.includes(route)) history.push(rootUrl+favorites.filter(e => e !== route).toString())
+    if (favorites.includes(route)) history.push(rootUrl + favorites.filter(e => e !== route).toString())
   }
 
   addUrlRoute = (route, favorites, history, rootUrl) => {
-    if (!favorites.includes(route)) history.push(rootUrl+(favorites.length !== 0 ? `${favorites},` : '')+route)
+    if (!favorites.includes(route)) history.push(rootUrl + (favorites.length !== 0 ? `${favorites},` : '') + route)
   }
 
   resetPosition = () => {
     this.setState({
-      resetPosition: {x: 0, y: 0},
+      resetPosition: { x: 0, y: 0 },
       highlightSwipe: false,
     })
   }
@@ -99,50 +99,52 @@ class StopTimes extends Component {
       swipeContent = remove
       swipeClasses.push('StopTimes__swipe--remove')
     } else {
-      swipeContent =  heart
+      swipeContent = heart
       swipeClasses.push('StopTimes__swipe--add')
     }
 
-    return(
+    return (
       <div
         className={classnames('StopTimes', { 'StopTimes--highlightSwipe': this.state.highlightSwipe })}
-        onMouseMove={ this.handleMouseMove }
-        onTouchMove={ this.handleMouseMove }
-        onMouseLeave={ this.handleMouseLeave }
-        onTouchEnd={ this.handleMouseLeave }
+        onMouseMove={this.handleMouseMove}
+        onTouchMove={this.handleMouseMove}
+        onMouseLeave={this.handleMouseLeave}
+        onTouchEnd={this.handleMouseLeave}
       >
         <div className={swipeClasses.join(' ')}>
           <ReactSVG
-            src={ swipeContent }
-            svgClassName="StopTimes__icon__svg"
+            src={swipeContent}
+            beforeInjection={(svg) => {
+              svg.classList.add('StopTimes__icon__svg')
+            }}
             className="StopTimes__icon"
           />
         </div>
-        <Draggable 
+        <Draggable
           axis="x"
-          onDrag={ this.handleDrag }
-          onStop={ this.handleStop }
-          position={ this.state.resetPosition }
-          bounds={{top: -50, left: 0, right: 120, bottom: 50}}
-          value={ route }
+          onDrag={this.handleDrag}
+          onStop={this.handleStop}
+          position={this.state.resetPosition}
+          bounds={{ top: -50, left: 0, right: 120, bottom: 50 }}
+          value={route}
         >
           <div className="StopTimes__box">
             <div className="StopTimes__box__left">
-              <Vehicle mode={ stopTimes[0].mode } love={ favorites.includes(route) }/>
+              <Vehicle mode={stopTimes[0].mode} love={favorites.includes(route)} />
               <div className="StopTimes__box__shortName">
-                { route }
+                {route}
               </div>
               <div className="StopTimes__box__direction">
-                { directions[route].headsign }
+                {directions[route].headsign}
               </div>
             </div>
             <div className="StopTimes__box__right">
               <div className="StopTimes__box__time">
-              { stopTimes
-                .slice(0,2)
-                .map(stopTime => 
-                  <div key={ stopTime.id }> { stopTime.departureTime }</div>
-              )}
+                {stopTimes
+                  .slice(0, 2)
+                  .map(stopTime =>
+                    <div key={stopTime.id}> {stopTime.departureTime}</div>
+                  )}
               </div>
             </div>
           </div>
@@ -150,7 +152,7 @@ class StopTimes extends Component {
       </div>
     )
   }
-} 
+}
 
 const mapStateToProps = state => ({
   favorites: state.favorites.routes,

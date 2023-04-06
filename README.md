@@ -11,23 +11,18 @@ Login to firebase:
 `firebase login`
 
 add .env file to project root:  
-REACT_APP_APIKEY=  
-REACT_APP_AUTHDOMAIN=  
-REACT_APP_DATABASEURL=  
-REACT_APP_PROJECTID=  
-REACT_APP_STORAGEBUCKET=  
-REACT_APP_MESSAGINGSENDERID=  
+# https://console.cloud.google.com/apis/credentials
 REACT_APP_GMAPS_KEY=  
+# https://portal-api.digitransit.fi/profile
+REACT_APP_HSL_KEY=
 
 `yarn`
 
 `yarn start`
 
-or 
-
-`yarn build && firebase serve`
-
 ## Deploy to firebase
+
+`firebase use <project-id>`
 
 `yarn build-fb`
 

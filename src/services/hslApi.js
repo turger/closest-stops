@@ -43,17 +43,18 @@ export const getStopsAndSchedulesByLocation = (lat, lon, radius, startTime = get
       }
     }
   }`
-).then(res => res.data.stopsByRadius.edges)
+  ).then(res => res.data.stopsByRadius.edges)
 
 const getCurrentTimestamp = () => {
-  return Math.round( new Date().getTime() / 1000)
+  return Math.round(new Date().getTime() / 1000)
 }
 
 const doQuery = query => new Promise(resolve => {
   fetch('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql', {
     method: 'post',
     headers: {
-      'Content-Type': 'application/graphql'
+      'Content-Type': 'application/graphql',
+      'digitransit-subscription-key': process.env.REACT_APP_HSL_KEY
     },
     body: query
   })

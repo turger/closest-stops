@@ -1,7 +1,7 @@
 /* global google */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ReactSVG from 'react-svg'
+import { ReactSVG } from 'react-svg'
 import { setCoords, setManualLocationInput } from './location/locationActions'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import { manualUpdateCurrentLocation } from '../services/locationService'
@@ -35,13 +35,13 @@ class SearchAddress extends Component {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(latLng =>
-        this.props.setCoords({lat: latLng.lat, lon: latLng.lng}),
+        this.props.setCoords({ lat: latLng.lat, lon: latLng.lng }),
         this.props.setManualLocationInput(true),
-        this.setState({showSearchAddress: false})
+        this.setState({ showSearchAddress: false })
       )
       .catch(error => {
         console.log('Google Maps API returned error: ', error)
-        this.setState({errorInAddress: true, showSearchAddress: true})
+        this.setState({ errorInAddress: true, showSearchAddress: true })
       })
   }
 
@@ -55,16 +55,20 @@ class SearchAddress extends Component {
       <div className="SearchAddress">
         <div onClick={manualUpdateCurrentLocation}>
           <ReactSVG
-            src={ updateLocation }
-            svgClassName="SearchAddress__locate__svg"
+            src={updateLocation}
+            beforeInjection={(svg) => {
+              svg.classList.add('SearchAddress__locate__svg')
+            }}
             className="SearchAddress__locate__button"
           />
         </div>
-        { this.state.showSearchAddress && 
+        {this.state.showSearchAddress &&
           <div className="SearchAddress__textField">
             <ReactSVG
-              src={ location }
-              svgClassName="SearchAddress__location__svg"
+              src={location}
+              beforeInjection={(svg) => {
+                svg.classList.add('SearchAddress__location__svg')
+              }}
               className="SearchAddress__location"
             />
             <PlacesAutocomplete
@@ -79,7 +83,7 @@ class SearchAddress extends Component {
                   <input
                     {...getInputProps({
                       placeholder: 'Search address ...',
-                      className: classnames('SearchAddress__search__input', {'SearchAddress__search__input--error': this.state.errorInAddress} )
+                      className: classnames('SearchAddress__search__input', { 'SearchAddress__search__input--error': this.state.errorInAddress })
 
                     })}
                   />
@@ -103,10 +107,12 @@ class SearchAddress extends Component {
                 </div>
               )}
             </PlacesAutocomplete>
-            <div onClick={() => this.setState({address: null})}>
+            <div onClick={() => this.setState({ address: null })}>
               <ReactSVG
-                src={ deleteButton }
-                svgClassName="SearchAddress__delete__svg"
+                src={deleteButton}
+                beforeInjection={(svg) => {
+                  svg.classList.add('SearchAddress__delete__svg')
+                }}
                 className="SearchAddress__delete__button"
               />
             </div>
@@ -114,8 +120,10 @@ class SearchAddress extends Component {
         }
         <div onClick={() => this.handleSearchClick()}>
           <ReactSVG
-            src={ searchLocation }
-            svgClassName="SearchAddress__manual__svg"
+            src={searchLocation}
+            beforeInjection={(svg) => {
+              svg.classList.add('SearchAddress__manual__svg')
+            }}
             className="SearchAddress__manual__button"
           />
         </div>
