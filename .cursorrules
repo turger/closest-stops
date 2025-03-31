@@ -1,0 +1,5 @@
+Use react v22.13.0
+Use hooks instead of redux actions and reducers
+Replace all mapStateToProps with newer react stuff
+Don't add ; in the end of lines
+Use yarn

@@ -53,17 +53,17 @@ const formatNextFiveStopTimes = stopTimes => {
   )
 }
 
-export const filterStops = (stops, filterFavorites, favoriteRoutes, vehiclesToHide) => {
+export const filterStops = (stops, filterFavorites, favoriteRoutes, hiddenVehicles) => {
   return Object.keys(stops).reduce((accumulator, stop) => {
-    const filteredStopTimes = filterStopTimes(stops[stop].stopTimes, filterFavorites, favoriteRoutes, vehiclesToHide)
+    const filteredStopTimes = filterStopTimes(stops[stop].stopTimes, filterFavorites, favoriteRoutes, hiddenVehicles)
     if (filteredStopTimes.length !== 0) accumulator[stop] = { ...stops[stop], stopTimes: filteredStopTimes } || [] 
     return accumulator
   }, {})
 }
 
-const filterStopTimes = (stopTimes, filterFavorites, favoriteRoutes, vehiclesToHide) => {
+const filterStopTimes = (stopTimes, filterFavorites, favoriteRoutes = [], vehiclesToHide) => {
   return Object.keys(stopTimes)
-    .map(stopTime => stopTimes[stopTime]
+    .map(key => stopTimes[key]
       .reduce((accumulator, st) => {
         if (minutesToDeparture(st.realtimeArrival, st.serviceDay) > 0) {
           accumulator.push({
@@ -75,8 +75,8 @@ const filterStopTimes = (stopTimes, filterFavorites, favoriteRoutes, vehiclesToH
       }, [])
       .filter(st => 
         filterFavorites 
-        ? favoriteRoutes.includes(st.shortName) && !vehiclesToHide.includes(st.mode)
-        : !vehiclesToHide.includes(st.mode) ))
+        ? favoriteRoutes?.includes(st.shortName) && !vehiclesToHide?.includes(st.mode)
+        : !vehiclesToHide?.includes(st.mode)))
       .filter(st => st.length !== 0)
 }
 

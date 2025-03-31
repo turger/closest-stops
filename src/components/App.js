@@ -1,26 +1,27 @@
 import React from 'react'
-import Stops from './stops/StopsContainer'
-import Header from './header/HeaderContainer'
-import SearchAddress from './SearchAddress'
-import Map from './map/MapContainer'
-import Menu from './menu/MenuContainer'
-import './App.css'
+import Stops from './Stops'
+import Map from './map/Map'
+import Pagewrapper from './Pagewrapper'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
-const App = ({ match: { params, url } }) => (
-  <div className="App">
-    <Header/>
-    <SearchAddress/>
-    { !url.includes('/map') &&
-      <Stops 
-        filterFavorites={url.includes('/favorites')}
-        favoriteRoutes={params.favoriteRoutes || ''}
-      /> 
-    }
-    { url.includes('/map') &&
-      <Map/>
-    }
-    <Menu/>
-  </div>
+const App = () => (
+  <Router future={{ 
+    v7_relativeSplatPath: true,
+    v7_startTransition: true 
+  }}>
+    <Routes>
+      <Route path="/" element={<Navigate to="/all" replace />} />
+      <Route path="/favorites" element={<Pagewrapper />}>
+        <Route index element={<Stops onlyFavorites={true} />} />
+      </Route>
+      <Route path="/all" element={<Pagewrapper />}>
+        <Route index element={<Stops />} />
+      </Route>
+      <Route path="/map" element={<Pagewrapper />}>
+        <Route index element={<Map />} />
+      </Route>
+    </Routes>
+  </Router>
 )
 
 export default App

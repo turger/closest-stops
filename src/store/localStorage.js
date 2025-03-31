@@ -1,4 +1,4 @@
-export const loadState = () => {
+export const loadLocalStorage = () => {
   try {
     const serializedState = localStorage.getItem('clops-state')
 
@@ -13,7 +13,7 @@ export const loadState = () => {
   }
 }
 
-export const saveState = (state) => {
+export const saveLocalStorage = (state) => {
   try {
     const serializedState = JSON.stringify(state)
     localStorage.setItem('clops-state', serializedState)
