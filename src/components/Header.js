@@ -5,8 +5,8 @@ import HeaderFilterMenu from './HeaderFilterMenu'
 import { useAppStore } from '../hooks/useAppStore'
 import { loadLocalStorage } from '../store/localStorage'
 import './Header.css'
-import { getCurrentGeolocation } from '../services/geolocationService'
 import { getStopsAndSchedulesByLocation } from '../services/hslApi'
+import { updateCurrentGeoLocation } from '../services/locationService'
 
 const Header = () => {
   const state = useAppStore.getState()
@@ -40,25 +40,19 @@ const Header = () => {
   }
 
   useEffect(() => {
-    getStopsData()
+    updateCurrentGeoLocation()
+
+    const oneMin = 60000
+    const interval = setInterval(() => {
+      updateCurrentGeoLocation()
+    }, oneMin)
+
+    return () => clearInterval(interval)
   }, [])
 
   useEffect(() => {
     getStopsData()
   }, [location.coords])
-
-  useEffect( () => {
-    const getCoordinates = async () => {
-      const position = await getCurrentGeolocation()
-      setCoords(position)
-    }
-
-    getCoordinates()
-
-    setInterval(() => {
-      getCoordinates()
-    }, 60000)
-  }, [])
 
   return(
     <div className="Header">

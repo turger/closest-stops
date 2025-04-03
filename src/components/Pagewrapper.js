@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from './Header'
-import SearchAddress from './SearchAddress'
+import SearchAddress from './LocationUpdate'
 import Menu from './Menu'
 
 const Pagewrapper = () => (

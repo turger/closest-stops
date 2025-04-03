@@ -3,6 +3,7 @@ import Stops from './Stops'
 import Map from './map/Map'
 import Pagewrapper from './Pagewrapper'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import './App.css'
 
 const App = () => (
   <Router future={{ 

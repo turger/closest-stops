@@ -1,5 +1,3 @@
-Use react v22.13.0
-Use hooks instead of redux actions and reducers
-Replace all mapStateToProps with newer react stuff
-Don't add ; in the end of lines
+This project has been created with very old create-react-app
+Use react version defined in .nvmrc file
 Use yarn

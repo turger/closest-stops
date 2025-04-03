@@ -17,7 +17,7 @@ const Stops = ({onlyFavorites = false}) => {
       <div className="Stops_loader"/>
     }
     { Object.keys(filteredStops).length === 0 && !loading && 
-      <div className="Stops__empty"> :( </div>
+      <div className="Stops__empty"> Ei suosikkeja </div>
     }
     { Object.keys(filteredStops)
       .map( key => 
