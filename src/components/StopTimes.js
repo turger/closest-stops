@@ -1,30 +1,28 @@
-import React, { useState, useRef } from 'react'
-import { ReactSVG } from 'react-svg'
-import Draggable from 'react-draggable'
 import classnames from 'classnames'
-import Vehicle from './Vehicle'
+import React, { useRef, useState } from 'react'
+import Draggable from 'react-draggable'
+import { ReactSVG } from 'react-svg'
 import heart from '../assets/heart2.svg'
 import remove from '../assets/remove.svg'
-import './StopTimes.css'
-import { loadLocalStorage, saveLocalStorage } from '../store/localStorage'
+import Vehicle from './Vehicle'
 import { useAppStore } from '../hooks/useAppStore'
+import './StopTimes.css'
 
 const DISTANCE_TRESHOLD = 80
 const DRAG_THRESHOLD = 10
 const SCROLL_THRESHOLD = 15
 
-const StopTimes = ({stopTimes, directions}) => {
-  const favoriteRoutes = useAppStore(state => state.favoriteRoutes)
-  const addFavoriteRoute = useAppStore(state => state.addFavoriteRoute)
-  const removeFavoriteRoute = useAppStore(state => state.removeFavoriteRoute)
+const StopTimes = ({ stopTimes, directions }) => {
   const draggableRef = useRef(null)
-
   const [highlightSwipe, setHighlightSwipe] = useState()
   const [resetPosition, setResetPosition] = useState()
   const [dragging, setDragging] = useState()
   const [scrolling, setScrolling] = useState()
 
-  
+  const favoriteRoutes = useAppStore(state => state.favoriteRoutes)
+  const addFavoriteRoute = useAppStore(state => state.addFavoriteRoute)
+  const removeFavoriteRoute = useAppStore(state => state.removeFavoriteRoute)
+
   let _dragY = 0
   let _dragX = 0
 
@@ -60,6 +58,7 @@ const StopTimes = ({stopTimes, directions}) => {
     const distance = Math.abs(ui.lastX)
     setResetPosition({ x: 0, y: 0 })
     setHighlightSwipe(false)
+    
     if (distance < DISTANCE_TRESHOLD) return
     updateFavorites()
   }
@@ -73,17 +72,12 @@ const StopTimes = ({stopTimes, directions}) => {
     }
   }
 
-  let swipeContent
-  let swipeClasses = ['StopTimes__swipe']
   const route = stopTimes[0].shortName
-
-  if (favoriteRoutes.includes(route)) {
-    swipeContent = remove
-    swipeClasses.push('StopTimes__swipe--remove')
-  } else {
-    swipeContent = heart
-    swipeClasses.push('StopTimes__swipe--add')
-  }
+  const swipeContent = favoriteRoutes.includes(route) ? remove : heart
+  const swipeClasses = [
+    'StopTimes__swipe',
+    favoriteRoutes.includes(route) ? 'StopTimes__swipe--remove' : 'StopTimes__swipe--add'
+  ]
 
   return (
     <div
@@ -102,6 +96,7 @@ const StopTimes = ({stopTimes, directions}) => {
           className="StopTimes__icon"
         />
       </div>
+
       <Draggable
         axis="x"
         onDrag={handleDrag}
@@ -121,20 +116,20 @@ const StopTimes = ({stopTimes, directions}) => {
               {directions[route].headsign}
             </div>
           </div>
+
           <div className="StopTimes__box__right">
             <div className="StopTimes__box__time">
               {stopTimes
                 .slice(0, 2)
-                .map(stopTime =>
-                  <div key={stopTime.id}> {stopTime.departureTime}</div>
-                )}
+                .map(stopTime => (
+                  <div key={stopTime.id}>{stopTime.departureTime}</div>
+                ))}
             </div>
           </div>
         </div>
       </Draggable>
     </div>
   )
-
 }
 
 export default StopTimes

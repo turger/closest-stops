@@ -1,15 +1,15 @@
 import React, { useMemo } from 'react'
 import classnames from 'classnames'
 import { Link, useLocation } from 'react-router-dom'
+import { ReactSVG } from 'react-svg'
 import heart from '../assets/heart.svg'
 import list from '../assets/list.svg'
 import map from '../assets/map.svg'
-import { ReactSVG } from 'react-svg'
 import './Menu.css'
 
 const Menu = () => {
   const location = useLocation()
-  const currentPath = location.pathname.slice(1) // Remove leading slash
+  const currentPath = location.pathname.slice(1)
 
   const isActive = (path) => currentPath === path
 
@@ -52,7 +52,9 @@ const Menu = () => {
         <Link
           key={path}
           to={`/${path}`}
-          className={classnames('Menu__link', { 'Menu__link--active': isActive(path) })}
+          className={classnames('Menu__link', {
+            'Menu__link--active': isActive(path)
+          })}
         >
           <ReactSVG
             src={icon}

@@ -18,7 +18,7 @@ const getCurrentGeolocation = async () => {
     console.error('Error getting location:', error)
     throw error
   }
-} 
+}
 
 export const updateCurrentGeoLocation = async () => {
   try {

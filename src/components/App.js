@@ -6,18 +6,23 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import './App.css'
 
 const App = () => (
-  <Router future={{ 
-    v7_relativeSplatPath: true,
-    v7_startTransition: true 
-  }}>
+  <Router
+    future={{
+      v7_relativeSplatPath: true,
+      v7_startTransition: true
+    }}
+  >
     <Routes>
       <Route path="/" element={<Navigate to="/all" replace />} />
+      
       <Route path="/favorites" element={<Pagewrapper />}>
         <Route index element={<Stops onlyFavorites={true} />} />
       </Route>
+      
       <Route path="/all" element={<Pagewrapper />}>
         <Route index element={<Stops />} />
       </Route>
+      
       <Route path="/map" element={<Pagewrapper />}>
         <Route index element={<Map />} />
       </Route>

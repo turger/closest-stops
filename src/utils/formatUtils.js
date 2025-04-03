@@ -1,5 +1,5 @@
-import { getDepartureTime, minutesToDeparture } from './calcUtils'
 import _ from 'lodash'
+import { getDepartureTime, minutesToDeparture } from './calcUtils'
 
 export const mapStop = stop => ({
   distance: stop.node.distance,

@@ -1,14 +1,12 @@
-import { saveLocalStorage } from '../store/localStorage';
-import _ from 'lodash';
-import { mapStop } from '../utils/formatUtils';
-import {create} from 'zustand'
+import _ from 'lodash'
+import { create } from 'zustand'
+import { mapStop } from '../utils/formatUtils'
+import { saveLocalStorage } from '../store/localStorage'
 
 const initialState = {
   location: {
     radius: 1000,
-    coords: {lat: 60.17139759724351, lon: 24.941557707652542},
-    manualLocationInput: false,
-    locationDenied: false
+    coords: {lat: 60.17139759724351, lon: 24.941557707652542}
   },
   loading: false,
   stopsData: {
@@ -32,19 +30,13 @@ const initialState = {
 
 export const useAppStore = create((set, get) => ({
   ...initialState,
+  // TODO: is this necessary?
   setCoords: (coords) => {
     const state = get()
     const updatedLocation = {
       ...state.location,
       coords
     }
-
-    // Save to local storage
-    saveLocalStorage({
-      location: updatedLocation,
-      favorites: state.favoriteRoutes,
-      hiddenVehicles: state.stopsData.hiddenVehicles
-    })
 
     set({location: updatedLocation})
   },
@@ -55,7 +47,6 @@ export const useAppStore = create((set, get) => ({
       radius
     }
 
-    // Save to local storage
     saveLocalStorage({
       location: updatedLocation,
       favorites: state.favoriteRoutes,
@@ -71,7 +62,6 @@ export const useAppStore = create((set, get) => ({
       manualLocationInput
     }
 
-    // Save to local storage
     saveLocalStorage({
       location: updatedLocation,
       favorites: state.favoriteRoutes,
@@ -87,7 +77,6 @@ export const useAppStore = create((set, get) => ({
       locationDenied
     }
 
-    // Save to local storage
     saveLocalStorage({
       location: updatedLocation,
       favorites: state.favoriteRoutes,
@@ -119,7 +108,6 @@ export const useAppStore = create((set, get) => ({
       hiddenVehicles
     }
 
-    // Save to local storage
     saveLocalStorage({
       location: state.location,
       favorites: state.favoriteRoutes,
@@ -132,7 +120,6 @@ export const useAppStore = create((set, get) => ({
     const state = get()
     const updatedFavorites = [...state.favoriteRoutes, route]
 
-    // Save to local storage
     saveLocalStorage({
       location: state.location,
       favorites: updatedFavorites,
@@ -145,7 +132,6 @@ export const useAppStore = create((set, get) => ({
     const state = get()
     const updatedFavorites = state.favoriteRoutes.filter(r => r !== route)
     
-    // Save to local storage
     saveLocalStorage({
       location: state.location,
       favorites: updatedFavorites,

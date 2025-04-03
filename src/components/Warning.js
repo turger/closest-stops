@@ -3,9 +3,9 @@ import { ReactSVG } from 'react-svg'
 import warning from '../assets/warning.svg'
 import './Warning.css'
 
-const Warning = ({ message, handleClick, showWarning }) =>
+const Warning = ({ message, handleClick, showWarning }) => (
   <div className="Warning">
-    {!showWarning &&
+    {!showWarning && (
       <div onClick={handleClick}>
         <ReactSVG
           src={warning}
@@ -15,8 +15,9 @@ const Warning = ({ message, handleClick, showWarning }) =>
           className="Warning__button"
         />
       </div>
-    }
-    {showWarning &&
+    )}
+
+    {showWarning && (
       <div className="Warning__box" onClick={handleClick}>
         <div className="Warning__box__content">
           <ReactSVG
@@ -29,7 +30,8 @@ const Warning = ({ message, handleClick, showWarning }) =>
           {message}
         </div>
       </div>
-    }
+    )}
   </div>
+)
 
 export default Warning

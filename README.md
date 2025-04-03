@@ -31,3 +31,8 @@ REACT_APP_HSL_KEY=
 ## 🔥Try it out! 🔥
 
 https://clopspops.firebaseapp.com
+
+## TODO
+* Use typescript
+* Add linter
+* Use less

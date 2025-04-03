@@ -12,57 +12,59 @@ const Header = () => {
   const state = useAppStore.getState()
 
   const location = useAppStore(state => state.location)
-  const setCoords = useAppStore((state) => state.setCoords)
-  const setFavoriteRoutes = useAppStore((state) => state.setFavoriteRoutes)
-  const setHiddenVehicles = useAppStore((state) => state.setHiddenVehicles)
-  const setLoading = useAppStore((state) => state.setLoading)
-  const setStopsData = useAppStore((state) => state.setStopsData)
+  const setFavoriteRoutes = useAppStore(state => state.setFavoriteRoutes)
+  const setHiddenVehicles = useAppStore(state => state.setHiddenVehicles)
+  const setLoading = useAppStore(state => state.setLoading)
+  const setStopsData = useAppStore(state => state.setStopsData)
 
   const [showWarning, setShowWarning] = useState()
 
-  useEffect( () => {
+  useEffect(() => {
     const localStorage = loadLocalStorage()
     if (localStorage) {
       setLoading(true)
-      localStorage?.location?.coords && setCoords({lat: localStorage.location.coords.lat, lon: localStorage.location.coords.lon})
       setFavoriteRoutes(localStorage.favorites.toString())
       setHiddenVehicles(localStorage.hiddenVehicles)
       setLoading(false)
     }
   }, [])
 
-  const getStopsData = async () => {
-    if (!_.get(location.coords, 'lat')) return
-    setLoading(true)
-    const stopsDataRaw = await getStopsAndSchedulesByLocation(location.coords.lat, location.coords.lon, location.radius)
-    setLoading(false)
-    setStopsData(stopsDataRaw)
-  }
-
   useEffect(() => {
-    updateCurrentGeoLocation()
+    getStopsData()
 
     const oneMin = 60000
     const interval = setInterval(() => {
-      updateCurrentGeoLocation()
+      getStopsData()
     }, oneMin)
 
     return () => clearInterval(interval)
   }, [])
 
-  useEffect(() => {
-    getStopsData()
-  }, [location.coords])
+  const getStopsData = async () => {
+    const updatedLocation = await updateCurrentGeoLocation()
 
-  return(
+    if (!_.get(updatedLocation, 'lat')) return
+    
+    setLoading(true)
+    const stopsDataRaw = await getStopsAndSchedulesByLocation(
+      updatedLocation.lat,
+      updatedLocation.lon,
+      location.radius
+    )
+    setLoading(false)
+    setStopsData(stopsDataRaw)
+  }
+
+  return (
     <div className="Header">
-      { state.location.locationDenied &&
+      {state.location.locationDenied && (
         <Warning
           message="Enable geolocation in your browser if you want to find stops using your current location."
           handleClick={() => setShowWarning(!showWarning)}
           showWarning={showWarning}
         />
-      }
+      )}
+      
       <img src={logo} className="Header-logo" alt="logo" />
       <h1 className="Header-title">Closest stops</h1>
       <HeaderFilterMenu />
@@ -70,4 +72,4 @@ const Header = () => {
   )
 }
 
-export default (Header)
+export default Header

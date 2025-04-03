@@ -6,10 +6,10 @@ import Menu from './Menu'
 
 const Pagewrapper = () => (
   <>
-    <Header/>
-    <SearchAddress/>
+    <Header />
+    <SearchAddress />
     <Outlet />
-    <Menu/>
+    <Menu />
   </>
 )
 

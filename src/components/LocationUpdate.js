@@ -1,4 +1,3 @@
-/* global google */
 import React from 'react';
 import { ReactSVG } from 'react-svg';
 import { updateCurrentGeoLocation } from '../services/locationService';
