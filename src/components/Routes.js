@@ -1,5 +1,4 @@
 import React from 'react'
-import { useAppStore } from '../hooks/useAppStore'
 import StopTimes from './StopTimes'
 import './Routes.css'
 

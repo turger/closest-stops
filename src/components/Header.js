@@ -17,7 +17,7 @@ const Header = () => {
   const setLoading = useAppStore(state => state.setLoading)
   const setStopsData = useAppStore(state => state.setStopsData)
 
-  const [showWarning, setShowWarning] = useState()
+  const [showWarning, setShowWarning] = useState(true)
 
   useEffect(() => {
     const localStorage = loadLocalStorage()
@@ -41,11 +41,21 @@ const Header = () => {
   }, [])
 
   const getStopsData = async () => {
+    setLoading(true)
+    const permissions = await navigator.permissions.query({ name: 'geolocation' })
+
+    if (!permissions.state || permissions.state === 'denied') {
+      state.setLocationDenied(true)
+      setLoading(false)
+      return
+    }
+
+    state.setLocationDenied(false)
+
     const updatedLocation = await updateCurrentGeoLocation()
 
     if (!_.get(updatedLocation, 'lat')) return
     
-    setLoading(true)
     const stopsDataRaw = await getStopsAndSchedulesByLocation(
       updatedLocation.lat,
       updatedLocation.lon,
@@ -57,7 +67,7 @@ const Header = () => {
 
   return (
     <div className="Header">
-      {state.location.locationDenied && (
+      {location.locationDenied && (
         <Warning
           message="Enable geolocation in your browser if you want to find stops using your current location."
           handleClick={() => setShowWarning(!showWarning)}

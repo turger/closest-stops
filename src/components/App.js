@@ -13,12 +13,16 @@ const App = () => (
     }}
   >
     <Routes>
-      <Route path="/" element={<Navigate to="/all" replace />} />
+      {/* <Route path="/" element={<Navigate to="/all" replace />} /> */}
       
       <Route path="/favorites" element={<Pagewrapper />}>
         <Route index element={<Stops onlyFavorites={true} />} />
       </Route>
       
+      <Route path="/" element={<Pagewrapper />}>
+        <Route index element={<Stops />} />
+      </Route>
+
       <Route path="/all" element={<Pagewrapper />}>
         <Route index element={<Stops />} />
       </Route>

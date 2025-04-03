@@ -6,7 +6,8 @@ import { saveLocalStorage } from '../store/localStorage'
 const initialState = {
   location: {
     radius: 1000,
-    coords: {lat: 60.17139759724351, lon: 24.941557707652542}
+    coords: {},
+    locationDenied: true
   },
   loading: false,
   stopsData: {
