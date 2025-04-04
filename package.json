@@ -20,13 +20,24 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "8.56.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.5.3",
     "vite": "^5.1.0"
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "build-fb": "vite build && firebase deploy"
+    "build-fb": "vite build && firebase deploy",
+    "lint": "eslint \"src/**/*.{js,jsx}\"",
+    "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix",
+    "sort-imports": "prettier --write \"src/**/*.{js,jsx}\" --plugin=@trivago/prettier-plugin-sort-imports"
   }
 }

@@ -1,17 +1,9 @@
-import React from 'react'
-import StopTimes from './StopTimes'
 import './Routes.css'
+import StopTimes from './StopTimes'
+import React from 'react'
 
 const Routes = ({ oneStopData }) => {
-  const {
-    stopTimes,
-    distance,
-    name,
-    id,
-    desc,
-    directions,
-    platform,
-  } = oneStopData
+  const { stopTimes, distance, name, id, desc, directions, platform } = oneStopData
 
   return (
     <div className="Routes">
@@ -21,16 +13,14 @@ const Routes = ({ oneStopData }) => {
           <div className="Routes__location__info__address">
             {desc}
             {platform && (
-              <div className="Routes__location__info__address__platform">
-                {platform}
-              </div>
+              <div className="Routes__location__info__address__platform">{platform}</div>
             )}
           </div>
         </div>
       </div>
 
       <div className="Routes__stopTimes">
-        {Object.keys(stopTimes).map(key => (
+        {Object.keys(stopTimes).map((key) => (
           <StopTimes
             key={`${id}-${stopTimes[key][0].id}`}
             stopTimes={stopTimes[key]}

@@ -1,5 +1,3 @@
-import { useAppStore } from '../hooks/useAppStore'
-
 const getCurrentGeolocation = async () => {
   try {
     const position = await new Promise((resolve, reject) => {
@@ -20,11 +18,10 @@ const getCurrentGeolocation = async () => {
   }
 }
 
-export const updateCurrentGeoLocation = async () => {
+export const getCurrentCoords = async () => {
   try {
     const location = await getCurrentGeolocation()
-    const state = useAppStore.getState()
-    state.setCoords(location)
+
     return location
   } catch (error) {
     console.error('Error getting location:', error)

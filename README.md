@@ -27,7 +27,6 @@ add `.env` file to project root, see base from `.env.dist`.
 https://clopspops.web.app
 
 ## TODO
-* Change from create react app to vite
-* Use typescript
-* Add linter
-* Use less
+
+- Use typescript
+- Use less

@@ -1,9 +1,9 @@
-import React from 'react'
-import classnames from 'classnames'
-import { ReactSVG } from 'react-svg'
-import vehicleAssets from './vehicleAssets'
 import heart from '../assets/love.svg'
 import './Vehicle.css'
+import vehicleAssets from './vehicleAssets'
+import classnames from 'classnames'
+import React from 'react'
+import { ReactSVG } from 'react-svg'
 
 const Vehicle = ({ mode, love }) => {
   const vehicleIconSrc = love ? vehicleAssets[`${mode}-LOVE`] : vehicleAssets[mode]

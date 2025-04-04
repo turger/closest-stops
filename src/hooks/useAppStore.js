@@ -1,7 +1,6 @@
-import _ from 'lodash'
-import { create } from 'zustand'
-import { mapStop } from '../utils/formatUtils'
 import { saveLocalStorage } from '../store/localStorage'
+import { mapStop } from '../utils/formatUtils'
+import { create } from 'zustand'
 
 const initialState = {
   location: {
@@ -37,7 +36,7 @@ export const useAppStore = create((set, get) => ({
       coords
     }
 
-    set({location: updatedLocation})
+    set({ location: updatedLocation })
   },
   setRadius: (radius) => {
     const state = get()
@@ -52,7 +51,7 @@ export const useAppStore = create((set, get) => ({
       hiddenVehicles: state.stopsData.hiddenVehicles
     })
 
-    set({location: updatedLocation})
+    set({ location: updatedLocation })
   },
   setLocationDenied: (locationDenied) => {
     const state = get()
@@ -67,23 +66,28 @@ export const useAppStore = create((set, get) => ({
       hiddenVehicles: state.stopsData.hiddenVehicles
     })
 
-    set({location: updatedLocation})
+    set({ location: updatedLocation })
   },
   setStopsData: (stops) => {
     const state = get()
-    const filteredStops = stops.filter(stop => stop.node.stop.stoptimesWithoutPatterns.length !== 0)
+    const filteredStops = stops.filter(
+      (stop) => stop.node.stop.stoptimesWithoutPatterns.length !== 0
+    )
     const updatedStops = {
       ...state.stopsData,
-      stops: filteredStops.reduce((accumulator, stop) => ({
-        ...accumulator,
-        [stop.node.stop.gtfsId]: mapStop(stop)
-      }), {})
+      stops: filteredStops.reduce(
+        (accumulator, stop) => ({
+          ...accumulator,
+          [stop.node.stop.gtfsId]: mapStop(stop)
+        }),
+        {}
+      )
     }
 
-    set({stopsData: updatedStops})
+    set({ stopsData: updatedStops })
   },
   setLoading: (loading) => {
-    set({loading})
+    set({ loading })
   },
   setHiddenVehicles: (hiddenVehicles) => {
     const state = get()
@@ -98,7 +102,7 @@ export const useAppStore = create((set, get) => ({
       hiddenVehicles: hiddenVehicles
     })
 
-    set({stopsData: updatedStops})
+    set({ stopsData: updatedStops })
   },
   addFavoriteRoute: (route) => {
     const state = get()
@@ -110,24 +114,23 @@ export const useAppStore = create((set, get) => ({
       hiddenVehicles: state.stopsData.hiddenVehicles
     })
 
-    set({favoriteRoutes: updatedFavorites})
+    set({ favoriteRoutes: updatedFavorites })
   },
   removeFavoriteRoute: (route) => {
     const state = get()
-    const updatedFavorites = state.favoriteRoutes.filter(r => r !== route)
-    
+    const updatedFavorites = state.favoriteRoutes.filter((r) => r !== route)
+
     saveLocalStorage({
       location: state.location,
       favorites: updatedFavorites,
       hiddenVehicles: state.stopsData.hiddenVehicles
     })
 
-    set({favoriteRoutes: updatedFavorites})
+    set({ favoriteRoutes: updatedFavorites })
   },
   setFavoriteRoutes: (routes) => {
     const updatedFavorites = routes !== '' ? routes.split(',') : []
 
-    set({favoriteRoutes: updatedFavorites})
+    set({ favoriteRoutes: updatedFavorites })
   }
 }))
- 

@@ -1,12 +1,12 @@
+import heart from '../assets/heart2.svg'
+import remove from '../assets/remove.svg'
+import { useAppStore } from '../hooks/useAppStore'
+import './StopTimes.css'
+import Vehicle from './Vehicle'
 import classnames from 'classnames'
 import React, { useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import { ReactSVG } from 'react-svg'
-import heart from '../assets/heart2.svg'
-import remove from '../assets/remove.svg'
-import Vehicle from './Vehicle'
-import { useAppStore } from '../hooks/useAppStore'
-import './StopTimes.css'
 
 const DISTANCE_TRESHOLD = 80
 const DRAG_THRESHOLD = 10
@@ -19,9 +19,9 @@ const StopTimes = ({ stopTimes, directions }) => {
   const [dragging, setDragging] = useState()
   const [scrolling, setScrolling] = useState()
 
-  const favoriteRoutes = useAppStore(state => state.favoriteRoutes)
-  const addFavoriteRoute = useAppStore(state => state.addFavoriteRoute)
-  const removeFavoriteRoute = useAppStore(state => state.removeFavoriteRoute)
+  const favoriteRoutes = useAppStore((state) => state.favoriteRoutes)
+  const addFavoriteRoute = useAppStore((state) => state.addFavoriteRoute)
+  const removeFavoriteRoute = useAppStore((state) => state.removeFavoriteRoute)
 
   let _dragY = 0
   let _dragX = 0
@@ -47,7 +47,10 @@ const StopTimes = ({ stopTimes, directions }) => {
     _dragY += ui.deltaY
     _dragX += Math.abs(ui.deltaX)
 
-    if (scrolling && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    if (
+      scrolling &&
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    ) {
       window.scrollBy(0, _dragY * -1)
     }
 
@@ -58,7 +61,7 @@ const StopTimes = ({ stopTimes, directions }) => {
     const distance = Math.abs(ui.lastX)
     setResetPosition({ x: 0, y: 0 })
     setHighlightSwipe(false)
-    
+
     if (distance < DISTANCE_TRESHOLD) return
     updateFavorites()
   }
@@ -109,21 +112,15 @@ const StopTimes = ({ stopTimes, directions }) => {
         <div ref={draggableRef} className="StopTimes__box">
           <div className="StopTimes__box__left">
             <Vehicle mode={stopTimes[0].mode} love={favoriteRoutes.includes(route)} />
-            <div className="StopTimes__box__shortName">
-              {route}
-            </div>
-            <div className="StopTimes__box__direction">
-              {directions[route].headsign}
-            </div>
+            <div className="StopTimes__box__shortName">{route}</div>
+            <div className="StopTimes__box__direction">{directions[route].headsign}</div>
           </div>
 
           <div className="StopTimes__box__right">
             <div className="StopTimes__box__time">
-              {stopTimes
-                .slice(0, 2)
-                .map(stopTime => (
-                  <div key={stopTime.id}>{stopTime.departureTime}</div>
-                ))}
+              {stopTimes.slice(0, 2).map((stopTime) => (
+                <div key={stopTime.id}>{stopTime.departureTime}</div>
+              ))}
             </div>
           </div>
         </div>
