@@ -1,5 +1,6 @@
 .Map {
-  height: calc(100% - 90px - 60px);
+  height: calc(100% - 130px - 60px);
   width: 100%;
-  padding-top: 90px;
+  padding-top: 130px;
+  padding-bottom: 60px;
 }

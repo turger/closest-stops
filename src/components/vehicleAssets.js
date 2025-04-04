@@ -10,14 +10,14 @@ import ferry from '../assets/ferry.svg'
 import ferryLove from '../assets/ferry-love.svg'
 
 export default {
-  'BUS': bus,
+  BUS: bus,
   'BUS-LOVE': busLove,
-  'TRAM': tram,
+  TRAM: tram,
   'TRAM-LOVE': tramLove,
-  'SUBWAY': metro,
+  SUBWAY: metro,
   'SUBWAY-LOVE': metroLove,
-  'RAIL': train,
+  RAIL: train,
   'RAIL-LOVE': trainLove,
-  'FERRY': ferry,
+  FERRY: ferry,
   'FERRY-LOVE': ferryLove
 }

@@ -1,40 +1,41 @@
 export const getStopsAndSchedulesByLocation = (lat, lon, radius, startTime = getCurrentTimestamp()) =>
   doQuery(`
-  {
-    stopsByRadius(lat:${lat}, lon:${lon}, radius:${radius}) {
-      edges {
-        node {
-          distance
-          stop {
-            gtfsId
-            name
-            desc
-            platformCode
-            lat
-            lon
-            patterns {
+    {
+      stopsByRadius(lat: ${lat}, lon: ${lon}, radius: ${radius}) {
+        edges {
+          node {
+            distance
+            stop {
+              gtfsId
               name
-              headsign
-              route {
-                longName
-                shortName
-              }
-            }
-            stoptimesWithoutPatterns(
-              startTime: "${startTime}",
-              timeRange: 7200,
-              numberOfDepartures:30
-            ) {
-              scheduledArrival
-              scheduledDeparture
-              realtimeArrival
-              serviceDay
-              trip {
+              desc
+              platformCode
+              lat
+              lon
+              patterns {
+                name
+                headsign
                 route {
-                  gtfsId
                   longName
                   shortName
-                  mode
+                }
+              }
+              stoptimesWithoutPatterns(
+                startTime: "${startTime}",
+                timeRange: 7200,
+                numberOfDepartures: 30
+              ) {
+                scheduledArrival
+                scheduledDeparture
+                realtimeArrival
+                serviceDay
+                trip {
+                  route {
+                    gtfsId
+                    longName
+                    shortName
+                    mode
+                  }
                 }
               }
             }
@@ -42,15 +43,12 @@ export const getStopsAndSchedulesByLocation = (lat, lon, radius, startTime = get
         }
       }
     }
-  }`
-  ).then(res => res.data.stopsByRadius.edges)
+  `).then(res => res.data.stopsByRadius.edges)
 
-const getCurrentTimestamp = () => {
-  return Math.round(new Date().getTime() / 1000)
-}
+const getCurrentTimestamp = () => Math.round(new Date().getTime() / 1000)
 
 const doQuery = query => new Promise(resolve => {
-  fetch('https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql', {
+  fetch('https://api.digitransit.fi/routing/v2/hsl/gtfs/v1', {
     method: 'post',
     headers: {
       'Content-Type': 'application/graphql',

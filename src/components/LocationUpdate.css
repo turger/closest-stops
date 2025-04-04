@@ -1,0 +1,21 @@
+.LocationUpdate {
+  position: fixed;
+  top: 130px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+.LocationUpdate__locate__button {
+  position: absolute;
+  top: -33px;
+  left: 3px;
+  margin: 0 10px;
+}
+
+.LocationUpdate__locate__svg {
+  height: 20px;
+  fill: #5c45a0;
+}

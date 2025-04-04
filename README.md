@@ -30,4 +30,10 @@ REACT_APP_HSL_KEY=
 
 ## 🔥Try it out! 🔥
 
-https://clopspops.firebaseapp.com
+https://clopspops.web.app
+
+## TODO
+* Change from create react app to vite
+* Use typescript
+* Add linter
+* Use less
