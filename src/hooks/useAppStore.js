@@ -25,13 +25,11 @@ const initialState = {
     platform: '',
     lat: 0,
     lon: 0
-  },
-  activePath: undefined
-};
+  }
+}
 
 export const useAppStore = create((set, get) => ({
   ...initialState,
-  // TODO: is this necessary?
   setCoords: (coords) => {
     const state = get()
     const updatedLocation = {
@@ -46,21 +44,6 @@ export const useAppStore = create((set, get) => ({
     const updatedLocation = {
       ...state.location,
       radius
-    }
-
-    saveLocalStorage({
-      location: updatedLocation,
-      favorites: state.favoriteRoutes,
-      hiddenVehicles: state.stopsData.hiddenVehicles
-    })
-
-    set({location: updatedLocation})
-  },
-  setManualLocationInput: (manualLocationInput) => {
-    const state = get()
-    const updatedLocation = {
-      ...state.location,
-      manualLocationInput
     }
 
     saveLocalStorage({
@@ -145,17 +128,6 @@ export const useAppStore = create((set, get) => ({
     const updatedFavorites = routes !== '' ? routes.split(',') : []
 
     set({favoriteRoutes: updatedFavorites})
-  },
-  setRouteDetails: (details) => {
-    const state = get()
-    const updatedRoutes = {
-      ...state.routes,
-      ...details
-    }
-    set({routes: updatedRoutes})
-  },
-  setActivePath: (path) => {
-    set({activePath: path})
   }
 }))
  

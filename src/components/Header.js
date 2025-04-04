@@ -19,6 +19,7 @@ const Header = () => {
   const setStopsData = useAppStore(state => state.setStopsData)
 
   const [showWarning, setShowWarning] = useState(true)
+  const [previousLocation, setPreviousLocation] = useState(location)
 
   useEffect(() => {
     const localStorage = loadLocalStorage()
@@ -31,18 +32,13 @@ const Header = () => {
   }, [])
 
   useEffect(() => {
-    getStopsData()
+    if (previousLocation.coords.lat !== location.coords.lat || previousLocation.coords.lon !== location.coords.lon) {
+      setPreviousLocation({...location, coords: {lat: location.coords.lat, lon: 24.9277357}})
+      getStopsData(location.coords)
+    }
+  }, [location.coords])
 
-    const oneMin = 60000
-    const interval = setInterval(() => {
-      getStopsData()
-    }, oneMin)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const getStopsData = async () => {
-    setLoading(true)
+  const getUpdatedLocation = async () => {
     const permissions = await navigator.permissions.query({ name: 'geolocation' })
 
     if (!permissions.state || permissions.state === 'denied') {
@@ -53,13 +49,37 @@ const Header = () => {
 
     state.setLocationDenied(false)
 
-    const updatedLocation = await updateCurrentGeoLocation()
+    return await updateCurrentGeoLocation()
+  }
 
-    if (!_.get(updatedLocation, 'lat')) return
+
+  useEffect(() => {
+    getUpdatedLocation()
+
+    const getLocationAndStops = async () => {
+      const updatedLocation = await getUpdatedLocation()
+      getStopsData(updatedLocation.coords)
+    }
+
+    const oneMin = 60000
+    const interval = setInterval(() => {
+      getLocationAndStops()
+    }, oneMin)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const getStopsData = async (updatedCoords) => {
+    setLoading(true)
+
+    if (!_.get(updatedCoords, 'lat')) {
+      setLoading(false)
+      return
+    }
     
     const stopsDataRaw = await getStopsAndSchedulesByLocation(
-      updatedLocation.lat,
-      updatedLocation.lon,
+      updatedCoords.lat,
+      updatedCoords.lon,
       location.radius
     )
     setLoading(false)
