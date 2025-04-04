@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import dotRed from '../../assets/dot-red.svg'
 import 'leaflet-defaulticon-compatibility'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import 'leaflet/dist/leaflet.css'
 import './LeafletMapStops.css'
+
+const hereIcon = L.icon({
+  iconUrl: dotRed,
+  iconSize: [20, 20]
+})
 
 const LeafletMapStops = ({ stops, coords }) => {
   const [markers, setMarkers] = useState({})
@@ -64,6 +70,15 @@ const LeafletMapStops = ({ stops, coords }) => {
           attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <Marker
+          key={currentLat}
+          position={{ lat: currentLat, lng: currentLon }}
+          icon={hereIcon}
+        >
+          <Popup>
+            Your are here
+          </Popup>
+        </Marker>
         {markersWithLabels}
       </MapContainer>
     </div>
