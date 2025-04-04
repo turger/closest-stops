@@ -1,7 +1,7 @@
 import React from 'react'
-import Stops from './Stops'
-import Map from './map/Map'
-import Pagewrapper from './Pagewrapper'
+import Stops from './components/Stops'
+import Map from './components/map/Map'
+import Pagewrapper from './components/Pagewrapper'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 
@@ -12,9 +12,7 @@ const App = () => (
       v7_startTransition: true
     }}
   >
-    <Routes>
-      {/* <Route path="/" element={<Navigate to="/all" replace />} /> */}
-      
+    <Routes>      
       <Route path="/favorites" element={<Pagewrapper />}>
         <Route index element={<Stops onlyFavorites={true} />} />
       </Route>

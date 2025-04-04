@@ -23,7 +23,7 @@ const Stops = ({ onlyFavorites = false }) => {
       )}
 
       {Object.keys(filteredStops).length === 0 && !loading && (
-        <div className="Stops__empty">{onlyFavorites ? 'Ei suosikkeja' : 'Ei sijaintitietoja'}</div>
+        <div className="Stops__empty">{onlyFavorites ? 'No favorites' : 'No location available'}</div>
       )}
 
       {Object.keys(filteredStops).map(key => (

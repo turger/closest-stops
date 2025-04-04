@@ -11,7 +11,8 @@ const Menu = () => {
   const location = useLocation()
   const currentPath = location.pathname.slice(1)
 
-  const isActive = (path) => currentPath === path
+  const isActive = (path) => 
+    currentPath === path || (!currentPath && path ==='all')
 
   const svgInjectionHandlers = useMemo(() => ({
     favorites: (svg) => {

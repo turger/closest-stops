@@ -52,7 +52,7 @@ const doQuery = query => new Promise(resolve => {
     method: 'post',
     headers: {
       'Content-Type': 'application/graphql',
-      'digitransit-subscription-key': process.env.REACT_APP_HSL_KEY
+      'digitransit-subscription-key': import.meta.env.VITE_HSL_KEY
     },
     body: query
   })
