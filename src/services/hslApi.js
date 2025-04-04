@@ -1,4 +1,33 @@
-export const getStopsAndSchedulesByLocation = (lat, lon, radius, startTime = getCurrentTimestamp()) =>
+const getCurrentTimestamp = () => Math.round(new Date().getTime() / 1000)
+
+const doQuery = (query) =>
+  new Promise((resolve) => {
+    fetch('https://api.digitransit.fi/routing/v2/hsl/gtfs/v1', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/graphql',
+        'digitransit-subscription-key': import.meta.env.VITE_HSL_KEY
+      },
+      body: query
+    })
+      .then((res) => {
+        if (res.status !== 200) throw new Error(res.status)
+        resolve(res.json())
+      })
+      .catch((err) => {
+        console.warn(err)
+        setTimeout(() => {
+          resolve(doQuery(query))
+        }, 10000)
+      })
+  })
+
+export const getStopsAndSchedulesByLocation = (
+  lat,
+  lon,
+  radius = 1000,
+  startTime = getCurrentTimestamp()
+) =>
   doQuery(`
     {
       stopsByRadius(lat: ${lat}, lon: ${lon}, radius: ${radius}) {
@@ -43,27 +72,4 @@ export const getStopsAndSchedulesByLocation = (lat, lon, radius, startTime = get
         }
       }
     }
-  `).then(res => res.data.stopsByRadius.edges)
-
-const getCurrentTimestamp = () => Math.round(new Date().getTime() / 1000)
-
-const doQuery = query => new Promise(resolve => {
-  fetch('https://api.digitransit.fi/routing/v2/hsl/gtfs/v1', {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/graphql',
-      'digitransit-subscription-key': import.meta.env.VITE_HSL_KEY
-    },
-    body: query
-  })
-    .then(res => {
-      if (res.status !== 200) throw new Error(res.status)
-      resolve(res.json())
-    })
-    .catch(err => {
-      console.warn(err)
-      setTimeout(() => {
-        resolve(doQuery(query))
-      }, 10000)
-    })
-})
+  `).then((res) => res.data.stopsByRadius.edges)

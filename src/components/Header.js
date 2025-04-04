@@ -1,22 +1,44 @@
-import React, { useEffect, useState } from 'react'
-import _ from 'lodash'
 import logo from '../assets/logo.svg'
-import Warning from './Warning'
-import HeaderFilterMenu from './HeaderFilterMenu'
 import { useAppStore } from '../hooks/useAppStore'
+import { getStopsAndSchedulesByLocation } from '../services/hslApi'
+import { getCurrentCoords } from '../services/locationService'
 import { loadLocalStorage } from '../store/localStorage'
 import './Header.css'
-import { getStopsAndSchedulesByLocation } from '../services/hslApi'
-import { updateCurrentGeoLocation } from '../services/locationService'
+import HeaderFilterMenu from './HeaderFilterMenu'
+import Warning from './Warning'
+import _ from 'lodash'
+import React, { useEffect, useState } from 'react'
+
+const getUpdatedCoords = async () => {
+  const state = useAppStore.getState()
+  const permissions = await navigator.permissions.query({ name: 'geolocation' })
+
+  if (!permissions.state || permissions.state === 'denied') {
+    state.setLocationDenied(true)
+    return
+  }
+
+  state.setLocationDenied(false)
+  const coords = await getCurrentCoords()
+  state.setCoords(coords)
+
+  return coords
+}
+
+const getStopsData = async (updatedCoords) => {
+  if (!_.get(updatedCoords, 'lat')) {
+    return undefined
+  }
+
+  return await getStopsAndSchedulesByLocation(updatedCoords.lat, updatedCoords.lon, location.radius)
+}
 
 const Header = () => {
-  const state = useAppStore.getState()
-
-  const location = useAppStore(state => state.location)
-  const setFavoriteRoutes = useAppStore(state => state.setFavoriteRoutes)
-  const setHiddenVehicles = useAppStore(state => state.setHiddenVehicles)
-  const setLoading = useAppStore(state => state.setLoading)
-  const setStopsData = useAppStore(state => state.setStopsData)
+  const location = useAppStore((state) => state.location)
+  const setFavoriteRoutes = useAppStore((state) => state.setFavoriteRoutes)
+  const setHiddenVehicles = useAppStore((state) => state.setHiddenVehicles)
+  const setLoading = useAppStore((state) => state.setLoading)
+  const setStopsData = useAppStore((state) => state.setStopsData)
 
   const [showWarning, setShowWarning] = useState(true)
   const [previousLocation, setPreviousLocation] = useState(location)
@@ -24,42 +46,43 @@ const Header = () => {
   useEffect(() => {
     const localStorage = loadLocalStorage()
     if (localStorage) {
-      setLoading(true)
       setFavoriteRoutes(localStorage.favorites.toString())
       setHiddenVehicles(localStorage.hiddenVehicles)
-      setLoading(false)
     }
-  }, [])
+  })
 
   useEffect(() => {
-    if (previousLocation.coords.lat !== location.coords.lat || previousLocation.coords.lon !== location.coords.lon) {
-      setPreviousLocation({...location, coords: {lat: location.coords.lat, lon: 24.9277357}})
-      getStopsData(location.coords)
-    }
-  }, [location.coords])
-
-  const getUpdatedLocation = async () => {
-    const permissions = await navigator.permissions.query({ name: 'geolocation' })
-
-    if (!permissions.state || permissions.state === 'denied') {
-      state.setLocationDenied(true)
-      setLoading(false)
-      return
+    const updateStops = async () => {
+      setPreviousLocation({ ...location, coords: { lat: location.coords.lat, lon: 24.9277357 } })
+      const stopsData = await getStopsData(location.coords)
+      setStopsData(stopsData)
     }
 
-    state.setLocationDenied(false)
-
-    return await updateCurrentGeoLocation()
-  }
-
+    if (
+      previousLocation.coords.lat !== location.coords.lat ||
+      previousLocation.coords.lon !== location.coords.lon
+    ) {
+      updateStops()
+    }
+  }, [
+    location,
+    location.coords,
+    previousLocation.coords.lat,
+    previousLocation.coords.lon,
+    setLoading,
+    setStopsData
+  ])
 
   useEffect(() => {
-    getUpdatedLocation()
-
     const getLocationAndStops = async () => {
-      const updatedLocation = await getUpdatedLocation()
-      getStopsData(updatedLocation.coords)
+      setLoading(true)
+      const updatedCoords = await getUpdatedCoords()
+      const stopsData = await getStopsData(updatedCoords)
+      setStopsData(stopsData)
+      setLoading(false)
     }
+
+    getLocationAndStops()
 
     const oneMin = 60000
     const interval = setInterval(() => {
@@ -67,24 +90,8 @@ const Header = () => {
     }, oneMin)
 
     return () => clearInterval(interval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const getStopsData = async (updatedCoords) => {
-    setLoading(true)
-
-    if (!_.get(updatedCoords, 'lat')) {
-      setLoading(false)
-      return
-    }
-    
-    const stopsDataRaw = await getStopsAndSchedulesByLocation(
-      updatedCoords.lat,
-      updatedCoords.lon,
-      location.radius
-    )
-    setLoading(false)
-    setStopsData(stopsDataRaw)
-  }
 
   return (
     <div className="Header">
@@ -95,7 +102,7 @@ const Header = () => {
           showWarning={showWarning}
         />
       )}
-      
+
       <img src={logo} className="Header-logo" alt="logo" />
       <h1 className="Header-title">Closest stops</h1>
       <HeaderFilterMenu />

@@ -1,19 +1,19 @@
-import React from 'react'
-import classnames from 'classnames'
-import { ReactSVG } from 'react-svg'
-import vehicleAssets from './vehicleAssets'
 import { useAppStore } from '../hooks/useAppStore'
 import './HeaderFilterMenu.css'
+import vehicleAssets from './vehicleAssets'
+import classnames from 'classnames'
+import React from 'react'
+import { ReactSVG } from 'react-svg'
 
 const vehicles = ['BUS', 'TRAM', 'SUBWAY', 'RAIL', 'FERRY']
 
 const HeaderFilterMenu = () => {
   const state = useAppStore.getState()
-  const { hiddenVehicles } = useAppStore(state => state.stopsData)
+  const { hiddenVehicles } = useAppStore((state) => state.stopsData)
 
   const handleVehicleClick = (vehicle) => {
     if (hiddenVehicles?.includes(vehicle)) {
-      state.setHiddenVehicles(hiddenVehicles.filter(e => e !== vehicle.toString()))
+      state.setHiddenVehicles(hiddenVehicles.filter((e) => e !== vehicle.toString()))
     } else {
       state.setHiddenVehicles(hiddenVehicles.concat([vehicle]))
     }
@@ -21,7 +21,7 @@ const HeaderFilterMenu = () => {
 
   return (
     <div className="HeaderFilterMenu">
-      {vehicles.map(vehicle => (
+      {vehicles.map((vehicle) => (
         <div
           key={vehicle}
           className={classnames(
