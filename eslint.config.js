@@ -21,7 +21,7 @@ export default [
       }
     },
     plugins: {
-      'react': reactPlugin,
+      react: reactPlugin,
       'react-hooks': reactHooksPlugin
     },
     rules: {
@@ -30,7 +30,8 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn'
+      'react-hooks/exhaustive-deps': 'warn',
+      'no-console': ['error', { allow: ['warn', 'error'] }]
     },
     settings: {
       react: {
@@ -38,4 +39,4 @@ export default [
       }
     }
   }
-] 
+]

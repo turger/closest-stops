@@ -1,9 +1,11 @@
+import React from 'react'
+
 import { useAppStore } from '../hooks/useAppStore'
 import { filterStops } from '../utils/formatUtils'
+
 import Routes from './Routes'
 import Spinner from './Spinner'
 import './Stops.css'
-import React from 'react'
 
 const Stops = ({ onlyFavorites = false }) => {
   const stopsData = useAppStore((state) => state.stopsData)
