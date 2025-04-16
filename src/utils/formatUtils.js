@@ -75,12 +75,10 @@ const filterStopTimes = (stopTimes, filterFavorites, favoriteRoutes = [], vehicl
     .map((key) =>
       stopTimes[key]
         .reduce((accumulator, st) => {
-          if (minutesToDeparture(st.realtimeArrival, st.serviceDay) > 0) {
-            accumulator.push({
-              ...st,
-              departureTime: getDepartureTime(st.realtimeArrival, st.serviceDay)
-            })
-          }
+          accumulator.push({
+            ...st,
+            departureTime: getDepartureTime(st.realtimeArrival, st.serviceDay)
+          })
           return accumulator
         }, [])
         .filter((st) =>

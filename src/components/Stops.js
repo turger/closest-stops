@@ -9,6 +9,7 @@ const Stops = ({ onlyFavorites = false }) => {
   const stopsData = useAppStore((state) => state.stopsData)
   const loading = useAppStore((state) => state.loading)
   const favoriteRoutes = useAppStore((state) => state.favoriteRoutes)
+  const location = useAppStore((state) => state.location)
 
   const filteredStops = filterStops(
     stopsData.stops,
@@ -17,14 +18,14 @@ const Stops = ({ onlyFavorites = false }) => {
     stopsData.hiddenVehicles
   )
 
+  const errorMessage = location.locationDenied ? 'No location available' : 'No stops found nearby'
+
   return (
     <div className="Stops">
       {loading && <Spinner />}
 
       {Object.keys(filteredStops).length === 0 && !loading && (
-        <div className="Stops__empty">
-          {onlyFavorites ? 'No favorites' : 'No location available'}
-        </div>
+        <div className="Stops__empty">{onlyFavorites ? 'No favorites' : errorMessage}</div>
       )}
 
       {Object.keys(filteredStops).map((key) => (

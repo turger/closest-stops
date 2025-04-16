@@ -5,9 +5,11 @@ import L from 'leaflet'
 import 'leaflet-defaulticon-compatibility'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import 'leaflet/dist/leaflet.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import Spinner from './Spinner'
+import { filterStops } from '../utils/formatUtils'
+import Warning from './Warning'
 
 const hereIcon = L.icon({
   iconUrl: dotRed,
@@ -20,6 +22,11 @@ const LeafletMapStops = () => {
   const stopsData = useAppStore((state) => state.stopsData)
   const stops = stopsData.stops
 
+  const filteredStops = useMemo(
+    () => filterStops(stops, false, [], stopsData.hiddenVehicles),
+    [stops, stopsData.hiddenVehicles]
+  )
+
   const [markers, setMarkers] = useState({})
   const [lat, setLat] = useState(null)
   const [lon, setLon] = useState(null)
@@ -30,8 +37,8 @@ const LeafletMapStops = () => {
   }, [location])
 
   useEffect(() => {
-    setMarkers(stops)
-  }, [stops])
+    setMarkers(filteredStops)
+  }, [filteredStops])
 
   if (loading) {
     return (
@@ -41,13 +48,17 @@ const LeafletMapStops = () => {
     )
   }
 
-  if (!lat || !lon || !Object.keys(stops).length) {
+  if (!lat || !lon) {
     return (
       <div className="LeafletMapStops">
         <div className="LeafletMapStops-nodata">No location available</div>
       </div>
     )
   }
+
+  const hasStopsNearby = Object.keys(filteredStops).length > 0
+
+  console.log('hasStopsNearby', hasStopsNearby)
 
   const getNextThreeStops = (stopTimesArray) =>
     stopTimesArray
@@ -83,6 +94,7 @@ const LeafletMapStops = () => {
         <Marker key={lat} position={{ lat: lat, lng: lon }} icon={hereIcon}>
           <Popup>Your are here</Popup>
         </Marker>
+        {!hasStopsNearby && <Warning message="No stops found nearby" showWarning={true} />}
         {markersWithLabels}
       </MapContainer>
     </div>
