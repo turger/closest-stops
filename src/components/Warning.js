@@ -1,6 +1,6 @@
+import warning from '../assets/warning.svg'
 import React from 'react'
 import { ReactSVG } from 'react-svg'
-import warning from '../assets/warning.svg'
 import './Warning.css'
 
 const Warning = ({ message, handleClick, showWarning }) => (

@@ -10,17 +10,11 @@ Add firebase:
 Login to firebase:  
 `firebase login`
 
-add .env file to project root:  
-```
-# https://console.cloud.google.com/apis/credentials
-REACT_APP_GMAPS_KEY=  
-# https://portal-api.digitransit.fi/profile
-REACT_APP_HSL_KEY=
-```
+add `.env` file to project root, see base from `.env.dist`.
 
 `yarn`
 
-`yarn start`
+`yarn dev`
 
 ## Deploy to firebase
 
@@ -33,7 +27,6 @@ REACT_APP_HSL_KEY=
 https://clopspops.web.app
 
 ## TODO
-* Change from create react app to vite
-* Use typescript
-* Add linter
-* Use less
+
+- Use typescript
+- Use less

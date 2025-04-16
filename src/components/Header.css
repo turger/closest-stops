@@ -7,7 +7,6 @@
   box-shadow: 0 3px 16px 0 #d4d8ff;
   text-align: center;
   z-index: 1;
-  
 }
 
 .Header-logo {
@@ -34,8 +33,16 @@
 }
 
 @keyframes Logo-shake {
-  0% { transform: rotate(0deg); }
-  33% { transform: rotate(20deg); }
-  66% { transform: rotate(-20deg); }
-  100% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(20deg);
+  }
+  66% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }

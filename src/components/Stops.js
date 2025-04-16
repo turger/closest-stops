@@ -1,13 +1,15 @@
-import React from 'react'
-import Routes from './Routes'
 import { useAppStore } from '../hooks/useAppStore'
 import { filterStops } from '../utils/formatUtils'
+import Routes from './Routes'
+import Spinner from './Spinner'
 import './Stops.css'
+import React from 'react'
 
 const Stops = ({ onlyFavorites = false }) => {
-  const stopsData = useAppStore(state => state.stopsData)
-  const loading = useAppStore(state => state.loading)
-  const favoriteRoutes = useAppStore(state => state.favoriteRoutes)
+  const stopsData = useAppStore((state) => state.stopsData)
+  const loading = useAppStore((state) => state.loading)
+  const favoriteRoutes = useAppStore((state) => state.favoriteRoutes)
+  const location = useAppStore((state) => state.location)
 
   const filteredStops = filterStops(
     stopsData.stops,
@@ -16,17 +18,17 @@ const Stops = ({ onlyFavorites = false }) => {
     stopsData.hiddenVehicles
   )
 
+  const errorMessage = location.locationDenied ? 'No location available' : 'No stops found nearby'
+
   return (
     <div className="Stops">
-      {loading && (
-        <div className="Stops_loader" />
-      )}
+      {loading && <Spinner />}
 
       {Object.keys(filteredStops).length === 0 && !loading && (
-        <div className="Stops__empty">{onlyFavorites ? 'Ei suosikkeja' : 'Ei sijaintitietoja'}</div>
+        <div className="Stops__empty">{onlyFavorites ? 'No favorites' : errorMessage}</div>
       )}
 
-      {Object.keys(filteredStops).map(key => (
+      {Object.keys(filteredStops).map((key) => (
         <Routes key={key} oneStopData={filteredStops[key]} />
       ))}
     </div>

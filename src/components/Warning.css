@@ -3,6 +3,7 @@
   display: flex;
   width: 100%;
   color: #b38c00;
+  z-index: 1001;
 }
 
 .Warning__icon {
@@ -34,7 +35,7 @@
   padding: 5px;
   background: rgba(255, 238, 179, 0.7);
   border-radius: 3px;
-  font-size: 12px;
+  font-size: 1rem;
   z-index: 20;
 }
 

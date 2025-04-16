@@ -1,9 +1,9 @@
-import React from 'react'
-import Stops from './Stops'
-import Map from './map/Map'
-import Pagewrapper from './Pagewrapper'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
+import LeafletMapStops from './components/LeafletMapStops'
+import Pagewrapper from './components/Pagewrapper'
+import Stops from './components/Stops'
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 const App = () => (
   <Router
@@ -13,12 +13,10 @@ const App = () => (
     }}
   >
     <Routes>
-      {/* <Route path="/" element={<Navigate to="/all" replace />} /> */}
-      
       <Route path="/favorites" element={<Pagewrapper />}>
         <Route index element={<Stops onlyFavorites={true} />} />
       </Route>
-      
+
       <Route path="/" element={<Pagewrapper />}>
         <Route index element={<Stops />} />
       </Route>
@@ -26,9 +24,9 @@ const App = () => (
       <Route path="/all" element={<Pagewrapper />}>
         <Route index element={<Stops />} />
       </Route>
-      
+
       <Route path="/map" element={<Pagewrapper />}>
-        <Route index element={<Map />} />
+        <Route index element={<LeafletMapStops />} />
       </Route>
     </Routes>
   </Router>
