@@ -1,4 +1,4 @@
-const getCurrentGeolocation = async () => {
+export const getCurrentCoords = async () => {
   try {
     const position = await new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject, {
@@ -9,22 +9,17 @@ const getCurrentGeolocation = async () => {
     })
 
     return {
-      lat: position.coords.latitude,
-      lon: position.coords.longitude
+      coords: {
+        lat: position.coords.latitude,
+        lon: position.coords.longitude
+      },
+      error: undefined
     }
   } catch (error) {
     console.error('Error getting location:', error)
-    throw error
-  }
-}
-
-export const getCurrentCoords = async () => {
-  try {
-    const location = await getCurrentGeolocation()
-
-    return location
-  } catch (error) {
-    console.error('Error getting location:', error)
-    throw error
+    return {
+      coords: {},
+      error: error
+    }
   }
 }

@@ -70,6 +70,11 @@ export const useAppStore = create((set, get) => ({
   },
   setStopsData: (stops) => {
     const state = get()
+
+    if (!stops) {
+      return
+    }
+
     const filteredStops = stops.filter(
       (stop) => stop.node.stop.stoptimesWithoutPatterns.length !== 0
     )

@@ -19,8 +19,13 @@ const getUpdatedCoords = async () => {
   }
 
   state.setLocationDenied(false)
-  const coords = await getCurrentCoords()
+  const { coords, error } = await getCurrentCoords()
   state.setCoords(coords)
+  if (error) {
+    state.setLocationDenied(true)
+  } else {
+    state.setLocationDenied(false)
+  }
 
   return coords
 }
