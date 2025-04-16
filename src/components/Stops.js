@@ -1,6 +1,7 @@
 import { useAppStore } from '../hooks/useAppStore'
 import { filterStops } from '../utils/formatUtils'
 import Routes from './Routes'
+import Spinner from './Spinner'
 import './Stops.css'
 import React from 'react'
 
@@ -18,7 +19,7 @@ const Stops = ({ onlyFavorites = false }) => {
 
   return (
     <div className="Stops">
-      {loading && <div className="Stops_loader" />}
+      {loading && <Spinner />}
 
       {Object.keys(filteredStops).length === 0 && !loading && (
         <div className="Stops__empty">

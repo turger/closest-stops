@@ -7,6 +7,7 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet/dist/leaflet.css'
 import { useEffect, useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import Spinner from './Spinner'
 
 const hereIcon = L.icon({
   iconUrl: dotRed,
@@ -15,6 +16,7 @@ const hereIcon = L.icon({
 
 const LeafletMapStops = () => {
   const location = useAppStore((state) => state.location)
+  const loading = useAppStore((state) => state.loading)
   const stopsData = useAppStore((state) => state.stopsData)
   const stops = stopsData.stops
 
@@ -30,6 +32,14 @@ const LeafletMapStops = () => {
   useEffect(() => {
     setMarkers(stops)
   }, [stops])
+
+  if (loading) {
+    return (
+      <div className="LeafletMapStops">
+        <Spinner />
+      </div>
+    )
+  }
 
   if (!lat || !lon || !Object.keys(stops).length) {
     return (
